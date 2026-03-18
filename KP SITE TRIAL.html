@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KP Media - Creative Media Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<!-- Loader -->
+
+<div id="loader">
+  <div class="box">
+    <div class="bar"></div>
+  </div>
+</div>
+<style>
+#loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:#003c7c;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+.box{
+width:120px;
+height:45px;
+border:6px solid white;
+padding:3px;
+}
+
+.bar{
+width:0%;
+height:100%;
+background:#e30c0c;
+animation:load 2s forwards;
+}
+
+@keyframes load{
+from{width:0%;}
+to{width:100%;}
+}
+</style>
+
+<script>
+setTimeout(function(){
+document.getElementById("loader").style.display="none";
+},2000);
+</script>
+
+
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-bold text-blue-600">KP <span class="text-gray-800">Media</span></a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-gray-800 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link text-gray-800 hover:text-blue-600">Home</a>
+                    <a href="#services" class="nav-link text-gray-800 hover:text-blue-600">Services</a>
+                    <a href="#portfolio" class="nav-link text-gray-800 hover:text-blue-600">Portfolio</a>
+                    <a href="#about" class="nav-link text-gray-800 hover:text-blue-600">About</a>
+                    <a href="#contact" class="nav-link text-gray-800 hover:text-blue-600">Contact</a>
+                    <a href="tel:+233257722786" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition ml-4">Donate</a>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden py-4">
+                <a href="#home" class="block py-2 text-gray-800 hover:text-blue-600">Home</a>
+                <a href="#services" class="block py-2 text-gray-800 hover:text-blue-600">Services</a>
+                <a href="#portfolio" class="block py-2 text-gray-800 hover:text-blue-600">Portfolio</a>
+                <a href="#about" class="block py-2 text-gray-800 hover:text-blue-600">About</a>
+                <a href="#contact" class="block py-2 text-gray-800 hover:text-blue-600">Contact</a>
+                <a href="tel:+233257722786" class="block bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition mt-4 text-center">Donate</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient text-white py-20 md:py-32">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-12 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4">Elevate Your Brand with KP Media</h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90">Creative solutions for the digital age. We craft compelling media experiences that connect with your audience.</p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#contact" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold text-center hover:bg-gray-100 transition duration-300">Get Started</a>
+                    <a href="#services" class="border-2 border-white px-8 py-3 rounded-lg font-semibold text-center hover:bg-white hover:text-blue-600 transition duration-300">Our Services</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Creative Media" class="rounded-lg shadow-2xl animate-float max-w-full h-auto">
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Services</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">We offer a comprehensive range of media services to help your brand stand out in the digital landscape.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card bg-gray-50 p-8 rounded-lg border border-gray-200">
+                    <div class="text-blue-600 mb-4">
+                        <i class="fas fa-video text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Video Production</h3>
+                    <p class="text-gray-600">Professional video production services from concept to final edit. We create engaging content that tells your story effectively.</p>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card bg-gray-50 p-8 rounded-lg border border-gray-200">
+                    <div class="text-blue-600 mb-4">
+                        <i class="fas fa-camera-retro text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Photography</h3>
+                    <p class="text-gray-600">High-quality photography services for products, events, and portraits that capture the essence of your brand.</p>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-card bg-gray-50 p-8 rounded-lg border border-gray-200">
+                    <div class="text-blue-600 mb-4">
+                        <i class="fas fa-paint-brush text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Graphic Design</h3>
+                    <p class="text-gray-600">Creative graphic design solutions including logos, branding materials, and marketing collateral that make an impact.</p>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="service-card bg-gray-50 p-8 rounded-lg border border-gray-200">
+                    <div class="text-blue-600 mb-4">
+                        <i class="fas fa-ad text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Digital Marketing</h3>
+                    <p class="text-gray-600">Strategic digital marketing campaigns that increase your online presence and drive meaningful engagement.</p>
+                </div>
+                
+                <!-- Service 5 -->
+                <div class="service-card bg-gray-50 p-8 rounded-lg border border-gray-200">
+                    <div class="text-blue-600 mb-4">
+                        <i class="fas fa-globe text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Web Development</h3>
+                    <p class="text-gray-600">Custom website development that's responsive, user-friendly, and optimized for performance and conversions.</p>
+                </div>
+                
+                <!-- Service 6 -->
+                <div class="service-card bg-gray-50 p-8 rounded-lg border border-gray-200">
+                    <div class="text-blue-600 mb-4">
+                        <i class="fas fa-bullhorn text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Social Media Management</h3>
+                    <p class="text-gray-600">Comprehensive social media strategies and management to grow your audience and strengthen your brand online.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Portfolio</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">Explore some of our recent projects and see how we've helped clients achieve their media goals.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Portfolio Item 1 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project 1" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <div class="text-center p-4">
+                            <h3 class="text-white text-xl font-bold mb-2">Corporate Video Series</h3>
+                            <p class="text-gray-300 mb-4">A comprehensive video campaign for a Fortune 500 company</p>
+                            <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Item 2 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project 2" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <div class="text-center p-4">
+                            <h3 class="text-white text-xl font-bold mb-2">E-commerce Brand Photography</h3>
+                            <p class="text-gray-300 mb-4">Product photography for a leading online retailer</p>
+                            <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition duration-300">View All Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0 md:pr-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">About KP Media</h2>
+                    <div class="w-20 h-1 bg-blue-600 mb-6"></div>
+                    <p class="text-gray-600 mb-6">Founded in 2020, KP Media has grown from a small creative studio to a full-service media production agency serving clients across multiple industries.</p>
+                    <p class="text-gray-600 mb-6">Our team of passionate creatives, strategists, and technologists work together to deliver media solutions that not only look great but drive real results for our clients.</p>
+                    <p class="text-gray-600 mb-8">We believe in the power of storytelling and leverage the latest technologies to create media experiences that resonate with audiences and achieve business objectives.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-medium">Creative</div>
+                        <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-medium">Innovative</div>
+                        <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-medium">Strategic</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">What Our Clients Say</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">Don't just take our word for it. Here's what our clients have to say about working with us.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"KP Media transformed Mighty Concept and Trading Enterprise's online presence. Their video production team created content that perfectly captured our company's values and mission."</p>
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Solomon Assan</h4>
+                        <p class="text-sm text-gray-500">Director, Mighty Concept and Trading Enterprise</p>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"We were very satisfied with KP Media's photography services. They delivered high-quality product images that met all our requirements."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Michael Chen</h4>
+                            <p class="text-sm text-gray-500">Retail Business Owner</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"KP Media provided excellent social media management services. They helped us establish a consistent posting schedule and improved our online presence."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Emily Rodriguez" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Emily Rodriguez</h4>
+                            <p class="text-sm text-gray-500">Small Business Owner</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Get In Touch</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">Ready to start your next project with us? Send us a message and we'll get back to you as soon as possible.</p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 mb-12 md:mb-0 md:pr-12">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6">Contact Information</h3>
+                    
+                    <div class="flex items-start mb-6">
+                        <div class="text-blue-600 mr-4 mt-1">
+                            <i class="fas fa-map-marker-alt text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">Our Office</h4>
+                            <p class="text-gray-600">Koforidua<br>Eastern Region, Ghana</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start mb-6">
+                        <div class="text-blue-600 mr-4 mt-1">
+                            <i class="fas fa-envelope text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">Email Us</h4>
+                            <p class="text-gray-600">edufulgodfred22@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start mb-6">
+                        <div class="text-blue-600 mr-4 mt-1">
+                            <i class="fas fa-phone-alt text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">Call Us</h4>
+                            <p class="text-gray-600">+233 257722786 (Godfred Eduful, CEO)<br>Mon-Fri, 9am-6pm GMT</p>
+                        </div>
+                    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Google Drive Image Test</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6 flex justify-center items-center min-h-screen">
+
+  <div class="relative group w-full max-w-md">
+    <img src="ceo.jpeg" 
+         alt="CEO" 
+         class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
+
+    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+      <div class="text-center p-4">
+        <h3 class="text-white text-xl font-bold mb-2">CEO</h3>
+        <p class="text-gray-300 mb-4">Founder of KP MEDIA</p>
+       <!-- <a href="ceo.jpeg" 
+           target="_blank" 
+           class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+           View Image-->
+        </a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+                    <div class="mt-8">
+                        <h4 class="font-medium text-gray-800 mb-4">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="https://web.facebook.com/godfred.eduful.319" class="text-blue-600 hover:text-blue-800 text-xl"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://x.com/_kobby_pounds" class="text-blue-600 hover:text-blue-800 text-xl"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/_kp_media" class="text-blue-600 hover:text-blue-800 text-xl"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/" class="text-blue-600 hover:text-blue-800 text-xl"><i class="fab fa-linkedin-in"></i></a>
+                        <!--<a href="#" class="text-blue-600 hover:text-blue-800 text-xl"><i class="fab fa-youtube"></i></a>-->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <form id="contactForm" class="bg-gray-50 p-8 rounded-lg shadow-md">
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Your Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="subject" class="block text-gray-700 font-medium mb-2">Subject</label>
+                            <input type="text" id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Your Message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">Send Message</button>
+                    </form>
+                    
+                    <div id="formSuccess" class="hidden mt-4 p-4 bg-green-100 text-green-800 rounded-lg">
+                        <i class="fas fa-check-circle mr-2"></i> Your message has been sent successfully! We'll get back to you soon.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-16 bg-blue-600 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">Subscribe to Our Newsletter</h2>
+            <p class="max-w-2xl mx-auto mb-8 opacity-90">Stay updated with our latest projects, industry insights, and special offers.</p>
+            
+            <form class="max-w-md mx-auto flex">
+                <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-l-lg focus:outline-none text-gray-800">
+                <button type="submit" class="bg-blue-800 px-6 py-3 rounded-r-lg font-semibold hover:bg-blue-900 transition duration-300">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">KP Media</h3>
+                    <p class="text-gray-400">Creative media solutions for the digital age. We help brands tell their stories through compelling visuals and strategic content.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Services</a></li>
+                        <li><a href="#portfolio" class="text-gray-400 hover:text-white transition">Portfolio</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Video Production</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Photography</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Graphic Design</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Web Development</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Digital Marketing</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Contact</h4>
+                    <address class="not-italic text-gray-400">
+                        <p class="mb-2">Koforidua</p>
+                        <p class="mb-2">Eastern Region, Ghana</p>
+                        <p class="mb-2">edufulgodfred22@gmail.com</p>
+                        <p>+233 257722786 (Godfred Eduful, CEO)</p>
+                        <a href="https://i.postimg.cc/m2smF2qM/CEO.jpg" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition mt-4">CEO</a>
+                        <a href="tel:+233257722786" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition mt-4">Donate Now</a>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2025 KP Media. Under the Management of KP Group Of Companies. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="https://web.facebook.com/godfred.eduful.319" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook"></i></a>
+                    <a href="https://x.com/_kobby_pounds" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/_kp_media" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/" class="text-gray-400 hover:text-white transition"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate form submission
+            setTimeout(() => {
+                this.reset();
+                document.getElementById('formSuccess').classList.remove('hidden');
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('formSuccess').classList.add('hidden');
+                }, 5000);
+            }, 1000);
+        });
+
+        // Animate elements when they come into view
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fadeIn');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.service-card, .hero-gradient img').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
