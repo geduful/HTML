@@ -1,0 +1,362 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KP Group | Global Gateway</title>
+    
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root { --accent: #FF3E00; --surface: 10, 10, 10; --text: 255, 255, 255; }
+
+        /* Theme Orchestration */
+        [data-theme="media"] { --accent: #FF3E00; --surface: 10, 10, 10; --text: 255, 255, 255; --glow: rgba(255, 62, 0, 0.3); }
+        [data-theme="retail"] { --accent: #00A86B; --surface: 248, 250, 249; --text: 15, 25, 20; --glow: rgba(0, 168, 107, 0.2); }
+        [data-theme="electronics"] { --accent: #007AFF; --surface: 13, 15, 22; --text: 235, 240, 255; --glow: rgba(0, 122, 255, 0.3); }
+
+        body { 
+            background-color: rgb(var(--surface)); 
+            color: rgb(var(--text));
+            font-family: 'General Sans', sans-serif;
+            transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1), color 0.8s ease;
+        }
+
+        .font-heading { font-family: 'Clash Display', sans-serif; }
+
+        /* Glassmorphism & High-End Effects */
+        .glass {
+            background: rgba(var(--text), 0.03);
+            backdrop-filter: blur(25px) saturate(200%);
+            border: 1px solid rgba(var(--text), 0.08);
+        }
+
+        .neo-card {
+            border: 1px solid rgba(var(--text), 0.1);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .neo-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 40px var(--glow);
+            transform: translateY(-8px);
+        }
+
+        /* Animated Grain Overlay for Texture */
+        .grain {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.04; pointer-events: none; z-index: 99;
+        }
+
+        .active-tab {
+            background: var(--accent) !important;
+            color: white !important;
+            box-shadow: 0 4px 15px var(--glow);
+        }
+    </style>
+</head>
+
+<body x-data="{ 
+    theme: 'media',
+    sites: {
+        media: { url: 'https://kpmedia.xo.je', label: 'Launch Media Studio', desc: 'Digital works and cinematic production.' },
+        retail: { url: 'https://retail.kp-group.com', label: 'Shop Essentials', desc: 'Premium provision shops and retail chains.' },
+        electronics: { url: 'https://electronics.kp-group.com', label: 'View Catalog', desc: 'Next-gen appliances and smart systems.' }
+    }
+}" :data-theme="theme">
+
+    <div class="grain"></div>
+
+    <nav class="fixed top-0 w-full z-[100] glass px-8 py-5 flex justify-between items-center border-b">
+        <div class="flex items-center gap-3 group cursor-pointer">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white transition-all duration-700" :style="'background:' + 'var(--accent)'">KP</div>
+            <span class="font-heading font-bold text-xl tracking-tighter">KP GROUP</span>
+        </div>
+        
+        <div class="hidden md:flex gap-12 text-[10px] font-bold uppercase tracking-[0.2em]">
+            <a href="#" class="hover:text-[var(--accent)] transition-colors">Our Ecosystem</a>
+            <a href="#" class="hover:text-[var(--accent)] transition-colors">Investors</a>
+            <a href="#" class="hover:text-[var(--accent)] transition-colors">Contact</a>
+        </div>
+
+        <a :href="sites[theme].url" target="_blank" class="px-6 py-2 rounded-full border border-[var(--accent)] text-[var(--accent)] text-xs font-bold uppercase transition-all hover:bg-[var(--accent)] hover:text-white">
+            External Site <i data-lucide="external-link" class="inline w-3 h-3 ml-1"></i>
+        </a>
+    </nav>
+
+    <header class="min-h-screen flex flex-col justify-center items-center px-6 pt-20">
+        <div class="absolute inset-0 z-0 overflow-hidden">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-10 blur-[150px] transition-colors duration-1000"
+                 :style="'background: radial-gradient(circle, var(--accent) 0%, transparent 70%)'"></div>
+        </div>
+
+        <div class="relative z-10 text-center space-y-10 max-w-5xl">
+            <h1 class="font-heading text-8xl md:text-[12rem] font-bold tracking-tighter leading-[0.8] transition-all duration-700">
+                <span class="block">THE FUTURE</span>
+                <span class="block italic outline-text opacity-40" :style="theme === 'retail' ? 'color: var(--accent)' : ''">IS DIVERSE.</span>
+            </h1>
+
+            <div class="flex flex-wrap justify-center gap-4 bg-black/5 p-2 rounded-full backdrop-blur-xl border border-white/10 shadow-2xl">
+                <button @click="theme = 'media'" :class="theme === 'media' ? 'active-tab' : 'hover:bg-white/10'" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-500">KP Media</button>
+                <button @click="theme = 'retail'" :class="theme === 'retail' ? 'active-tab' : 'hover:bg-white/10'" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-500">KP Retail</button>
+                <button @click="theme = 'electronics'" :class="theme === 'electronics' ? 'active-tab' : 'hover:bg-white/10'" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-500">KP Electronics</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="max-w-7xl mx-auto px-6 pb-32">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="md:col-span-2 neo-card glass rounded-[2.5rem] p-12 flex flex-col justify-between min-h-[500px] relative overflow-hidden">
+                <div class="relative z-10">
+                    <div class="flex items-center gap-4 mb-8">
+                        <i x-show="theme === 'media'" data-lucide="clapperboard" class="w-10 h-10 text-[var(--accent)]"></i>
+                        <i x-show="theme === 'retail'" data-lucide="shopping-bag" class="w-10 h-10 text-[var(--accent)]"></i>
+                        <i x-show="theme === 'electronics'" data-lucide="zap" class="w-10 h-10 text-[var(--accent)]"></i>
+                        <h2 class="font-heading text-4xl font-bold uppercase tracking-tight" x-text="'KP ' + theme"></h2>
+                    </div>
+                    <p class="text-2xl font-light opacity-80 max-w-xl mb-12 transition-all" x-text="sites[theme].desc"></p>
+                    <a :href="sites[theme].url" target="_blank" class="inline-flex items-center gap-4 bg-[var(--accent)] text-white px-10 py-5 rounded-2xl font-bold text-lg transition-transform hover:scale-105 active:scale-95">
+                        <span x-text="sites[theme].label"></span>
+                        <i data-lucide="arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full blur-[80px] opacity-20" :style="'background: var(--accent)'"></div>
+            </div>
+
+            <div class="neo-card glass rounded-[2.5rem] p-10 flex flex-col justify-center items-center text-center">
+                <div class="mb-4 opacity-40 text-xs font-bold uppercase tracking-[0.3em]">Division Status</div>
+                <div class="text-6xl font-heading font-bold text-[var(--accent)] mb-2">LIVE</div>
+                <div class="h-1 w-12 bg-[var(--accent)] rounded-full animate-pulse"></div>
+            </div>
+
+            <div class="neo-card glass rounded-[2.5rem] p-10 flex flex-col justify-between hover:bg-[var(--accent)] hover:text-white group transition-all duration-500">
+                <i data-lucide="globe" class="w-8 h-8 opacity-50 group-hover:rotate-45 transition-transform"></i>
+                <div>
+                    <h3 class="font-heading text-xl font-bold mb-2 uppercase">Headquarters</h3>
+                    <p class="text-sm opacity-60">Connecting KP Group's diverse industries from one central hub.</p>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 neo-card glass rounded-[2.5rem] p-10 flex items-center justify-between">
+                <div class="flex -space-x-4">
+                    <div class="w-14 h-14 rounded-full border-4 border-[rgb(var(--surface))] bg-zinc-800 flex items-center justify-center font-bold">M</div>
+                    <div class="w-14 h-14 rounded-full border-4 border-[rgb(var(--surface))] bg-zinc-700 flex items-center justify-center font-bold text-green-500">R</div>
+                    <div class="w-14 h-14 rounded-full border-4 border-[rgb(var(--surface))] bg-zinc-600 flex items-center justify-center font-bold text-blue-500">E</div>
+                </div>
+                <p class="font-medium text-sm opacity-60 italic">Integrated management across all platforms.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        lucide.createIcons();
+        
+        // Ensure icons refresh when theme changes
+        window.addEventListener('click', () => {
+            setTimeout(() => lucide.createIcons(), 50);
+        });
+    </script>
+</body>
+</html> -->
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KP Group | Multi-Industry Excellence</title>
+    
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root { --accent: #FF3E00; --surface: 10, 10, 10; --text: 255, 255, 255; }
+        [data-theme="media"] { --accent: #FF3E00; --surface: 10, 10, 10; --text: 255, 255, 255; }
+        [data-theme="retail"] { --accent: #00A86B; --surface: 245, 247, 246; --text: 20, 30, 25; }
+        [data-theme="electronics"] { --accent: #007AFF; --surface: 15, 17, 20; --text: 240, 240, 250; }
+
+        body { 
+            background-color: rgb(var(--surface)); 
+            color: rgb(var(--text));
+            font-family: 'General Sans', sans-serif;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .font-heading { font-family: 'Clash Display', sans-serif; }
+        
+        .glass {
+            background: rgba(var(--text), 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(var(--text), 0.1);
+        }
+
+        .neo-shadow:hover {
+            box-shadow: 10px 10px 0px var(--accent);
+            transform: translate(-5px, -5px);
+        }
+
+        .industry-tab.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 10px 20px -5px var(--accent);
+        }
+    </style>
+</head>
+
+<body x-data="{ 
+    theme: 'media',
+    ceo: { name: 'Kelvin P.', role: 'Group CEO', bio: 'Visionary leader driving multi-sector innovation across West Africa and beyond.' },
+    sectors: {
+        media: { name: 'KP Media', url: 'https://kpmedia.xo.je', slogan: 'Stories that Move.', icon: 'play' },
+        retail: { name: 'KP Retail', url: 'https://retail.kp-group.com', slogan: 'Quality in Every Aisle.', icon: 'shopping-bag' },
+        electronics: { name: 'KP Electronics', url: 'https://electronics.kp-group.com', slogan: 'The Future, Integrated.', icon: 'cpu' }
+    }
+}" :data-theme="theme">
+
+    <nav class="fixed top-0 w-full z-[100] glass px-8 py-4 flex justify-between items-center transition-all border-b border-white/10">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-white transition-all" :style="'background:' + 'var(--accent)'">KP</div>
+            <span class="font-heading font-bold text-xl tracking-tighter">GROUP</span>
+        </div>
+        
+        <div class="hidden md:flex gap-8 text-[11px] font-bold uppercase tracking-widest">
+            <a href="#sectors" class="hover:opacity-60 transition-opacity">Business Sectors</a>
+            <a href="#leadership" class="hover:opacity-60 transition-opacity">Leadership</a>
+            <a href="#contact" class="hover:opacity-60 transition-opacity">Contact</a>
+        </div>
+
+        <a href="tel:0257722786" class="bg-[var(--accent)] text-white px-6 py-2 rounded-full font-bold text-xs uppercase transition-transform hover:scale-105">
+            Partner: 0257722786
+        </a>
+    </nav>
+
+    <header class="pt-48 pb-20 px-6 max-w-7xl mx-auto flex flex-col items-start min-h-[85vh]">
+        <div class="inline-flex mb-6 rounded-full px-4 py-1 border text-[10px] font-bold uppercase tracking-widest transition-all"
+             :style="'border-color: var(--accent); color: var(--accent)'">
+             EST. 2026 // Conglomerate
+        </div>
+        
+        <h1 class="text-7xl md:text-[9rem] font-bold leading-[0.85] mb-8 tracking-tighter font-heading italic">
+            <span class="block">REDEFINING</span>
+            <span class="block text-[var(--accent)]" x-text="sectors[theme].name.toUpperCase()"></span>
+        </h1>
+
+        <p class="max-w-xl text-xl opacity-70 mb-12 font-light italic" x-text="sectors[theme].slogan"></p>
+        
+        <div class="flex flex-wrap gap-4 p-2 glass rounded-2xl w-fit">
+            <template x-for="(data, key) in sectors" :key="key">
+                <button @click="theme = key" 
+                        :class="theme === key ? 'active' : 'hover:bg-white/5 opacity-50'" 
+                        class="industry-tab px-8 py-4 rounded-xl font-bold transition-all flex items-center gap-3 uppercase text-xs tracking-widest">
+                    <span x-text="data.name"></span>
+                </button>
+            </template>
+        </div>
+    </header>
+
+    <section id="sectors" class="px-6 py-20 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 h-auto md:h-[600px]">
+            <div class="md:col-span-3 glass neo-shadow rounded-3xl p-12 flex flex-col justify-between relative overflow-hidden transition-all group">
+                <div class="relative z-10">
+                    <h3 class="font-heading text-5xl font-bold mb-4" x-text="sectors[theme].name"></h3>
+                    <p class="max-w-md opacity-60 text-lg mb-8">Click below to enter the dedicated ecosystem for this division. Each site is custom-built for industry-specific needs.</p>
+                    <a :href="sectors[theme].url" target="_blank" class="inline-flex items-center gap-4 bg-[var(--accent)] text-white px-10 py-5 rounded-2xl font-bold text-lg hover:gap-6 transition-all">
+                        Launch <span x-text="sectors[theme].name"></span> Website <i data-lucide="external-link"></i>
+                    </a>
+                </div>
+                <i data-lucide="globe" class="absolute -right-10 -bottom-10 w-64 h-64 opacity-5 group-hover:rotate-12 transition-transform duration-1000"></i>
+            </div>
+
+            <div class="md:col-span-1 glass neo-shadow rounded-3xl p-8 flex flex-col justify-center items-center text-center">
+                <div class="text-xs uppercase tracking-widest opacity-40 mb-4">Partner Inquiries</div>
+                <div class="text-2xl font-bold mb-4">Ready to Scale?</div>
+                <a href="mailto:contact@kpgroup.com" class="font-bold underline decoration-[var(--accent)] hover:text-[var(--accent)] transition-colors">contact@kpgroup.com</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="leadership" class="px-6 py-32 bg-[rgba(var(--text),0.02)] border-y border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="font-heading text-5xl font-bold mb-16 italic underline decoration-[var(--accent)]">THE BOARD.</h2>
+            
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="space-y-6">
+                    <div class="aspect-[3/4] glass rounded-3xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 relative">
+                        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent">
+                            <p class="text-white text-xs font-bold tracking-widest uppercase mb-1" x-text="ceo.role"></p>
+                            <h4 class="text-white text-3xl font-heading font-bold" x-text="ceo.name"></h4>
+                        </div>
+                    </div>
+                    <p class="opacity-60 text-sm leading-relaxed" x-text="ceo.bio"></p>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="aspect-[3/4] glass rounded-3xl overflow-hidden grayscale opacity-50 border-dashed border-2 flex items-center justify-center">
+                        <span class="font-heading text-xl opacity-30">COO // OPS</span>
+                    </div>
+                    <h4 class="text-xl font-bold">Executive Operations</h4>
+                    <p class="opacity-60 text-sm">Managing the complex logistics of cross-sector production and retail distribution.</p>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="aspect-[3/4] glass rounded-3xl overflow-hidden grayscale opacity-50 border-dashed border-2 flex items-center justify-center">
+                        <span class="font-heading text-xl opacity-30">CTO // TECH</span>
+                    </div>
+                    <h4 class="text-xl font-bold">Technical Director</h4>
+                    <p class="opacity-60 text-sm">Overseeing the KP Electronics division and Group-wide digital transformation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="py-24 px-6 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-20 items-center">
+            <div>
+                <h2 class="font-heading text-6xl font-bold mb-8">LET'S CONNECT.</h2>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-6">
+                        <div class="p-4 rounded-full bg-[var(--accent)]/10 text-[var(--accent)]"><i data-lucide="phone"></i></div>
+                        <div>
+                            <p class="text-xs opacity-50 uppercase font-bold tracking-tighter">Phone</p>
+                            <p class="text-xl font-bold">0257722786</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <div class="p-4 rounded-full bg-[var(--accent)]/10 text-[var(--accent)]"><i data-lucide="mail"></i></div>
+                        <div>
+                            <p class="text-xs opacity-50 uppercase font-bold tracking-tighter">Email</p>
+                            <p class="text-xl font-bold underline">contact@kpgroup.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="glass p-10 rounded-[3rem] space-y-6 border-2 border-dashed border-[var(--accent)]/20">
+                <h3 class="text-2xl font-bold italic">Newsletter</h3>
+                <p class="opacity-60">Join 5,000+ investors and partners receiving our quarterly updates.</p>
+                <div class="flex gap-2">
+                    <input type="email" placeholder="email@address.com" class="flex-1 bg-white/5 border border-white/10 px-6 py-4 rounded-xl outline-none focus:border-[var(--accent)] transition-all">
+                    <button class="bg-[var(--accent)] text-white px-6 py-4 rounded-xl font-bold"><i data-lucide="send"></i></button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        window.addEventListener('click', () => { setTimeout(() => lucide.createIcons(), 50); });
+    </script>
+</body>
+</html>

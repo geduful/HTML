@@ -55,57 +55,26 @@
             50% { transform: translateY(-15px); }
             100% { transform: translateY(0px); }
         }
+        
+        .hidden-fade { opacity:0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+        .animate-fadeIn { opacity:1; transform: translateY(0); }
     </style>
 </head>
-<!-- Loader -->
-
-<div id="loader">
-  <div class="box">
-    <div class="bar"></div>
-  </div>
-</div>
-<style>
-#loader{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100vh;
-background:#003c7c;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:9999;
-}
-
-.box{
-width:120px;
-height:45px;
-border:6px solid white;
-padding:3px;
-}
-
-.bar{
-width:0%;
-height:100%;
-background:#e30c0c;
-animation:load 2s forwards;
-}
-
-@keyframes load{
-from{width:0%;}
-to{width:100%;}
-}
-</style>
-
-<script>
-setTimeout(function(){
-document.getElementById("loader").style.display="none";
-},2000);
-</script>
-
 
 <body class="bg-gray-50">
+    <!-- Loader (must be inside body) -->
+    <div id="loader">
+        <div class="box"><div class="bar"></div></div>
+    </div>
+
+    <style>
+        #loader { position: fixed; top:0; left:0; width:100%; height:100vh; background:#003c7c; display:flex; justify-content:center; align-items:center; z-index:9999; }
+        .box{ width:120px; height:45px; border:6px solid white; padding:3px; }
+        .bar{ width:0%; height:100%; background:#e30c0c; animation:load 2s forwards; }
+        @keyframes load { from{width:0;} to{width:100%;} }
+    </style>
+    <script> setTimeout(()=>document.getElementById("loader").style.display="none", 2000); </script>
+
     <!-- Navigation -->
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-6 py-3">
@@ -156,7 +125,7 @@ document.getElementById("loader").style.display="none";
                 </div>
             </div>
             <div class="md:w-1/2 flex justify-center">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Creative Media" class="rounded-lg shadow-2xl animate-float max-w-full h-auto">
+                <img src="https://www.shutterstock.com/image-photo/video-editor-arranging-recorded-stock-600nw-2489078227.jpg" alt="Creative Media" class="rounded-lg shadow-2xl animate-float max-w-full h-auto">
             </div>
         </div>
     </section>
@@ -240,10 +209,10 @@ document.getElementById("loader").style.display="none";
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Portfolio Item 1 -->
                 <div class="group relative overflow-hidden rounded-lg shadow-lg">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project 1" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
+                    <img src="https://media.licdn.com/dms/image/sync/v2/D4E27AQGMo6dBZR5hbg/articleshare-shrink_800/B4EZjI3_5SGcAI-/0/1755716779948?e=2147483647&v=beta&t=rftojpjYGPCVnnlrz3Q9YndXSTEBmfI7MjcGRh1ImCs" alt="Project 1" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <div class="text-center p-4">
-                            <h3 class="text-white text-xl font-bold mb-2">Corporate Video Series</h3>
+                        <div class="text-center p-4 text-white">
+                            <h3 class="text-xl font-bold mb-2">Corporate Video Series</h3>
                             <p class="text-gray-300 mb-4">A comprehensive video campaign for a Fortune 500 company</p>
                             <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">View Project</a>
                         </div>
@@ -252,11 +221,23 @@ document.getElementById("loader").style.display="none";
                 
                 <!-- Portfolio Item 2 -->
                 <div class="group relative overflow-hidden rounded-lg shadow-lg">
-                    <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project 2" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/074/180/344/small/photography-studio-with-four-professional-lights-two-black-and-two-white-octabox-softboxes-and-gray-backdrop-photo.jpg" alt="Project 2" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <div class="text-center p-4">
-                            <h3 class="text-white text-xl font-bold mb-2">E-commerce Brand Photography</h3>
+                        <div class="text-center p-4 text-white">
+                            <h3 class="text-xl font-bold mb-2">E-commerce Brand Photography</h3>
                             <p class="text-gray-300 mb-4">Product photography for a leading online retailer</p>
+                            <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Item 3 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                    <img src="https://www.webtreeonline.com/wp-content/uploads/2016/11/Webtree-apr-2025-1-01.jpg" alt="Project 3" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <div class="text-center p-4 text-white">
+                            <h3 class="text-xl font-bold mb-2">Social Media Campaign</h3>
+                            <p class="text-gray-300 mb-4">Comprehensive social media strategy and content creation for brand awareness</p>
                             <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">View Project</a>
                         </div>
                     </div>
@@ -265,7 +246,7 @@ document.getElementById("loader").style.display="none";
             </div>
             
             <div class="text-center mt-12">
-                <a href="#" class="inline-block border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition duration-300">View All Projects</a>
+                <a href="portfolio.html" class="inline-block border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition duration-300">View All Projects</a>
             </div>
         </div>
     </section>
@@ -273,8 +254,8 @@ document.getElementById("loader").style.display="none";
     <!-- About Section -->
     <section id="about" class="py-20 bg-white">
         <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-12 md:mb-0 md:pr-12">
+            <div class="flex flex-col md:flex-row items-center gap-10">
+                <div class="md:w-1/2">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">About KP Media</h2>
                     <div class="w-20 h-1 bg-blue-600 mb-6"></div>
                     <p class="text-gray-600 mb-6">Founded in 2020, KP Media has grown from a small creative studio to a full-service media production agency serving clients across multiple industries.</p>
@@ -284,6 +265,35 @@ document.getElementById("loader").style.display="none";
                         <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-medium">Creative</div>
                         <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-medium">Innovative</div>
                         <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-medium">Strategic</div>
+                    </div>
+                </div>
+
+                <div class="md:w-1/2 grid gap-6">
+                    <div class="rounded-2xl p-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-xl">
+                      <div class="flex items-center justify-center mb-4">
+                        <i class="fas fa-users fa-3x"></i>
+                      </div>
+                      <h3 class="text-2xl font-bold mb-2 text-center">KP Media Team</h3>
+                      <p class="text-center opacity-90">Professional media producers and storytellers crafting visual solutions with data-driven strategy and creative consistency.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div class="p-5 bg-blue-50 border border-blue-100 rounded-xl">
+                        <h4 class="text-2xl font-bold text-blue-700">5+</h4>
+                        <p class="text-gray-600">Years Experience</p>
+                      </div>
+                      <div class="p-5 bg-blue-50 border border-blue-100 rounded-xl">
+                        <h4 class="text-2xl font-bold text-blue-700">100+</h4>
+                        <p class="text-gray-600">Projects Delivered</p>
+                      </div>
+                      <div class="p-5 bg-blue-50 border border-blue-100 rounded-xl">
+                        <h4 class="text-2xl font-bold text-blue-700">30+</h4>
+                        <p class="text-gray-600">Happy Clients</p>
+                      </div>
+                      <div class="p-5 bg-blue-50 border border-blue-100 rounded-xl">
+                        <h4 class="text-2xl font-bold text-blue-700">10</h4>
+                        <p class="text-gray-600">Awards &amp; Recognitions</p>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -312,6 +322,7 @@ document.getElementById("loader").style.display="none";
                         </div>
                     </div>
                     <p class="text-gray-600 mb-6">"KP Media transformed Mighty Concept and Trading Enterprise's online presence. Their video production team created content that perfectly captured our company's values and mission."</p>
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Solomon Assan" class="w-12 h-12 rounded-full mr-4">
                     <div>
                         <h4 class="font-semibold text-gray-800">Solomon Assan</h4>
                         <p class="text-sm text-gray-500">Director, Mighty Concept and Trading Enterprise</p>
@@ -331,10 +342,10 @@ document.getElementById("loader").style.display="none";
                     </div>
                     <p class="text-gray-600 mb-6">"We were very satisfied with KP Media's photography services. They delivered high-quality product images that met all our requirements."</p>
                     <div class="flex items-center">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen" class="w-12 h-12 rounded-full mr-4">
+                        <img src="/HTML/images/Hero.jpeg" alt="Seth Okyere" class="w-12 h-12 rounded-full mr-4">
                         <div>
-                            <h4 class="font-semibold text-gray-800">Michael Chen</h4>
-                            <p class="text-sm text-gray-500">Retail Business Owner</p>
+                            <h4 class="font-semibold text-gray-800">Seth Okyere</h4>
+                            <p class="text-sm text-gray-500">CEO Of VVIM Consult</p>
                         </div>
                     </div>
                 </div>
@@ -352,9 +363,9 @@ document.getElementById("loader").style.display="none";
                     </div>
                     <p class="text-gray-600 mb-6">"KP Media provided excellent social media management services. They helped us establish a consistent posting schedule and improved our online presence."</p>
                     <div class="flex items-center">
-                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Emily Rodriguez" class="w-12 h-12 rounded-full mr-4">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Comfort Manu" class="w-12 h-12 rounded-full mr-4">
                         <div>
-                            <h4 class="font-semibold text-gray-800">Emily Rodriguez</h4>
+                            <h4 class="font-semibold text-gray-800">Comfort Manu</h4>
                             <p class="text-sm text-gray-500">Small Business Owner</p>
                         </div>
                     </div>
@@ -405,75 +416,102 @@ document.getElementById("loader").style.display="none";
                             <p class="text-gray-600">+233 257722786 (Godfred Eduful, CEO)<br>Mon-Fri, 9am-6pm GMT</p>
                         </div>
                     </div>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Google Drive Image Test</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 p-6 flex justify-center items-center min-h-screen">
 
-  <div class="relative group w-full max-w-md">
-    <img src="ceo.jpeg" 
-         alt="CEO" 
-         class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-
-    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-      <div class="text-center p-4">
-        <h3 class="text-white text-xl font-bold mb-2">CEO</h3>
-        <p class="text-gray-300 mb-4">Founder of KP MEDIA</p>
-       <!-- <a href="ceo.jpeg" 
-           target="_blank" 
-           class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-           View Image-->
-        </a>
-      </div>
-    </div>
-  </div>
-
-</body>
-</html>
-                    <div class="mt-8">
-                        <h4 class="font-medium text-gray-800 mb-4">Follow Us</h4>
-                        <div class="flex space-x-4">
-                            <a href="https://web.facebook.com/godfred.eduful.319" class="text-blue-600 hover:text-blue-800 text-xl"><i class="fab fa-facebook-f"></i></a>
-                            <a href="https://x.com/_kobby_pounds" class="text-blue-600 hover:text-blue-800 text-xl"><i class="fab fa-twitter"></i></a>
-                            <a href="https://instagram.com/_kp_media" class="text-blue-600 hover:text-blue-800 text-xl"><i class="fab fa-instagram"></i></a>
-                            <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/" class="text-blue-600 hover:text-blue-800 text-xl"><i class="fab fa-linkedin-in"></i></a>
-                        <!--<a href="#" class="text-blue-600 hover:text-blue-800 text-xl"><i class="fab fa-youtube"></i></a>-->
-                        </div>
+                    <!-- Added map block -->
+                    <div class="mt-8 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+                      <h4 class="text-lg font-semibold text-gray-800 px-4 py-3 bg-gray-50">Find Us</h4>
+                      <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.5630777690837!2d-0.1704848847836872!3d6.094684023127254!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdb9395cb7d0f31%3A0x907066a7c482e6aa!2sKoforidua%2C%20Ghana!5e0!3m2!1sen!2sus!4v1700000000000"
+                        class="w-full h-72 border-0"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                      </iframe>
+                      <div class="p-4 text-gray-600">
+                        <p class="font-medium">KP Media Office</p>
+                        <p>Koforidua, Eastern Region, Ghana</p>
+                        <p>Mon - Fri: 9am - 6pm GMT</p>
+                        <!-- <a href="https://maps.app.goo.gl/j33LuQupPoTWbfaf8"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="mt-3 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                          Open in Google Maps
+                        </a> -->
+                      </div>
                     </div>
                 </div>
-                
+
                 <div class="md:w-1/2">
-                    <form id="contactForm" class="bg-gray-50 p-8 rounded-lg shadow-md">
-                        <div class="mb-6">
-                            <label for="name" class="block text-gray-700 font-medium mb-2">Your Name</label>
-                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required>
+                    <div class="relative group w-full max-w-md rounded-lg overflow-hidden shadow-lg mb-8">
+                      <img src="ceo.jpeg"
+                           alt="CEO Founder of KP MEDIA"
+                           class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
+
+                      <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <div class="text-center p-4 text-white">
+                          <h3 class="text-xl font-bold mb-2">Godfred Eduful</h3>
+                          <p class="text-sm mb-4">Founder &amp; CEO, KP Media</p>
+
+                          <div class="text-left text-sm">
+                            <h4 class="font-semibold text-white mb-2">Education</h4>
+                            <ul class="list-disc list-inside space-y-1">
+                              <li>BTech Computer Science – Koforidua Technical University</li>
+                              <li>Code Yourself! An Introduction to Programming – The University of Edinburgh (Coursera)</li>
+                              <li>Introduction to Dark Web, Anonymity, and Cryptocurrency – EC Council Certificate</li>
+                            </ul>
+                          </div>
                         </div>
-                        
-                        <div class="mb-6">
-                            <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
-                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required>
-                        </div>
-                        
-                        <div class="mb-6">
-                            <label for="subject" class="block text-gray-700 font-medium mb-2">Subject</label>
-                            <input type="text" id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required>
-                        </div>
-                        
-                        <div class="mb-6">
-                            <label for="message" class="block text-gray-700 font-medium mb-2">Your Message</label>
-                            <textarea id="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">Send Message</button>
-                    </form>
+                      </div>
+                    </div>
+
+                    <form id="contactForm" 
+      action="https://formspree.io/f/maqpgbkd" 
+      method="POST"
+      class="bg-gray-50 p-8 rounded-lg shadow-md">
+
+  <div class="mb-6">
+    <label for="name" class="block text-gray-700 font-medium mb-2">Your Name</label>
+    <input type="text" name="name" id="name" 
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" 
+      required>
+  </div>
+
+  <div class="mb-6">
+    <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
+    <input type="email" name="email" id="email" 
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" 
+      required>
+  </div>
+
+  <div class="mb-6">
+    <label for="subject" class="block text-gray-700 font-medium mb-2">Subject</label>
+    <input type="text" name="subject" id="subject" 
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" 
+      required>
+  </div>
+
+  <div class="mb-6">
+    <label for="message" class="block text-gray-700 font-medium mb-2">Your Message</label>
+    <textarea name="message" id="message" rows="5" 
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" 
+      required></textarea>
+  </div>
+
+  <!-- Optional: redirect after submit -->
+  <input type="hidden" name="_redirect" value="https://yourwebsite.com/thank-you.html">
+
+  <button type="submit" 
+    class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+    Send Message
+  </button>
+</form>
                     
                     <div id="formSuccess" class="hidden mt-4 p-4 bg-green-100 text-green-800 rounded-lg">
                         <i class="fas fa-check-circle mr-2"></i> Your message has been sent successfully! We'll get back to you soon.
+                    </div>
+                    
+                    <div id="formError" class="hidden mt-4 p-4 bg-red-100 text-red-800 rounded-lg">
+                        <i class="fas fa-exclamation-circle mr-2"></i> There was an error sending your message. Please try again or contact us directly.
                     </div>
                 </div>
             </div>
@@ -486,10 +524,19 @@ document.getElementById("loader").style.display="none";
             <h2 class="text-2xl md:text-3xl font-bold mb-4">Subscribe to Our Newsletter</h2>
             <p class="max-w-2xl mx-auto mb-8 opacity-90">Stay updated with our latest projects, industry insights, and special offers.</p>
             
-            <form class="max-w-md mx-auto flex">
-                <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-l-lg focus:outline-none text-gray-800">
-                <button type="submit" class="bg-blue-800 px-6 py-3 rounded-r-lg font-semibold hover:bg-blue-900 transition duration-300">Subscribe</button>
+            <form id="newsletterForm" class="max-w-md mx-auto flex" action="https://formspree.io/f/maqpgbkd" method="POST">
+                <input type="hidden" name="_subject" value="Newsletter Subscription">
+                <input type="email" name="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-l-lg focus:outline-none text-gray-800" required>
+                <button type="submit" id="newsletterSubmit" class="bg-blue-800 px-6 py-3 rounded-r-lg font-semibold hover:bg-blue-900 transition duration-300">Subscribe</button>
             </form>
+            
+            <div id="newsletterSuccess" class="hidden mt-4 p-4 bg-green-100 text-green-800 rounded-lg max-w-md mx-auto">
+                <i class="fas fa-check-circle mr-2"></i> Thanks for subscribing! We'll keep you updated.
+            </div>
+            
+            <div id="newsletterError" class="hidden mt-4 p-4 bg-red-100 text-red-800 rounded-lg max-w-md mx-auto">
+                <i class="fas fa-exclamation-circle mr-2"></i> There was an error. Please try again.
+            </div>
         </div>
     </section>
 
@@ -531,14 +578,14 @@ document.getElementById("loader").style.display="none";
                         <p class="mb-2">Eastern Region, Ghana</p>
                         <p class="mb-2">edufulgodfred22@gmail.com</p>
                         <p>+233 257722786 (Godfred Eduful, CEO)</p>
-                        <a href="https://i.postimg.cc/m2smF2qM/CEO.jpg" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition mt-4">CEO</a>
+                        <a href="ceo2.jpeg" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition mt-4">CEO</a>
                         <a href="tel:+233257722786" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition mt-4">Donate Now</a>
                     </address>
                 </div>
             </div>
             
             <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 mb-4 md:mb-0">© 2025 KP Media. Under the Management of KP Group Of Companies. All rights reserved.</p>
+                <p class="text-gray-400 mb-4 md:mb-0">© 2025 KP Media. Under the Management of <a href="index.html" class="text-blue-500 hover:text-blue-400 transition">KP Group Of Companies</a>. All rights reserved.</p>
                 <div class="flex space-x-6">
                     <a href="https://web.facebook.com/godfred.eduful.319" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook"></i></a>
                     <a href="https://x.com/_kobby_pounds" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
@@ -573,33 +620,104 @@ document.getElementById("loader").style.display="none";
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Simulate form submission
-            setTimeout(() => {
-                this.reset();
-                document.getElementById('formSuccess').classList.remove('hidden');
+            const form = this;
+            const formData = new FormData(form);
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            
+            // Disable button and show loading
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+            
+            // Submit to Formspree
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Success
+                    form.reset();
+                    document.getElementById('formSuccess').classList.remove('hidden');
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        document.getElementById('formSuccess').classList.add('hidden');
+                    }, 5000);
+                } else {
+                    // Error
+                    throw new Error('Form submission failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('formError').classList.remove('hidden');
                 
-                // Hide success message after 5 seconds
+                // Hide error message after 5 seconds
                 setTimeout(() => {
-                    document.getElementById('formSuccess').classList.add('hidden');
+                    document.getElementById('formError').classList.add('hidden');
                 }, 5000);
-            }, 1000);
+            })
+            .finally(() => {
+                // Re-enable button
+                submitButton.disabled = false;
+                submitButton.textContent = originalText;
+            });
         });
 
-        // Animate elements when they come into view
-        const observerOptions = {
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-fadeIn');
+        // Newsletter form submission
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const form = this;
+            const formData = new FormData(form);
+            const submitButton = document.getElementById('newsletterSubmit');
+            const originalText = submitButton.textContent;
+            
+            // Disable button and show loading
+            submitButton.disabled = true;
+            submitButton.textContent = 'Subscribing...';
+            
+            // Submit to Formspree
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
                 }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Success
+                    form.reset();
+                    document.getElementById('newsletterSuccess').classList.remove('hidden');
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        document.getElementById('newsletterSuccess').classList.add('hidden');
+                    }, 5000);
+                } else {
+                    // Error
+                    throw new Error('Newsletter subscription failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('newsletterError').classList.remove('hidden');
+                
+                // Hide error message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('newsletterError').classList.add('hidden');
+                }, 5000);
+            })
+            .finally(() => {
+                // Re-enable button
+                submitButton.disabled = false;
+                submitButton.textContent = originalText;
             });
-        }, observerOptions);
-
-        document.querySelectorAll('.service-card, .hero-gradient img').forEach(el => {
-            observer.observe(el);
         });
     </script>
 </body>

@@ -3,41 +3,390 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Members Page</title>
+    <title>KP Group of Companies - Staff</title>
+    <style>
+        :root { --accent:#FF3E00; --bg:#0A0B10; --card:#11131B; --text:#ECEFF4; }
+        * { box-sizing:border-box; margin:0; padding:0; }
+        body { background:#080A10; color:#E5E9F0; font-family:'General Sans',Arial,sans-serif; line-height:1.5; }
+        .page { max-width:1100px; margin:40px auto; padding:0 20px; }
+        .header-bar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; margin-bottom:30px; }
+        .header-bar h1 { font-size:2rem; letter-spacing:.08em; text-transform:uppercase; color:#fff; }
+        .header-sub { font-size:1rem; color:#A6ADBA; margin-top:8px; }
+        .nav-links { display:flex; gap:12px; flex-wrap:wrap; }
+        .nav-links a { padding:8px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.15); text-decoration:none; color:#E5E9F0; font-weight:700; font-size:.8rem; transition:.2s; }
+        .nav-links a:hover { background:rgba(255,62,0,.15); border-color:rgba(255,62,0,.45); color:#fff; }
+.card { background:rgba(17,19,27,.85); border:1px solid rgba(255,255,255,.1); border-radius:24px; padding:28px; box-shadow:0 14px 40px rgba(0,0,0,.35); }
+        .staff-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:18px; margin-top:16px; }
+        .staff-card { background:rgba(8,10,16,.97); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:18px; transition:transform .2s, box-shadow .2s; }
+        .staff-card:hover { transform:translateY(-4px); box-shadow:0 10px 24px rgba(0,0,0,.4); }
+        .staff-photo { width:60px; height:60px; border-radius:999px; object-fit:cover; border:2px solid var(--accent); margin-right:14px; }
+        .staff-header { display:flex; align-items:center; margin-bottom:14px; }
+        .staff-name { font-size:1.06rem; font-weight:800; color:#fff; margin-bottom:2px; }
+        .staff-role { color:#A6ADBA; font-size:.82rem; text-transform:uppercase; letter-spacing:.08em; }
+        .staff-bio { color:#D2D8E3; font-size:.95rem; line-height:1.5; margin-bottom:14px; }
+        .staff-meta { font-size:.84rem; color:#99A3B5; margin-bottom:14px; }
+        .view-profile { display:inline-block; padding:8px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.18); color:#fff; text-decoration:none; background:rgba(255,62,0,.14); font-weight:700; transition:.2s; cursor:pointer; }
+        .view-profile:hover { background:rgba(255,62,0,.3); border-color:rgba(255,62,0,.6); }
+        .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.85); z-index:999; justify-content:center; align-items:center; padding:20px; }
+        .modal.active { display:flex; }
+        .modal-content { background:rgba(8,10,16,.98); border:1px solid rgba(255,255,255,.12); border-radius:20px; padding:40px; max-width:500px; width:100%; position:relative; }
+        .modal-close { position:absolute; top:16px; right:16px; background:none; border:none; color:#A6ADBA; font-size:1.5rem; cursor:pointer; }
+        .modal-close:hover { color:#fff; }
+        .modal-header { display:flex; align-items:flex-start; gap:16px; margin-bottom:20px; }
+        .modal-photo { width:80px; height:80px; border-radius:999px; object-fit:cover; border:2px solid var(--accent); }
+        .modal-info { flex:1; }
+        .modal-name { font-size:1.4rem; font-weight:800; color:#fff; margin-bottom:4px; }
+        .modal-title { color:#FF875E; font-size:.9rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px; }
+        .modal-bio { color:#D2D8E3; margin-bottom:20px; line-height:1.6; font-size:.95rem; }
+        .modal-section { margin-bottom:20px; }
+        .modal-label { color:#A6ADBA; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px; font-weight:700; }
+        .contact-list { list-style:none; }
+        .contact-list li { margin-bottom:8px; }
+        .contact-list a { color:#FF875E; text-decoration:none; font-weight:600; }
+        .contact-list a:hover { text-decoration:underline; }
+        .social-links { display:flex; gap:12px; flex-wrap:wrap; }
+        .social-links a { display:inline-flex; align-items:center; gap:6px; padding:8px 12px; border-radius:999px; border:1px solid rgba(255,62,0,.4); color:#fff; text-decoration:none; font-size:.85rem; transition:.2s; }
+        .social-links a:hover { background:rgba(255,62,0,.2); border-color:rgba(255,62,0,.7); }
+        .secondary { color:#99A3B5; font-size:.92rem; }
+        .footer-note { margin-top:25px; font-size:.88rem; color:#8C96A6; }
+        .cta-link { color:#FF875E; text-decoration:none; font-weight:700; }
+    </style>
 </head>
 <body>
-    </header>
-    <main>
-        <h1>Club Members</h1>
-        <p>Build. Learn. Ship</p>
-        <nav>
-            <a href="my site.html" target="_blank" rel="noopener noreferrer">Home</a>
-            <a href="about.html" target="_blank" rel="noopener noreferrer">About</a>
-            <a href="#" target="_blank" rel="noopener noreferrer">Members</a>
-            <a href="about.html" target="_blank" rel="noopener noreferrer">Contact</a>
-            <a href="about.html" target="_blank" rel="noopener noreferrer">Events</a>
-            <hr>
-        <h2>Active Members</h2>
-        <table border="2px">
-            <tr>
-                <th>Name</th>
-                <th>Track</th>
-                <th>Level</th>
-            </tr>
-            <tr>
-                <td>Samuel</td>
-                <td>Frontend</td>
-                <td>Intermediate</td>
-            </tr>
-            <tr>
-                <td>Zeenat</td>
-                <td>Full Stack</td>
-                <td>God level</td>
-            </tr>
-        </table>
-        <p>
-            Want to join ? Visit our <a href="contact.html">Contact Page</a>
-        </p>
-    </main>
+    <div class="page">
+        <header class="header-bar">
+            <div>
+                <h1>KP Group of Companies - Staff</h1>
+                <p class="header-sub">Executive team and key leadership roles</p>
+            </div>
+            <nav class="nav-links">
+                <a href="kpgroupofcompanies.html">Home</a>
+                <a href="kpmedia.html" target="_blank">KP Media</a>
+                <a href="https://retail.kp-group.com" target="_blank">KP Retail</a>
+                <a href="https://electronics.kp-group.com" target="_blank">KP Electronics</a>
+            </nav>
+        </header>
+
+        <section class="card">
+            <h2 class="secondary">Senior Team and Staff</h2>
+            <p class="secondary">Click a profile to learn more about each leadership role and contribution.</p>
+            <div class="staff-grid">
+                <article class="staff-card">
+                    <div class="staff-header">
+                        <img src="ceo.jpeg" alt="Godfred Eduful" class="staff-photo" onerror="this.src='https://via.placeholder.com/60'">
+                        <div>
+                            <p class="staff-name">Godfred Eduful</p>
+                            <p class="staff-role">Founder & Group CEO</p>
+                        </div>
+                    </div>
+                    <p class="staff-bio">Visionary leader building the KP Group ecosystem across media, retail, and electronics, with focus on sustainability and global growth.</p>
+                    <p class="staff-meta">Based in Accra | 15+ years in strategic leadership</p>
+                    <button class="view-profile" onclick="openModal('godfred')">View Profile</button>
+                </article>
+
+                <article class="staff-card">
+                    <div class="staff-header">
+                        <img src="Emma.JPG" alt="Emmanuel Kyeremeh Yeboah" class="staff-photo" onerror="this.src='https://via.placeholder.com/60'">
+                        <div>
+                            <p class="staff-name">Emmanuel Kyeremeh Yeboah</p>
+                            <p class="staff-role">Executive COO</p>
+                        </div>
+                    </div>
+                    <p class="staff-bio">Operations strategist optimizing processes, partnerships, and execution across the entire group.</p>
+                    <p class="staff-meta">Leads operations, logistics, and customer excellence.</p>
+                    <button class="view-profile" onclick="openModal('emmanuel')">View Profile</button>
+                </article>
+
+                <article class="staff-card">
+                    <div class="staff-header">
+                        <img src="Godwin.jpg" alt="Godwin Ntiri-Dankyi" class="staff-photo" onerror="this.src='https://via.placeholder.com/60'">
+                        <div>
+                            <p class="staff-name">Godwin Ntiri-Dankyi</p>
+                            <p class="staff-role">Chief Tech Officer</p>
+                        </div>
+                    </div>
+                    <p class="staff-bio">Technology leader driving software innovation, digital transformation, and IT security across products and services.</p>
+                    <p class="staff-meta">Experienced in systems architecture and platform scaling.</p>
+                    <button class="view-profile" onclick="openModal('godwin')">View Profile</button>
+                </article>
+
+                <article class="staff-card">
+                    <div class="staff-header">
+                        <img src="Princess.jpg" alt="Head of Strategy" class="staff-photo">
+                        <div>
+                            <p class="staff-name">Princess Esther Maame Esi Aidoo</p>
+                            <p class="staff-role">Head of Strategy</p>
+                        </div>
+                    </div>
+                    <p class="staff-bio">Oversees group-wide strategic planning, business development, and new market evaluation.</p>
+                    <p class="staff-meta">Focus on growth, partnerships, and M&A.</p>
+                    <button class="view-profile" onclick="openModal('strategy')">View Profile</button>
+                </article>
+
+                <article class="staff-card">
+                    <div class="staff-header">
+                        <img src="enam.jpg" alt="Head of Partnerships" class="staff-photo">
+                        <div>
+                            <p class="staff-name">Acolatsey Amenya Enam</p>
+                            <p class="staff-role">Head of Partnerships</p>
+                        </div>
+                    </div>
+                    <p class="staff-bio">Drives strategic partnerships, business relationships, and cross-industry collaborations to expand KP Group's market presence.</p>
+                    <p class="staff-meta">Specialized in B2B relations and partnership management.</p>
+                    <button class="view-profile" onclick="openModal('partnerships')">View Profile</button>
+                </article>
+
+                <article class="staff-card">
+                    <div class="staff-header">
+                        <img src="debrah.jpeg" alt="Emmanuel Debrah" class="staff-photo" onerror="this.src='https://via.placeholder.com/60'">
+                        <div>
+                            <p class="staff-name">Emmanuel Debrah</p>
+                            <p class="staff-role">HR Manager</p>
+                        </div>
+                    </div>
+                    <p class="staff-bio">Human Resources leader focused on talent development, employee engagement, and building a high-performance culture across the group.</p>
+                    <p class="staff-meta">Responsible for recruitment, training, and workforce wellbeing in KP Group.</p>
+                    <button class="view-profile" onclick="openModal('emmanuel-debrah')">View Profile</button>
+                </article>
+            </div>
+
+            <!-- <p class="footer-note">Need to update contact details? Share portfolios and social links and I'll add them. <a class="cta-link" href="contact.html">Contact us</a></p> -->
+        </section>
+    </div>
+
+    <!-- Profile Modals -->
+    <div id="godfred-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('godfred')">×</button>
+            <div class="modal-header">
+                <img src="ceo.jpeg" alt="Godfred Eduful" class="modal-photo" onerror="this.src='https://via.placeholder.com/80'">
+                <div class="modal-info">
+                    <p class="modal-name">Godfred Eduful</p>
+                    <p class="modal-title">Founder & Group CEO</p>
+                </div>
+            </div>
+
+            <p class="modal-bio">Visionary entrepreneur and strategic leader with 15+ years of experience in building scalable business ecosystems. Godfred founded KP Group to create synergies across media, retail, and electronics with a focus on innovation, sustainability, and global expansion.</p>
+
+            <div class="modal-section">
+                <p class="modal-label">Contact Information</p>
+                <ul class="contact-list">
+                    <li><a href="mailto:edufulgodfred22@gmail.com">edufulgodfred22@gmail.com</a></li>
+                    <li><a href="tel:+233257722786">+233 25 772 2786</a></li>
+                </ul>
+            </div>
+
+            <div class="modal-section">
+                <p class="modal-label">Connect</p>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/" target="_blank">LinkedIn</a>
+                    <a href="https://www.tiktok.com/@_kobby_pounds" target="_blank">TikTok</a>
+                    <a href="https://x.com/_kobby_pounds" target="_blank">Twitter</a>
+                    <a href="https://www.instagram.com/_kobby_pounds/" target="_blank">Instagram</a>
+                    <a href="https://github.com/geduful" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="emmanuel-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('emmanuel')">×</button>
+            <div class="modal-header">
+                <img src="Emma.JPG" alt="Emmanuel Kyeremeh Yeboah" class="modal-photo" onerror="this.src='https://via.placeholder.com/80'">
+                <div class="modal-info">
+                    <p class="modal-name">Emmanuel Kyeremeh Yeboah</p>
+                    <p class="modal-title">Executive COO</p>
+                </div>
+            </div>
+
+            <p class="modal-bio">Operations strategist with deep expertise in process optimization, supply chain management, and execution excellence. Emmanuel leads all operational functions across KP Group's diverse business units, ensuring efficiency and customer satisfaction across markets.</p>
+
+            <div class="modal-section">
+                <p class="modal-label">Contact Information</p>
+                <ul class="contact-list">
+                    <li><a href="mailto:emmanuelyeboah1t@gmail.com">emmanuelyeboah1t@gmail.com</a></li>
+                    <li><a href="tel:+233547155939">+233 54 715 5939</a></li>
+                </ul>
+            </div>
+
+            <div class="modal-section">
+                <p class="modal-label">Connect</p>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/emmanuel-yeboah-78b1a53a7/" target="_blank">LinkedIn</a>
+                    <a href="https://www.tiktok.com/@championeky" target="_blank">TikTok</a>
+                    <a href="https://twitter.com/emmanuel_kp" target="_blank">Twitter</a>
+                    <a href="https://instagram.com/emmanuel_kp" target="_blank">Instagram</a>
+                    <a href="https://github.com/emmanuelyeboah1t-netizen" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="godwin-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('godwin')">×</button>
+            <div class="modal-header">
+                <img src="Godwin.jpg" alt="Godwin Ntiri-Dankyi" class="modal-photo" onerror="this.src='https://via.placeholder.com/80'">
+                <div class="modal-info">
+                    <p class="modal-name">Godwin Ntiri-Dankyi</p>
+                    <p class="modal-title">Chief Tech Officer</p>
+                </div>
+            </div>
+
+            <p class="modal-bio">Technology visionary driving digital transformation and innovation across KP Group. With expertise in cloud architecture, cybersecurity, and scalable systems, Godwin leads the group's digital strategy and technological advancement.</p>
+
+            <div class="modal-section">
+                <p class="modal-label">Contact Information</p>
+                <ul class="contact-list">
+                    <li><a href="mailto:ntiridankyigodwin@gmail.com">ntiridankyigodwin@gmail.com</a></li>
+                    <li><a href="tel:+233553571171">+233 55 357 1171</a></li>
+                </ul>
+            </div>
+
+            <div class="modal-section">
+                <p class="modal-label">Connect</p>
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/godwin-ntiri" target="_blank">LinkedIn</a>
+                    <a href="https://www.tiktok.com/@officialkdee1" target="_blank">TikTok</a>
+                    <a href="https://twitter.com/godwin_tech" target="_blank">Twitter</a>
+                    <a href="https://instagram.com/godwin_kp_tech" target="_blank">Instagram</a>
+                    <a href="https://github.com/godwin-kp" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="strategy-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('strategy')">×</button>
+            <div class="modal-header">
+                <img src="Princess.jpg" alt="Head of Strategy" class="modal-photo">
+                <div class="modal-info">
+                    <p class="modal-name">Princess Esther Maame Esi Aidoo</p>
+                    <p class="modal-title">Head of Strategy</p>
+                </div>
+            </div>
+
+            <p class="modal-bio">Strategic planning leader overseeing business development and market expansion for KP Group. This executive focuses on identifying growth opportunities, managing partnerships, and driving strategic initiatives across the conglomerate.</p>
+
+            <div class="modal-section">
+                <p class="modal-label">Contact Information</p>
+                <ul class="contact-list">
+                    <li><a href="mailto:princessestheraidoo@gmail.com">princessestheraidoo@gmail.com</a></li>
+                    <li><a href="tel:+233504137713">+233 50 413 7713</a></li>
+                </ul>
+            </div>
+
+            <div class="modal-section">
+                <p class="modal-label">Connect</p>
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/strategy-kp" target="_blank">LinkedIn</a>
+                    <a href="https://www.tiktok.com/@mhixpea" target="_blank">TikTok</a>
+                    <a href="https://twitter.com/strategy_kp" target="_blank">Twitter</a>
+                    <a href="https://instagram.com/strategy_kp" target="_blank">Instagram</a>
+                    <a href="https://github.com/strategy-kp" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="partnerships-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('partnerships')">×</button>
+            <div class="modal-header">
+                <img src="enam.jpg" alt="Head of Partnerships" class="modal-photo">
+                <div class="modal-info">
+                    <p class="modal-name">Acolatsey Amenya Enam</p>
+                    <p class="modal-title">Head of Partnerships</p>
+                </div>
+            </div>
+
+            <p class="modal-bio">Strategic partnership leader driving business relationships and cross-industry collaborations. This executive oversees alliance development, vendor management, and partnership expansion initiatives that strengthen KP Group's market position and capabilities.</p>
+
+            <div class="modal-section">
+                <p class="modal-label">Contact Information</p>
+                <ul class="contact-list">
+                    <li><a href="mailto: acolatseyenam@gmail.com">acolatseyenam@gmail.com</a></li>
+                    <li><a href="tel:+233531705885">+233 53 170 5885</a></li>
+                </ul>
+            </div>
+
+            <div class="modal-section">
+                <p class="modal-label">Connect</p>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/enam-acolatsey-b49b9531b/" target="_blank">LinkedIn</a>
+                    <a href="https://tiktok.com/@partnerships_kp" target="_blank">TikTok</a>
+                    <a href="https://twitter.com/partnerships_kp" target="_blank">Twitter</a>
+                    <a href="https://instagram.com/partnerships_kp" target="_blank">Instagram</a>
+                    <a href="https://github.com/partnerships-kp" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="emmanuel-debrah-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('emmanuel-debrah')">×</button>
+            <div class="modal-header">
+                <img src="debrah.jpeg" alt="Emmanuel Debrah" class="modal-photo" onerror="this.src='https://via.placeholder.com/80'">
+                <div class="modal-info">
+                    <p class="modal-name">Emmanuel Debrah</p>
+                    <p class="modal-title">HR Manager</p>
+                </div>
+            </div>
+
+            <p class="modal-bio">People-first HR leader dedicated to talent acquisition, learning & development, and employee wellbeing. Emmanuel ensures KP Group has the right culture, skills, and management practices to thrive in complex markets.</p>
+
+            <div class="modal-section">
+                <p class="modal-label">Contact Information</p>
+                <ul class="contact-list">
+                    <li><a href="mailto:emmanuel.debrah@kpgroup.com">emmanuel.debrah@kpgroup.com</a></li>
+                    <li><a href="tel:+233558831019">+233 55 883 1019</a></li>
+                </ul>
+            </div>
+
+            <div class="modal-section">
+                <p class="modal-label">Connect</p>
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/emmanuel-debrah" target="_blank">LinkedIn</a>
+                    <a href="https://www.tiktok.com/@emmanuel_debrah" target="_blank">TikTok</a>
+                    <a href="https://twitter.com/emmanuel_debrah" target="_blank">Twitter</a>
+                    <a href="https://instagram.com/emmanuel_debrah" target="_blank">Instagram</a>
+                    <a href="https://github.com/emmanuel-debrah" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id + '-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id + '-modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside content
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(m => {
+                    m.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+        });
+    </script>
 </body>
 </html>

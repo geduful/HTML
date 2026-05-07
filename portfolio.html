@@ -1,97 +1,534 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Godfred Eduful | CEO & Creative Technologist</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KP Media - Our Projects | Creative Media Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
 
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+        .project-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
 
-<style>
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    color: #e5e7eb;
-    line-height: 1.6;
-    overflow-x: hidden;
-    background: #0f172a;
-}
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 35px 60px rgba(0, 0, 0, 0.2);
+        }
 
-/* Background Layer */
-.bg-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    overflow: hidden;
-}
+        .project-image {
+            height: 280px;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            position: relative;
+            overflow: hidden;
+        }
 
-.bg-container img {
-    position: absolute;
-    width: 200%;
-    height: auto;
-    min-height: 100%;
-    opacity: 0.15;
-    animation: slide 60s linear infinite;
-}
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
 
-.bg1 { top: 0; left: -100%; animation-delay: 0s; }
-.bg2 { top: 20%; left: -100%; animation-delay: 20s; }
-.bg3 { top: 40%; left: -100%; animation-delay: 40s; }
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
 
-@keyframes slide {
-    0% { left: -100%; }
-    50% { left: 0; }
-    100% { left: -100%; }
-}
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.9) 0%, rgba(139, 92, 246, 0.9) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
 
-/* Header */
-header {
-    text-align: center;
-    padding: 70px 20px;
-    position: relative;
-    z-index: 2;
-    overflow: hidden;
-}
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
 
-header img.profile {
-    width: 160px;
-    height: 160px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 4px solid #38bdf8;
-    margin-bottom: 20px;
-    animation: float 3s ease-in-out infinite;
-    position: relative;
-}
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            margin: 0 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
 
-@keyframes float {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: white;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
 
-header h1 {
-    margin: 10px 0 5px;
-    font-size: 2.4em;
-    color: #f8fafc;
-    animation: bounce 2s infinite;
-}
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
 
-@keyframes bounce {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-}
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
 
-header h3 {
-    margin: 0;
-    font-weight: 400;
-    color: #38bdf8;
-}
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
 
-header p {
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .stats-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+            padding: 12px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body class="text-white">
+    <!-- Back Button -->
+    <a href="kpmedia.html" class="back-btn">
+        <i class="fas fa-arrow-left mr-2"></i>Back to Home
+    </a>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient relative overflow-hidden">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+
+        <div class="container mx-auto px-6 py-20 relative z-10">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+                    Our Creative Portfolio
+                </h1>
+                <p class="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+                    Discover our award-winning projects that showcase innovation, creativity, and excellence in media production
+                </p>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
+                <div class="stats-card">
+                    <div class="text-4xl font-bold text-white mb-2">150+</div>
+                    <div class="text-blue-200">Projects Completed</div>
+                </div>
+                <div class="stats-card">
+                    <div class="text-4xl font-bold text-white mb-2">50+</div>
+                    <div class="text-blue-200">Happy Clients</div>
+                </div>
+                <div class="stats-card">
+                    <div class="text-4xl font-bold text-white mb-2">5</div>
+                    <div class="text-blue-200">Years Experience</div>
+                </div>
+                <div class="stats-card">
+                    <div class="text-4xl font-bold text-white mb-2">24/7</div>
+                    <div class="text-blue-200">Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Buttons -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Explore Our Work</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Filter by category to see our expertise in different media disciplines</p>
+            </div>
+
+            <!-- <div class="flex flex-wrap justify-center mb-12">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="video">Video Production</button>
+                <button class="filter-btn" data-filter="photo">Photography</button>
+                <button class="filter-btn" data-filter="design">Graphic Design</button>
+                <button class="filter-btn" data-filter="social">Social Media</button>
+                <button class="filter-btn" data-filter="web">Web Development</button>
+            </div> -->
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card" data-category="video">
+                    <div class="project-image">
+                        <img src="https://media.licdn.com/dms/image/sync/v2/D4E27AQGMo6dBZR5hbg/articleshare-shrink_800/B4EZjI3_5SGcAI-/0/1755716779948?e=2147483647&v=beta&t=rftojpjYGPCVnnlrz3Q9YndXSTEBmfI7MjcGRh1ImCs" alt="Corporate Video Series">
+                        <div class="project-overlay">
+                            <div class="text-center text-white">
+                                <i class="fas fa-play-circle text-4xl mb-4"></i>
+                                <h3 class="text-2xl font-bold mb-2">Corporate Video Series</h3>
+                                <p class="text-blue-100">Watch the full project</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">Video Production</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Corporate Video Series</h3>
+                        <p class="text-gray-600 mb-4">A comprehensive video campaign for a Fortune 500 company showcasing their innovative solutions and company culture.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <!-- <i class="fas fa-calendar mr-2"></i>
+                            <span>Completed 2024</span> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card" data-category="photo">
+                    <div class="project-image">
+                        <img src="https://static.vecteezy.com/system/resources/thumbnails/074/180/344/small/photography-studio-with-four-professional-lights-two-black-and-two-white-octabox-softboxes-and-gray-backdrop-photo.jpg" alt="E-commerce Brand Photography">
+                        <div class="project-overlay">
+                            <div class="text-center text-white">
+                                <i class="fas fa-camera text-4xl mb-4"></i>
+                                <h3 class="text-2xl font-bold mb-2">E-commerce Photography</h3>
+                                <p class="text-blue-100">View the gallery</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">Photography</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">E-commerce Brand Photography</h3>
+                        <p class="text-gray-600 mb-4">Professional product photography for a leading online retailer, capturing products in stunning detail.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <!-- <i class="fas fa-calendar mr-2"></i>
+                            <span>Completed 2024</span> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card" data-category="social">
+                    <div class="project-image">
+                        <img src="https://www.webtreeonline.com/wp-content/uploads/2016/11/Webtree-apr-2025-1-01.jpg" alt="Social Media Campaign">
+                        <div class="project-overlay">
+                            <div class="text-center text-white">
+                                <i class="fas fa-share-alt text-4xl mb-4"></i>
+                                <h3 class="text-2xl font-bold mb-2">Social Media Campaign</h3>
+                                <p class="text-blue-100">See the results</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full">Social Media</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Social Media Campaign</h3>
+                        <p class="text-gray-600 mb-4">Comprehensive social media strategy and content creation that increased brand awareness by 300%.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <!-- <i class="fas fa-calendar mr-2"></i>
+                            <span>Completed 2024</span> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card" data-category="design">
+                    <div class="project-image">
+                        <img src="https://img.freepik.com/free-vector/identity-technology-set_1284-10818.jpg" alt="Brand Identity Design">
+                        <div class="project-overlay">
+                            <div class="text-center text-white">
+                                <i class="fas fa-palette text-4xl mb-4"></i>
+                                <h3 class="text-2xl font-bold mb-2">Brand Identity Design</h3>
+                                <p class="text-blue-100">View the design</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-pink-100 text-pink-800 text-xs font-semibold px-3 py-1 rounded-full">Graphic Design</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Brand Identity Design</h3>
+                        <p class="text-gray-600 mb-4">Complete brand identity design including logo, color palette, and marketing materials for a tech startup.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <!-- <i class="fas fa-calendar mr-2"></i>
+                            <span>Completed 2024</span> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card" data-category="web">
+                    <div class="project-image">
+                        <img src="https://websitesmentor.com/wp-content/uploads/2025/08/E-Commerce.webp" alt="E-commerce Website">
+                        <div class="project-overlay">
+                            <div class="text-center text-white">
+                                <i class="fas fa-globe text-4xl mb-4"></i>
+                                <h3 class="text-2xl font-bold mb-2">E-commerce Website</h3>
+                                <p class="text-blue-100">Visit the site</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-3 py-1 rounded-full">Web Development</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">E-commerce Website</h3>
+                        <p class="text-gray-600 mb-4">Modern, responsive e-commerce website with integrated payment systems and inventory management.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <!-- <i class="fas fa-calendar mr-2"></i>
+                            <span>Completed 2024</span> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6
+                <div class="project-card" data-category="video">
+                    <div class="project-image">
+                        <img src="images/Hero.jpeg" alt="Documentary Film">
+                        <div class="project-overlay">
+                            <div class="text-center text-white">
+                                <i class="fas fa-film text-4xl mb-4"></i>
+                                <h3 class="text-2xl font-bold mb-2">Documentary Film</h3>
+                                <p class="text-blue-100">Watch the documentary</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">Video Production</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Documentary Film</h3>
+                        <p class="text-gray-600 mb-4">Award-winning documentary film about environmental conservation, featured at international film festivals.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <!-- <i class="fas fa-calendar mr-2"></i>
+                            <span>Completed 2024</span>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- Project 7 -->
+                <div class="project-card" data-category="photo">
+                    <div class="project-image">
+                        <img src="https://letsclickphotography.in/event-photography-3.jpg" alt="Event Photography">
+                        <div class="project-overlay">
+                            <div class="text-center text-white">
+                                <i class="fas fa-camera-retro text-4xl mb-4"></i>
+                                <h3 class="text-2xl font-bold mb-2">Event Photography</h3>
+                                <p class="text-blue-100">View the event photos</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">Photography</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Corporate Event Photography</h3>
+                        <p class="text-gray-600 mb-4">Professional event photography for a major corporate conference, capturing key moments and presentations.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <!-- <i class="fas fa-calendar mr-2"></i>
+                            <span>Completed 2024</span> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 8 -->
+                <div class="project-card" data-category="design">
+                    <div class="project-image">
+                        <img src="https://img.freepik.com/free-vector/stationery-design-set-vector-format_157027-1627.jpg?semt=ais_hybrid&w=740&q=80" alt="Marketing Materials">
+                        <div class="project-overlay">
+                            <div class="text-center text-white">
+                                <i class="fas fa-print text-4xl mb-4"></i>
+                                <h3 class="text-2xl font-bold mb-2">Marketing Materials</h3>
+                                <p class="text-blue-100">See the designs</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-pink-100 text-pink-800 text-xs font-semibold px-3 py-1 rounded-full">Graphic Design</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Marketing Materials Design</h3>
+                        <p class="text-gray-600 mb-4">Complete marketing collateral including brochures, banners, and digital assets for a product launch campaign.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <!-- <i class="fas fa-calendar mr-2"></i>
+                            <span>Completed 2024</span> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 9 -->
+                <div class="project-card" data-category="social">
+                    <div class="project-image">
+                        <img src="https://gwosevo.com/core/uploads/2024/07/Challenges-and-Solutions-Influencer-Marketing.webp" alt="Influencer Campaign">
+                        <div class="project-overlay">
+                            <div class="text-center text-white">
+                                <i class="fas fa-users text-4xl mb-4"></i>
+                                <h3 class="text-2xl font-bold mb-2">Influencer Campaign</h3>
+                                <p class="text-blue-100">View campaign results</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full">Social Media</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Influencer Marketing Campaign</h3>
+                        <p class="text-gray-600 mb-4">Successful influencer partnership campaign that reached over 500K users and increased engagement by 400%.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <!-- <i class="fas fa-calendar mr-2"></i>
+                            <span>Completed 2024</span> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-6">Ready to Start Your Project?</h2>
+            <p class="text-xl mb-8 text-blue-100 max-w-2xl mx-auto">
+                Let's create something amazing together. Contact us today to discuss your media needs.
+            </p>
+            <a href="kpmedia.html#contact" class="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition duration-300 inline-block">
+                Get In Touch
+            </a>
+        </div>
+    </section>
+
+    <script>
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+
+                const filterValue = button.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'block';
+                        // Add animation
+                        card.style.animation = 'fadeIn 0.5s ease forwards';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Add fadeIn animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+<!-- header p {
     max-width: 750px;
     margin: 20px auto 30px;
     color: #cbd5f5;
@@ -284,15 +721,15 @@ footer a {
 }
 </style>
 </head>
-<body>
+<body> -->
 
 <!-- Background Images -->
-<div class="bg-container">
+<!-- <div class="bg-container">
     <img src="https://img.freepik.com/free-vector/gradient-white-monochrome-background_23-2149026464.jpg?semt=ais_user_personalization&w=740&q=80" class="bg3" alt="Background 3">
-</div>
+</div> -->
 
 <!-- HEADER -->
-<header>
+<!-- <header>
     <img src="profile.jpg" class="profile" alt="Godfred Eduful">
     <h1>Godfred Eduful</h1>
     <h3>CEO | Graphic Designer | Computer Science Student</h3>
@@ -305,18 +742,18 @@ footer a {
         <a href="https://www.instagram.com/_kobby_pounds/" target="_blank"><img class="social-icon" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="">Instagram</a>
         <a href="tel:0257722786"><img class="social-icon" src="https://toppng.com/uploads/preview/phone-n-in-a-circle-11549346172gppajlimnv.png" alt="">Call Me</a>
     </div>
-</header>
+</header> -->
 
 <!-- ABOUT -->
-<section>
+<!-- <section>
     <h2>About Me</h2>
     <div class="card">
         <p>I’m Godfred Eduful, a Computer Science student, Graphic Designer, and Remote Transcriber with a strong passion for creating smart, efficient, and visually appealing digital solutions. As a CEO, I focus on leadership, innovation, and delivering value through technology and creativity.</p>
     </div>
-</section>
+</section> -->
 
 <!-- SKILLS -->
-<section class="skills">
+<!-- <section class="skills">
     <h2>Skills</h2>
     <div class="card">
         <ul>
@@ -330,10 +767,10 @@ footer a {
             <li>IT Supports</li>
         </ul>
     </div>
-</section>
+</section> -->
 
 <!-- PROJECTS -->
-<section class="projects">
+<!-- <section class="projects">
     <h2>Projects</h2>
     <div class="card">
         <div class="project">
@@ -349,10 +786,10 @@ footer a {
             <p>Remote transcription and documentation tasks using both human and AI-assisted tools to produce accurate, well-structured, and professional text outputs.</p>
         </div>
     </div>
-</section>
+</section> -->
 
 <!-- GALLERY 1 -->
-<section>
+<!-- <section>
     <h2>Gallery</h2>
     <div class="card">
         <div class="gallery">
@@ -381,10 +818,10 @@ footer a {
             </label>
         </div>
     </div>
-</section>
+</section> -->
 
 <!-- GALLERY 2 (Continuous scroll like Gallery 1) -->
-<section>
+<!-- <section>
     <h2>Gallery Swipe</h2>
     <div class="card">
         <div class="slider-container">
@@ -402,10 +839,10 @@ footer a {
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
 <!-- CONTACT -->
-<section>
+<!-- <section>
     <h2>Contact</h2>
     <div class="card">
         <p>Phone: <a href="tel:0257722786">0257722786</a></p>
@@ -416,12 +853,12 @@ footer a {
             <a href="https://www.instagram.com/_kobby_pounds/" target="_blank">Instagram</a>.
         </p>
     </div>
-</section>
+</section> -->
 
 <!-- FOOTER -->
-<footer>
+<!-- <footer>
     <p>&copy; 2026 Godfred Eduful. All rights reserved.</p>
 </footer>
 
-</body>
+</body> -->
 </html>
