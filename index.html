@@ -13,70 +13,162 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        :root { --accent: #FF3E00; --surface: 10, 10, 10; --text: 255, 255, 255; }
-        [data-theme="media"] { --accent: #FF3E00; --surface: 10, 10, 10; --text: 255, 255, 255; }
-        [data-theme="retail"] { --accent: #00A86B; --surface: 245, 247, 246; --text: 20, 30, 25; }
-        [data-theme="electronics"] { --accent: #007AFF; --surface: 15, 17, 20; --text: 240, 240, 250; }
+    :root { --accent: #FF3E00; --surface: 10, 10, 10; --text: 255, 255, 255; }
+    [data-theme="media"] { --accent: #FF3E00; --surface: 10, 10, 10; --text: 255, 255, 255; }
+    [data-theme="retail"] { --accent: #00A86B; --surface: 245, 247, 246; --text: 20, 30, 25; }
+    [data-theme="electronics"] { --accent: #007AFF; --surface: 15, 17, 20; --text: 240, 240, 250; }
 
-        body { 
-            background-color: rgb(var(--surface)); 
-            color: rgb(var(--text));
-            font-family: 'General Sans', sans-serif;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-x: hidden;
-            /* Cursor circle removed as requested */
+    body {
+        background-color: rgb(var(--surface));
+        color: rgb(var(--text));
+        font-family: 'General Sans', sans-serif;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-x: hidden;
+    }
+
+    .font-heading { font-family: 'Clash Display', sans-serif; }
+    .glass { background: rgba(var(--text), 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(var(--text), 0.1); }
+    .neo-shadow:hover { box-shadow: 12px 12px 0px var(--accent); transform: translate(-6px, -6px); }
+    .industry-tab.active { background: var(--accent); color: white; box-shadow: 0 15px 30px -10px var(--accent); }
+    .member-card:hover img { transform: scale(1.05); filter: grayscale(0); }
+
+    .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: rgba(0,0,0,0.9);
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    .modal:target { display: block; }
+
+    html, body {
+        min-width: 0;
+        width: 100%;
+    }
+
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
+    img, video, iframe, svg {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    section, header, footer {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    @media (max-width: 1024px) {
+        nav {
+            padding: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
-        .font-heading { font-family: 'Clash Display', sans-serif; }
-        .glass { background: rgba(var(--text), 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(var(--text), 0.1); }
-        .neo-shadow:hover { box-shadow: 12px 12px 0px var(--accent); transform: translate(-6px, -6px); }
-        .industry-tab.active { background: var(--accent); color: white; box-shadow: 0 15px 30px -10px var(--accent); }
-        .member-card:hover img { transform: scale(1.05); filter: grayscale(0); }
-        
-        /* Modal Styles for Privacy/Terms */
-        .modal { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.9); padding: 40px; overflow-y: auto; }
-        .modal:target { display: block; }
 
-        /* Responsive adjustments for smaller screens */
-        html, body { min-width: 0; }
-        *, *::before, *::after { box-sizing: border-box; }
-        img, video, iframe, svg { max-width: 100%; height: auto; display: block; }
-        .w-fit { max-width: 100%; }
-        .glass, .member-card, .industry-tab, .modal > div, form#contactForm, footer, header, section { min-width: 0; }
-        nav { padding-left: 1rem; padding-right: 1rem; }
-        header h1 { word-break: break-word; }
-        .industry-tab { min-width: 0; }
-
-        @media (max-width: 1024px) {
-            header { padding-left: 1rem; padding-right: 1rem; }
-            .glass { padding: 1.5rem; }
-            .grid { min-width: 0; }
-            nav { flex-wrap: wrap; gap: 0.75rem; align-items: center; }
-            nav > div.hidden.lg\:flex { display: flex !important; flex-wrap: wrap; justify-content: center; gap: 0.75rem; width: 100%; margin-top: 0.75rem; }
-            nav > div.hidden.lg\:flex a { font-size: 0.75rem; }
-            nav > div.flex.flex-col.items-end { width: 100%; justify-content: center; order: 3; }
-            nav > div.flex.items-center { width: 100%; justify-content: flex-start; order: 1; }
+        .glass {
+            padding: 1.5rem !important;
         }
 
-        @media (max-width: 768px) {
-            nav { justify-content: space-between; align-items: flex-start; }
-            nav > div:last-child { width: 100%; display: flex; justify-content: center; order: 4; }
-            nav > div.hidden.lg\:flex { width: 100%; justify-content: center; margin-top: 0.75rem; }
-            nav > div.hidden.lg\:flex a { font-size: 0.8rem; }
-            .glass { padding: 1.25rem !important; }
-            header { padding-top: 9rem; }
-            header h1 { font-size: clamp(2.4rem, 9vw, 4rem); line-height: 1.05; }
-            header p { font-size: 1rem; max-width: 100%; }
-            .grid { grid-template-columns: 1fr !important; }
-            .grid > * { width: 100%; }
-            .modal { padding: 20px; }
-            .modal > div { width: 100%; }
-            .industry-tab { padding: 0.85rem 1rem !important; font-size: 0.75rem !important; }
-            .inline-flex { flex-wrap: wrap; }
-            .inline-flex > * { min-width: 0; }
-            .flex.flex-col.items-end { align-items: center; }
-            .font-heading { font-size: 1rem; }
+        h1 {
+            font-size: clamp(3rem, 9vw, 6rem) !important;
+            line-height: 1;
         }
-    </style>
+
+        h2 {
+            font-size: clamp(2rem, 7vw, 4rem) !important;
+        }
+
+        h3 {
+            font-size: clamp(2rem, 6vw, 4rem) !important;
+        }
+    }
+
+    @media (max-width: 768px) {
+        nav {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        nav .hidden.lg\:flex {
+            display: flex !important;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        header {
+            padding-top: 10rem;
+            min-height: auto;
+        }
+
+        .industry-tab {
+            flex: 1 1 100%;
+            width: 100%;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .grid {
+            grid-template-columns: 1fr !important;
+        }
+
+        .glass {
+            border-radius: 1.5rem !important;
+            padding: 1.25rem !important;
+        }
+
+        .modal > div {
+            padding: 1.5rem !important;
+            border-radius: 1.5rem !important;
+        }
+
+        form {
+            padding: 1.5rem !important;
+        }
+
+        .inline-flex {
+            flex-direction: column;
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        body {
+            font-size: 14px;
+        }
+
+        nav span {
+            font-size: 0.9rem;
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 11vw, 4rem) !important;
+        }
+
+        h2 {
+            font-size: clamp(1.8rem, 9vw, 3rem) !important;
+        }
+
+        .glass {
+            padding: 1rem !important;
+        }
+
+        .industry-tab {
+            font-size: 0.7rem !important;
+        }
+
+        a, button {
+            min-height: 44px;
+        }
+    }
+</style>
 </head>
 
 <body x-data="{ 
@@ -88,7 +180,7 @@
     }
 }" :data-theme="theme">
 
-    <nav class="fixed top-0 w-full z-[100] glass px-8 py-4 flex justify-between items-center border-b border-white/10">
+    <nav class="fixed top-0 w-full z-[100] glass px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center border-b border-white/10">
         <div class="flex items-center gap-3 cursor-pointer" @click="window.scrollTo({top: 0, behavior: 'smooth'})">
             <div class="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-white transition-all shadow-lg overflow-hidden" :style="'background:' + 'var(--accent)'">
                 <img src="" alt="KP Group Logo" class="w-full h-full object-contain" onerror="this.style.display='none'; this.parentElement.innerText='KP'" />
@@ -115,7 +207,7 @@
         <div class="inline-flex mb-6 rounded-full px-5 py-1.5 border text-[10px] font-bold uppercase tracking-[0.3em] transition-all" :style="'border-color: var(--accent); color: var(--accent)'">
              Conglomerate Excellence
         </div>
-        <h1 class="text-4xl md:text-6xl lg:text-[9.5rem] font-bold leading-tight md:leading-[0.9] mb-10 tracking-tighter font-heading italic">
+        <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-[9.5rem] font-bold leading-tight md:leading-[0.9] mb-10 tracking-tighter font-heading italic">
             <span class="block">KP GROUP</span>
             <span class="block opacity-30 uppercase" :style="'color: var(--accent)'" x-text="theme"></span>
         </h1>
@@ -132,7 +224,7 @@
 
     <section id="sectors" class="px-6 py-24 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-            <div class="md:col-span-8 glass neo-shadow rounded-[3rem] p-12 flex flex-col justify-between min-h-[500px] group relative overflow-hidden">
+            <div class="md:col-span-8 glass neo-shadow rounded-[3rem] p-6 sm:p-8 lg:p-12 flex flex-col justify-between min-h-[500px] group relative overflow-hidden">
                 <div class="relative z-10">
                     <h3 class="font-heading text-6xl font-bold mb-6 italic" x-text="sectors[theme].name"></h3>
                     <p class="max-w-md opacity-60 text-xl mb-10">Access the full ecosystem for <span x-text="theme"></span>. Our services are tailored for global standards.</p>
@@ -164,7 +256,7 @@
 
     <section id="leadership" class="px-6 py-32 border-y border-white/5">
         <div class="max-w-7xl mx-auto">
-            <h2 class="font-heading text-6xl font-bold mb-20 italic">THE BOARD.</h2>
+            <h2 class="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold mb-20 italic">THE BOARD.</h2>
             <div class="grid md:grid-cols-3 gap-10">
                 <div class="group member-card cursor-pointer">
                     <div class="aspect-[4/5] glass rounded-[2.5rem] overflow-hidden mb-6 relative border-2 border-white/5">
@@ -205,7 +297,7 @@
     <footer id="contact" class="py-24 px-6 max-w-7xl mx-auto">
         <div class="grid lg:grid-cols-2 gap-20">
             <div class="space-y-10">
-                <h2 class="font-heading text-7xl font-bold leading-none italic uppercase">Partner<br><span class="text-[var(--accent)]">With Us.</span></h2>
+                <h2 class="font-heading text-4xl sm:text-6xl lg:text-7xl font-bold leading-none italic uppercase">Partner<br><span class="text-[var(--accent)]">With Us.</span></h2>
                 <div class="grid grid-cols-2 gap-8">
                     <a href="tel:0257722786" class="p-8 glass rounded-3xl hover:bg-[var(--accent)] hover:text-white transition-all group">
                         <i data-lucide="phone" class="mb-4"></i>
@@ -220,7 +312,7 @@
                 </div>
             </div>
             
-            <form id="contactForm" class="glass p-12 rounded-[3.5rem] space-y-8 shadow-2xl">
+            <form id="contactForm" class="glass p-6 sm:p-8 lg:p-12 rounded-[2rem] lg:rounded-[3.5rem] space-y-8 shadow-2xl">
                 <input type="text" name="name" placeholder="Full Name" required class="w-full bg-transparent border-b border-white/20 py-4 outline-none focus:border-[var(--accent)]">
                 <input type="email" name="email" placeholder="Email Address" required class="w-full bg-transparent border-b border-white/20 py-4 outline-none focus:border-[var(--accent)]">
                 <textarea name="message" placeholder="Message" rows="4" class="w-full bg-transparent border-b border-white/20 py-4 outline-none focus:border-[var(--accent)]"></textarea>
