@@ -35,6 +35,38 @@
         /* Modal Styles for Privacy/Terms */
         .modal { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.9); padding: 40px; overflow-y: auto; }
         .modal:target { display: block; }
+
+        /* Responsive adjustments for smaller screens */
+        html, body { min-width: 0; }
+        *, *::before, *::after { box-sizing: border-box; }
+        img, video, iframe, svg { max-width: 100%; height: auto; display: block; }
+        .w-fit { max-width: 100%; }
+        .glass, .member-card, .industry-tab, .modal > div, form#contactForm, footer, header, section { min-width: 0; }
+        nav { padding-left: 1rem; padding-right: 1rem; }
+        header h1 { word-break: break-word; }
+        .industry-tab { min-width: 0; }
+
+        @media (max-width: 1024px) {
+            header { padding-left: 1rem; padding-right: 1rem; }
+            .glass { padding: 1.5rem; }
+            .grid { min-width: 0; }
+        }
+
+        @media (max-width: 768px) {
+            nav { flex-wrap: wrap; gap: 0.75rem; align-items: flex-start; }
+            nav > div:last-child { width: 100%; display: flex; justify-content: flex-end; }
+            .glass { padding: 1.5rem !important; }
+            header { padding-top: 10rem; }
+            header h1 { font-size: clamp(2.5rem, 8vw, 4.4rem); line-height: 1.05; }
+            header p { font-size: 1rem; max-width: 100%; }
+            .grid { grid-template-columns: 1fr !important; }
+            .grid > * { width: 100%; }
+            .modal { padding: 20px; }
+            .modal > div { width: 100%; }
+            .industry-tab { padding: 1rem 1rem !important; font-size: 0.75rem !important; }
+            .inline-flex { flex-wrap: wrap; }
+            .inline-flex > * { min-width: 0; }
+        }
     </style>
 </head>
 
@@ -263,4 +295,5 @@
             }
         });
     </script>
-</bod
+</body>
+</html>
