@@ -2264,10 +2264,10 @@
         </div>
 
         <!-- Categories -->
-        <section class="section">
+        <section class="section" id="products-section">
             <div class="section-header">
                 <h2 class="section-title" style="cursor: pointer;" onclick="switchCategory('all')">Shop by <span>Category</span></h2>
-                <a href="#" class="view-all" onclick="switchCategory('all')">View All <i class="fas fa-arrow-right"></i></a>
+                <a href="javascript:void(0)" class="view-all" onclick="switchCategory('all')">View All <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <div class="categories-grid">
@@ -2294,10 +2294,11 @@
             </div>
         </section>
 
-<!-- Products -->
+        <!-- Products -->
         <section class="section" id="products">
             <div class="section-header">
                 <h2 class="section-title">Browse <span>Products</span></h2>
+                <a href="javascript:void(0)" class="view-all" id="viewAllProducts" onclick="switchCategory('all')" style="display:none">View All <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <!-- Categories Tabs Wrapper -->
@@ -2676,11 +2677,20 @@
             console.log('Switching to category:', category);
             currentCategory = category;
             const info = categoryInfo[category];
-            console.log('Category info:', info);
             
             if (!info) {
                 console.error('No info found for category:', category);
                 return;
+            }
+            
+            // Update section header title
+            const sectionTitle = document.querySelector('#products .section-title');
+            if (sectionTitle) {
+                if (category === 'all') {
+                    sectionTitle.innerHTML = 'Browse <span>Products</span>';
+                } else {
+                    sectionTitle.innerHTML = info.title + ' <span>Products</span>';
+                }
             }
             
             // Update title and icon
@@ -2691,6 +2701,18 @@
             if (titleEl) titleEl.textContent = info.title;
             if (countEl) countEl.textContent = info.count;
             if (iconEl) iconEl.innerHTML = '<i class="fas ' + info.icon + '"></i>';
+            
+            // Show/hide tabs
+            const tabsContainer = document.querySelector('.categories-tabs');
+            if (tabsContainer) {
+                tabsContainer.style.display = category === 'all' ? 'flex' : 'none';
+            }
+            
+            // Show/hide View All link in products header
+            const viewAllBtn = document.getElementById('viewAllProducts');
+            if (viewAllBtn) {
+                viewAllBtn.style.display = category === 'all' ? 'none' : 'flex';
+            }
             
             // Update active tab
             document.querySelectorAll('.category-tab').forEach(tab => {
@@ -2704,6 +2726,12 @@
             
             // Render products
             renderProducts(category);
+            
+            // Scroll to products section
+            const productsSection = document.getElementById('products');
+            if (productsSection) {
+                productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
             
             // Close sidebar on mobile
             if (window.innerWidth < 992) {
@@ -2798,7 +2826,7 @@
 
         // Initialize products on page load
         document.addEventListener('DOMContentLoaded', function() {
-            renderProducts('all');
+            switchCategory('all');
         });
     </script>
 </body>
