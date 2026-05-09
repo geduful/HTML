@@ -2138,35 +2138,35 @@
         <div class="sidebar-section">
             <h4 class="sidebar-title">Shop By Category</h4>
             <ul class="sidebar-links">
-                <li><a href="#" class="active" onclick="switchCategory('all')">
+                <li><a href="#" class="active" onclick="switchCategory('all'); return false;">
                     <i class="fas fa-layer-group"></i> All Products
                     <span class="count">500+</span>
                 </a></li>
-                <li><a href="#" onclick="switchCategory('tvs')">
+                <li><a href="#" onclick="switchCategory('tvs'); return false;">
                     <i class="fas fa-tv"></i> TVs & Monitors
                     <span class="count">120+</span>
                 </a></li>
-                <li><a href="#" onclick="switchCategory('laptops')">
+                <li><a href="#" onclick="switchCategory('laptops'); return false;">
                     <i class="fas fa-laptop"></i> Laptops
                     <span class="count">80+</span>
                 </a></li>
-                <li><a href="#" onclick="switchCategory('mobile')">
+                <li><a href="#" onclick="switchCategory('mobile'); return false;">
                     <i class="fas fa-mobile-alt"></i> Mobile
                     <span class="count">150+</span>
                 </a></li>
-                <li><a href="#" onclick="switchCategory('appliances')">
+                <li><a href="#" onclick="switchCategory('appliances'); return false;">
                     <i class="fas fa-blender"></i> Appliances
                     <span class="count">200+</span>
                 </a></li>
-                <li><a href="#" onclick="switchCategory('audio')">
+                <li><a href="#" onclick="switchCategory('audio'); return false;">
                     <i class="fas fa-headphones"></i> Audio
                     <span class="count">95+</span>
                 </a></li>
-                <li><a href="#" onclick="switchCategory('gaming')">
+                <li><a href="#" onclick="switchCategory('gaming'); return false;">
                     <i class="fas fa-gamepad"></i> Gaming
                     <span class="count">75+</span>
                 </a></li>
-                <li><a href="#" onclick="switchCategory('cameras')">
+                <li><a href="#" onclick="switchCategory('cameras'); return false;">
                     <i class="fas fa-camera"></i> Cameras
                     <span class="count">45+</span>
                 </a></li>
@@ -2673,19 +2673,31 @@
 
         // Switch category tab
         function switchCategory(category) {
+            console.log('Switching to category:', category);
             currentCategory = category;
             const info = categoryInfo[category];
+            console.log('Category info:', info);
+            
+            if (!info) {
+                console.error('No info found for category:', category);
+                return;
+            }
             
             // Update title and icon
-            document.getElementById('categoryTitle').textContent = info.title;
-            document.getElementById('categoryCount').textContent = info.count;
-            document.getElementById('categoryIcon').innerHTML = '<i class="fas ' + info.icon + '"></i>';
+            const titleEl = document.getElementById('categoryTitle');
+            const countEl = document.getElementById('categoryCount');
+            const iconEl = document.getElementById('categoryIcon');
+            
+            if (titleEl) titleEl.textContent = info.title;
+            if (countEl) countEl.textContent = info.count;
+            if (iconEl) iconEl.innerHTML = '<i class="fas ' + info.icon + '"></i>';
             
             // Update active tab
             document.querySelectorAll('.category-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
-            document.getElementById('tab-' + category).classList.add('active');
+            const activeTab = document.getElementById('tab-' + category);
+            if (activeTab) activeTab.classList.add('active');
             
             // Update sidebar active link
             updateActiveLink(category);
@@ -2701,8 +2713,21 @@
 
         // Render products
         function renderProducts(category) {
+            console.log('Rendering products for:', category);
             const productList = products[category];
             const grid = document.getElementById('categoryProducts');
+            
+            if (!grid) {
+                console.error('categoryProducts element not found');
+                return;
+            }
+            
+            if (!productList) {
+                console.error('No products found for category:', category);
+                grid.innerHTML = '<p style="color: white; padding: 2rem;">No products found for this category.</p>';
+                return;
+            }
+            
             grid.innerHTML = productList.map(p => `
                 <div class="product-card">
                     ${p.badge ? '<span class="product-badge">' + p.badge + '</span>' : ''}
