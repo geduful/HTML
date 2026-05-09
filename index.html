@@ -29,7 +29,6 @@
         }
 
         img, video, iframe, svg { max-width: 100%; height: auto; display: block; }
-
         .font-heading { font-family: 'Clash Display', sans-serif; }
 
         .glass {
@@ -52,15 +51,53 @@
             box-shadow: 0 15px 30px -10px var(--accent);
         }
 
-        .member-card:hover img { transform: scale(1.05); filter: grayscale(0); }
-
         .hero-title {
             font-size: clamp(3rem, 10vw, 9.5rem);
             line-height: 0.92;
         }
 
+        /* ── FIX 2: Modals always dark regardless of theme ── */
         .modal { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.9); padding: 1.25rem; overflow-y: auto; }
         .modal:target { display: block; }
+        .modal-inner {
+            background: #111317 !important;
+            color: #eceff4 !important;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .modal-inner p, .modal-inner strong { color: #eceff4 !important; }
+
+        /* ── Staff panel ── */
+        #staff-panel {
+            display: none;
+            position: fixed;
+            inset: 0;
+            top: 65px;
+            z-index: 99;
+            background: rgba(8,10,16,0.97);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            overflow-y: auto;
+            animation: panelIn 0.25s cubic-bezier(0.4,0,0.2,1);
+        }
+        #staff-panel.open { display: block; }
+        @keyframes panelIn {
+            from { opacity: 0; transform: translateY(-12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Staff profile modal — always dark */
+        #profile-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        #profile-modal.open { display: flex; }
     </style>
 </head>
 
@@ -74,13 +111,13 @@
     }
 }" :data-theme="theme">
 
-    <!-- NAV -->
+    <!-- ═══ NAV ═══ -->
     <nav class="fixed top-0 w-full z-[100] glass border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
 
             <!-- Logo -->
             <div class="flex items-center gap-3 cursor-pointer flex-shrink-0"
-                 @click="window.scrollTo({top:0, behavior:'smooth'}); menuOpen=false">
+                 @click="window.scrollTo({top:0, behavior:'smooth'}); menuOpen=false; closeStaff()">
                 <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-white shadow-lg overflow-hidden flex-shrink-0"
                      :style="'background: var(--accent)'">
                     <img src="" alt="KP Group Logo" class="w-full h-full object-contain"
@@ -91,10 +128,17 @@
 
             <!-- Desktop links -->
             <div class="hidden lg:flex gap-8 text-[10px] font-bold uppercase tracking-[0.2em]">
-                <a href="#sectors"     class="hover:text-[var(--accent)] transition-colors">Sectors</a>
-                <a href="#leadership"  class="hover:text-[var(--accent)] transition-colors">Leadership</a>
-                <a href="members.html" class="hover:text-[var(--accent)] transition-colors">Staff</a>
-                <a href="#contact"     class="hover:text-[var(--accent)] transition-colors">Contact</a>
+                <a href="#sectors"    onclick="closeStaff()" class="hover:text-[var(--accent)] transition-colors">Sectors</a>
+                <a href="#leadership" onclick="closeStaff()" class="hover:text-[var(--accent)] transition-colors">Leadership</a>
+                <!-- FIX 3: Staff as dropdown toggle -->
+                <button id="staff-btn" onclick="toggleStaff()"
+                        class="hover:text-[var(--accent)] transition-colors flex items-center gap-1.5 font-bold uppercase tracking-[0.2em] text-[10px]">
+                    Staff
+                    <svg id="staff-chevron" class="w-3 h-3 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                <a href="#contact" onclick="closeStaff()" class="hover:text-[var(--accent)] transition-colors">Contact</a>
             </div>
 
             <!-- CTA + Hamburger -->
@@ -103,49 +147,170 @@
                    class="bg-[var(--accent)] text-white px-4 sm:px-6 py-2 rounded-full font-bold text-[10px] sm:text-xs uppercase transition-all hover:brightness-110 active:scale-95 shadow-lg whitespace-nowrap">
                     Partner With Us
                 </a>
-                <button class="lg:hidden flex flex-col justify-center gap-1.5 p-1 w-8 h-8" @click="menuOpen = !menuOpen" aria-label="Toggle menu">
-                    <span class="block w-5 h-0.5 bg-current transition-all duration-300 origin-center"
-                          :class="menuOpen ? 'rotate-45 translate-y-2' : ''"></span>
-                    <span class="block w-5 h-0.5 bg-current transition-all duration-300"
-                          :class="menuOpen ? 'opacity-0' : ''"></span>
-                    <span class="block w-5 h-0.5 bg-current transition-all duration-300 origin-center"
-                          :class="menuOpen ? '-rotate-45 -translate-y-2' : ''"></span>
+                <button class="lg:hidden flex flex-col justify-center gap-1.5 p-1 w-8 h-8" @click="menuOpen = !menuOpen; closeStaff()" aria-label="Toggle menu">
+                    <span class="block w-5 h-0.5 bg-current transition-all duration-300 origin-center" :class="menuOpen ? 'rotate-45 translate-y-2' : ''"></span>
+                    <span class="block w-5 h-0.5 bg-current transition-all duration-300"               :class="menuOpen ? 'opacity-0' : ''"></span>
+                    <span class="block w-5 h-0.5 bg-current transition-all duration-300 origin-center" :class="menuOpen ? '-rotate-45 -translate-y-2' : ''"></span>
                 </button>
             </div>
         </div>
 
-        <!-- Mobile menu dropdown -->
+        <!-- Mobile menu -->
         <div x-show="menuOpen"
              x-transition:enter="transition ease-out duration-200"
              x-transition:enter-start="opacity-0 -translate-y-2"
              x-transition:enter-end="opacity-100 translate-y-0"
              x-transition:leave="transition ease-in duration-150"
-             x-transition:leave-start="opacity-100"
              x-transition:leave-end="opacity-0 -translate-y-2"
              class="lg:hidden glass border-t border-white/10 px-6 py-6 flex flex-col gap-5">
-            <a href="#sectors"     @click="menuOpen=false" class="text-sm font-bold uppercase tracking-widest hover:text-[var(--accent)] transition-colors">Sectors</a>
-            <a href="#leadership"  @click="menuOpen=false" class="text-sm font-bold uppercase tracking-widest hover:text-[var(--accent)] transition-colors">Leadership</a>
-            <a href="members.html" @click="menuOpen=false" class="text-sm font-bold uppercase tracking-widest hover:text-[var(--accent)] transition-colors">Staff</a>
-            <a href="#contact"     @click="menuOpen=false" class="text-sm font-bold uppercase tracking-widest hover:text-[var(--accent)] transition-colors">Contact</a>
+            <a href="#sectors"    @click="menuOpen=false; closeStaff()" class="text-sm font-bold uppercase tracking-widest hover:text-[var(--accent)] transition-colors">Sectors</a>
+            <a href="#leadership" @click="menuOpen=false; closeStaff()" class="text-sm font-bold uppercase tracking-widest hover:text-[var(--accent)] transition-colors">Leadership</a>
+            <button onclick="toggleStaff(); document.querySelector('[x-data]').__x.$data.menuOpen=false"
+                    class="text-sm font-bold uppercase tracking-widest hover:text-[var(--accent)] transition-colors text-left flex items-center gap-2">
+                Staff
+                <svg id="staff-chevron-mobile" class="w-3 h-3 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </button>
+            <a href="#contact" @click="menuOpen=false; closeStaff()" class="text-sm font-bold uppercase tracking-widest hover:text-[var(--accent)] transition-colors">Contact</a>
         </div>
     </nav>
 
-    <!-- HERO -->
+    <!-- ═══ STAFF PANEL ═══ -->
+    <div id="staff-panel">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <!-- Panel header -->
+            <div class="flex items-center justify-between mb-10">
+                <div>
+                    <h2 class="font-heading text-4xl sm:text-5xl font-bold italic" style="color:#fff; font-family:'Clash Display',sans-serif">THE STAFF.</h2>
+                    <p class="mt-2 text-sm" style="color:#A6ADBA">Our executive team and key leadership roles. Click a card to learn more.</p>
+                </div>
+                <button onclick="closeStaff()"
+                        class="p-3 rounded-full transition-all flex items-center justify-center"
+                        style="border:1px solid rgba(255,255,255,0.15); color:#fff"
+                        onmouseover="this.style.borderColor='var(--accent)'; this.style.color='var(--accent)'"
+                        onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='#fff'">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Staff grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 pb-16">
+
+                <article onclick="openProfile('godfred')" class="staff-card cursor-pointer rounded-[1.5rem] p-5 sm:p-6 transition-all duration-200 hover:-translate-y-1"
+                         style="background:rgba(17,19,27,0.9); border:1px solid rgba(255,255,255,0.08);">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="ceo.jpeg" alt="Godfred Eduful" class="w-14 h-14 rounded-full object-cover flex-shrink-0" style="border:2px solid var(--accent)" onerror="this.src='https://via.placeholder.com/56'">
+                        <div>
+                            <p class="font-bold text-white text-base leading-tight">Godfred Eduful</p>
+                            <p class="text-[11px] font-bold uppercase tracking-widest mt-1" style="color:#A6ADBA">Founder & Group CEO</p>
+                        </div>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-4" style="color:#D2D8E3">Visionary leader building the KP Group ecosystem across media, retail, and electronics.</p>
+                    <span class="text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full inline-block" style="border:1px solid rgba(255,62,0,0.4); color:#FF875E">View Profile →</span>
+                </article>
+
+                <article onclick="openProfile('emmanuel')" class="staff-card cursor-pointer rounded-[1.5rem] p-5 sm:p-6 transition-all duration-200 hover:-translate-y-1"
+                         style="background:rgba(17,19,27,0.9); border:1px solid rgba(255,255,255,0.08);">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="Emma.JPG" alt="Emmanuel Kyeremeh Yeboah" class="w-14 h-14 rounded-full object-cover flex-shrink-0" style="border:2px solid var(--accent)" onerror="this.src='https://via.placeholder.com/56'">
+                        <div>
+                            <p class="font-bold text-white text-base leading-tight">Emmanuel Kyeremeh Yeboah</p>
+                            <p class="text-[11px] font-bold uppercase tracking-widest mt-1" style="color:#A6ADBA">Executive COO</p>
+                        </div>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-4" style="color:#D2D8E3">Operations strategist optimizing processes, partnerships, and execution across the group.</p>
+                    <span class="text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full inline-block" style="border:1px solid rgba(255,62,0,0.4); color:#FF875E">View Profile →</span>
+                </article>
+
+                <article onclick="openProfile('godwin')" class="staff-card cursor-pointer rounded-[1.5rem] p-5 sm:p-6 transition-all duration-200 hover:-translate-y-1"
+                         style="background:rgba(17,19,27,0.9); border:1px solid rgba(255,255,255,0.08);">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="Godwin.jpg" alt="Godwin Ntiri-Dankyi" class="w-14 h-14 rounded-full object-cover flex-shrink-0" style="border:2px solid var(--accent)" onerror="this.src='https://via.placeholder.com/56'">
+                        <div>
+                            <p class="font-bold text-white text-base leading-tight">Godwin Ntiri-Dankyi</p>
+                            <p class="text-[11px] font-bold uppercase tracking-widest mt-1" style="color:#A6ADBA">Chief Tech Officer</p>
+                        </div>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-4" style="color:#D2D8E3">Technology leader driving software innovation, digital transformation, and IT security.</p>
+                    <span class="text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full inline-block" style="border:1px solid rgba(255,62,0,0.4); color:#FF875E">View Profile →</span>
+                </article>
+
+                <article onclick="openProfile('princess')" class="staff-card cursor-pointer rounded-[1.5rem] p-5 sm:p-6 transition-all duration-200 hover:-translate-y-1"
+                         style="background:rgba(17,19,27,0.9); border:1px solid rgba(255,255,255,0.08);">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="Princess.jpg" alt="Princess Esther Maame Esi Aidoo" class="w-14 h-14 rounded-full object-cover flex-shrink-0" style="border:2px solid var(--accent)" onerror="this.src='https://via.placeholder.com/56'">
+                        <div>
+                            <p class="font-bold text-white text-base leading-tight">Princess Esther Maame Esi Aidoo</p>
+                            <p class="text-[11px] font-bold uppercase tracking-widest mt-1" style="color:#A6ADBA">Head of Strategy</p>
+                        </div>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-4" style="color:#D2D8E3">Oversees group-wide strategic planning, business development, and new market evaluation.</p>
+                    <span class="text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full inline-block" style="border:1px solid rgba(255,62,0,0.4); color:#FF875E">View Profile →</span>
+                </article>
+
+                <article onclick="openProfile('enam')" class="staff-card cursor-pointer rounded-[1.5rem] p-5 sm:p-6 transition-all duration-200 hover:-translate-y-1"
+                         style="background:rgba(17,19,27,0.9); border:1px solid rgba(255,255,255,0.08);">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="enam.jpg" alt="Acolatsey Amenya Enam" class="w-14 h-14 rounded-full object-cover flex-shrink-0" style="border:2px solid var(--accent)" onerror="this.src='https://via.placeholder.com/56'">
+                        <div>
+                            <p class="font-bold text-white text-base leading-tight">Acolatsey Amenya Enam</p>
+                            <p class="text-[11px] font-bold uppercase tracking-widest mt-1" style="color:#A6ADBA">Head of Partnerships</p>
+                        </div>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-4" style="color:#D2D8E3">Drives strategic partnerships and cross-industry collaborations to expand KP Group's market presence.</p>
+                    <span class="text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full inline-block" style="border:1px solid rgba(255,62,0,0.4); color:#FF875E">View Profile →</span>
+                </article>
+
+                <article onclick="openProfile('debrah')" class="staff-card cursor-pointer rounded-[1.5rem] p-5 sm:p-6 transition-all duration-200 hover:-translate-y-1"
+                         style="background:rgba(17,19,27,0.9); border:1px solid rgba(255,255,255,0.08);">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="debrah.jpeg" alt="Emmanuel Debrah" class="w-14 h-14 rounded-full object-cover flex-shrink-0" style="border:2px solid var(--accent)" onerror="this.src='https://via.placeholder.com/56'">
+                        <div>
+                            <p class="font-bold text-white text-base leading-tight">Emmanuel Debrah</p>
+                            <p class="text-[11px] font-bold uppercase tracking-widest mt-1" style="color:#A6ADBA">HR Manager</p>
+                        </div>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-4" style="color:#D2D8E3">HR leader focused on talent development, employee engagement, and high-performance culture.</p>
+                    <span class="text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full inline-block" style="border:1px solid rgba(255,62,0,0.4); color:#FF875E">View Profile →</span>
+                </article>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ PROFILE MODAL ═══ -->
+    <div id="profile-modal" onclick="if(event.target===this) closeProfile()">
+        <div id="profile-content"
+             class="relative w-full max-w-lg rounded-[2rem] p-7 sm:p-10 overflow-y-auto max-h-[90vh]"
+             style="background:#111317; border:1px solid rgba(255,255,255,0.12); color:#eceff4;">
+            <button onclick="closeProfile()"
+                    class="absolute top-5 right-5 p-2 rounded-full transition-all"
+                    style="border:1px solid rgba(255,255,255,0.15); color:#fff"
+                    onmouseover="this.style.borderColor='#FF3E00'; this.style.color='#FF3E00'"
+                    onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='#fff'">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+            <!-- content injected by JS -->
+        </div>
+    </div>
+
+    <!-- ═══ HERO ═══ -->
     <header class="pt-28 sm:pt-36 md:pt-44 lg:pt-52 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-start min-h-[80vh]">
         <div class="inline-flex mb-5 rounded-full px-4 sm:px-5 py-1.5 border text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.3em]"
              :style="'border-color: var(--accent); color: var(--accent)'">
             Conglomerate Excellence
         </div>
-
         <h1 class="hero-title font-bold tracking-tighter font-heading italic mb-8 sm:mb-10">
             <span class="block">KP GROUP</span>
             <span class="block opacity-30 uppercase" :style="'color: var(--accent)'" x-text="theme"></span>
         </h1>
-
         <p class="max-w-xl text-base sm:text-lg md:text-2xl opacity-70 mb-10 sm:mb-12 font-light italic"
            x-text="sectors[theme].slogan"></p>
-
-        <!-- Sector tabs -->
         <div class="flex flex-wrap gap-2 sm:gap-3 p-2 glass rounded-[2rem] w-full sm:w-fit shadow-2xl">
             <template x-for="(data, key) in sectors" :key="key">
                 <button @click="theme = key"
@@ -157,10 +322,9 @@
         </div>
     </header>
 
-    <!-- SECTORS -->
+    <!-- ═══ SECTORS ═══ -->
     <section id="sectors" class="px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
-
             <div class="lg:col-span-8 glass neo-shadow rounded-[2rem] sm:rounded-[3rem] p-6 sm:p-8 lg:p-12 flex flex-col justify-between min-h-[320px] sm:min-h-[420px] lg:min-h-[500px] group relative overflow-hidden transition-all duration-300">
                 <div class="relative z-10">
                     <h3 class="font-heading text-3xl sm:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 italic" x-text="sectors[theme].name"></h3>
@@ -174,7 +338,6 @@
                 </div>
                 <i data-lucide="globe" class="absolute -right-12 -bottom-12 w-40 sm:w-64 lg:w-80 h-40 sm:h-64 lg:h-80 opacity-5 group-hover:opacity-10 transition-opacity"></i>
             </div>
-
             <div class="lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5 sm:gap-6">
                 <div class="glass neo-shadow rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-8 lg:p-10 transition-all duration-300">
                     <h4 class="text-xs font-bold uppercase tracking-widest opacity-40 mb-3 sm:mb-4">Follow The Group</h4>
@@ -195,14 +358,17 @@
         </div>
     </section>
 
-    <!-- LEADERSHIP -->
+    <!-- ═══ LEADERSHIP ═══ -->
     <section id="leadership" class="px-4 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-32 border-y border-white/5">
         <div class="max-w-7xl mx-auto">
             <h2 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold mb-12 sm:mb-16 lg:mb-20 italic">THE BOARD.</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
 
-                <!-- CEO -->
-                <div class="member-card cursor-pointer" x-data="{ active: false }" @mouseenter="active=true" @mouseleave="active=false" @touchstart.prevent="active=!active">
+                <!-- CEO — FIX 1: touch uses touchstart/touchend delta to distinguish tap vs scroll -->
+                <div class="member-card cursor-pointer" x-data="{ active: false, startY: 0 }"
+                     @mouseenter="active=true" @mouseleave="active=false"
+                     @touchstart="startY = $event.touches[0].clientY"
+                     @touchend="if(Math.abs($event.changedTouches[0].clientY - startY) < 10) active = !active">
                     <div class="aspect-[4/5] glass rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden mb-4 sm:mb-6 relative border-2 border-white/5">
                         <img src="ceo2.jpeg" alt="Godfred Eduful"
                              class="w-full h-full object-cover transition-all duration-700"
@@ -213,12 +379,15 @@
                         </div>
                     </div>
                     <h4 class="text-xl sm:text-2xl font-heading font-bold italic uppercase transition-colors"
-                        :class="active ? 'text-[var(--accent)]' : ''">Godfred Eduful (MPhil)</h4>
+                        :class="active ? 'text-[var(--accent)]' : ''">Godfred Eduful</h4>
                     <p class="opacity-40 font-bold text-[10px] uppercase tracking-[0.3em] mt-1">Founder & Group CEO</p>
                 </div>
 
                 <!-- COO -->
-                <div class="member-card cursor-pointer" x-data="{ active: false }" @mouseenter="active=true" @mouseleave="active=false" @touchstart.prevent="active=!active">
+                <div class="member-card cursor-pointer" x-data="{ active: false, startY: 0 }"
+                     @mouseenter="active=true" @mouseleave="active=false"
+                     @touchstart="startY = $event.touches[0].clientY"
+                     @touchend="if(Math.abs($event.changedTouches[0].clientY - startY) < 10) active = !active">
                     <div class="aspect-[4/5] glass rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden mb-4 sm:mb-6 relative border-2 border-white/5">
                         <img src="Emma.JPG" alt="Emmanuel Kyeremeh Yeboah"
                              class="w-full h-full object-cover transition-all duration-700"
@@ -234,7 +403,10 @@
                 </div>
 
                 <!-- CTO -->
-                <div class="member-card cursor-pointer sm:col-span-2 lg:col-span-1" x-data="{ active: false }" @mouseenter="active=true" @mouseleave="active=false" @touchstart.prevent="active=!active">
+                <div class="member-card cursor-pointer sm:col-span-2 lg:col-span-1" x-data="{ active: false, startY: 0 }"
+                     @mouseenter="active=true" @mouseleave="active=false"
+                     @touchstart="startY = $event.touches[0].clientY"
+                     @touchend="if(Math.abs($event.changedTouches[0].clientY - startY) < 10) active = !active">
                     <div class="aspect-[4/5] sm:aspect-[8/5] lg:aspect-[4/5] glass rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden mb-4 sm:mb-6 relative border-2 border-white/5">
                         <img src="Godwin.jpg" alt="Godwin Ntiri-Dankyi"
                              class="w-full h-full object-cover transition-all duration-700"
@@ -253,10 +425,9 @@
         </div>
     </section>
 
-    <!-- CONTACT / FOOTER -->
+    <!-- ═══ CONTACT / FOOTER ═══ -->
     <footer id="contact" class="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-20">
-
             <div class="space-y-8 sm:space-y-10">
                 <h2 class="font-heading text-5xl sm:text-6xl lg:text-7xl font-bold leading-none italic uppercase">
                     Partner<br><span class="text-[var(--accent)]">With Us.</span>
@@ -274,7 +445,6 @@
                     </a>
                 </div>
             </div>
-
             <form id="contactForm" class="glass p-6 sm:p-10 lg:p-12 rounded-[2.5rem] sm:rounded-[3.5rem] space-y-6 sm:space-y-8 shadow-2xl">
                 <input type="text" name="name" placeholder="Full Name" required
                        class="w-full bg-transparent border-b border-white/20 py-3 sm:py-4 outline-none focus:border-[var(--accent)] text-sm sm:text-base transition-colors">
@@ -289,7 +459,6 @@
                 <p id="contactFeedback" class="text-center text-sm font-bold opacity-80 hidden"></p>
             </form>
         </div>
-
         <div class="mt-20 sm:mt-24 lg:mt-32 pt-8 sm:pt-10 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p class="text-xs opacity-40 font-bold uppercase tracking-[0.4em]">© 2026 KP Group Of Companies</p>
             <div class="flex gap-6 sm:gap-8 text-[10px] font-bold uppercase tracking-widest opacity-60">
@@ -299,12 +468,12 @@
         </div>
     </footer>
 
-    <!-- MODALS -->
+    <!-- ═══ MODALS: Privacy & Terms — always dark ═══ -->
     <div id="privacy" class="modal">
-        <div class="max-w-3xl mx-auto glass p-8 sm:p-12 rounded-[2rem] sm:rounded-[3rem] relative">
-            <a href="#" class="absolute top-6 right-6 sm:top-8 sm:right-8 text-white"><i data-lucide="x"></i></a>
-            <h2 class="font-heading text-3xl sm:text-4xl font-bold mb-5 sm:mb-6 italic text-[var(--accent)]">Privacy Policy</h2>
-            <div class="space-y-4 opacity-70 text-sm leading-relaxed">
+        <div class="modal-inner max-w-3xl mx-auto p-8 sm:p-12 rounded-[2rem] sm:rounded-[3rem] relative">
+            <a href="#" class="absolute top-6 right-6 sm:top-8 sm:right-8" style="color:#eceff4"><i data-lucide="x"></i></a>
+            <h2 class="font-heading text-3xl sm:text-4xl font-bold mb-5 sm:mb-6 italic" style="color: var(--accent); font-family:'Clash Display',sans-serif">Privacy Policy</h2>
+            <div class="space-y-4 text-sm leading-relaxed" style="opacity:0.75">
                 <p><strong>1. Data Collection:</strong> We collect information you provide directly via contact forms to facilitate business partnerships.</p>
                 <p><strong>2. Use of Data:</strong> Your data is used exclusively for internal communication and project management within KP Group sectors.</p>
                 <p><strong>3. Protection:</strong> We implement industry-standard security to ensure your data is not accessed by unauthorized third parties.</p>
@@ -314,10 +483,10 @@
     </div>
 
     <div id="terms" class="modal">
-        <div class="max-w-3xl mx-auto glass p-8 sm:p-12 rounded-[2rem] sm:rounded-[3rem] relative">
-            <a href="#" class="absolute top-6 right-6 sm:top-8 sm:right-8 text-white"><i data-lucide="x"></i></a>
-            <h2 class="font-heading text-3xl sm:text-4xl font-bold mb-5 sm:mb-6 italic text-[var(--accent)]">Terms of Service</h2>
-            <div class="space-y-4 opacity-70 text-sm leading-relaxed">
+        <div class="modal-inner max-w-3xl mx-auto p-8 sm:p-12 rounded-[2rem] sm:rounded-[3rem] relative">
+            <a href="#" class="absolute top-6 right-6 sm:top-8 sm:right-8" style="color:#eceff4"><i data-lucide="x"></i></a>
+            <h2 class="font-heading text-3xl sm:text-4xl font-bold mb-5 sm:mb-6 italic" style="color: var(--accent); font-family:'Clash Display',sans-serif">Terms of Service</h2>
+            <div class="space-y-4 text-sm leading-relaxed" style="opacity:0.75">
                 <p><strong>1. Acceptable Use:</strong> Users agree to use this portal for legitimate business inquiries only.</p>
                 <p><strong>2. Intellectual Property:</strong> All content, branding, and logos under KP Group Of Companies and its subsidiaries are protected by copyright law.</p>
                 <p><strong>3. External Links:</strong> We are not responsible for content on external sites linked from this portal.</p>
@@ -330,6 +499,151 @@
         lucide.createIcons();
         window.addEventListener('click', () => { setTimeout(() => lucide.createIcons(), 100); });
 
+        /* ── Staff panel ── */
+        const staffPanel   = document.getElementById('staff-panel');
+        const staffChevron = document.getElementById('staff-chevron');
+        const staffChevronMobile = document.getElementById('staff-chevron-mobile');
+
+        function toggleStaff() {
+            const isOpen = staffPanel.classList.contains('open');
+            isOpen ? closeStaff() : openStaff();
+        }
+        function openStaff() {
+            staffPanel.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            if (staffChevron) staffChevron.style.transform = 'rotate(180deg)';
+            if (staffChevronMobile) staffChevronMobile.style.transform = 'rotate(180deg)';
+        }
+        function closeStaff() {
+            staffPanel.classList.remove('open');
+            document.body.style.overflow = '';
+            if (staffChevron) staffChevron.style.transform = 'rotate(0deg)';
+            if (staffChevronMobile) staffChevronMobile.style.transform = 'rotate(0deg)';
+        }
+
+        // Close staff panel on Escape
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') { closeStaff(); closeProfile(); }
+        });
+
+        /* ── Profile modal ── */
+        const profiles = {
+            godfred: {
+                img: 'ceo.jpeg', name: 'Godfred Eduful', title: 'Founder & Group CEO',
+                bio: 'Visionary entrepreneur and strategic leader with 15+ years of experience building scalable business ecosystems. Godfred founded KP Group to create synergies across media, retail, and electronics with a focus on innovation, sustainability, and global expansion.',
+                email: 'edufulgodfred22@gmail.com', phone: '+233 25 772 2786',
+                links: [
+                    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/godfred-eduful-743b2b350/' },
+                    { label: 'TikTok',   url: 'https://www.tiktok.com/@_kobby_pounds' },
+                    { label: 'Twitter',  url: 'https://x.com/_kobby_pounds' },
+                    { label: 'Instagram',url: 'https://www.instagram.com/_kobby_pounds/' },
+                    { label: 'GitHub',   url: 'https://github.com/geduful' },
+                ]
+            },
+            emmanuel: {
+                img: 'Emma.JPG', name: 'Emmanuel Kyeremeh Yeboah', title: 'Executive COO',
+                bio: 'Operations strategist with deep expertise in process optimization, supply chain management, and execution excellence. Emmanuel leads all operational functions across KP Group\'s diverse business units.',
+                email: 'emmanuelyeboah1t@gmail.com', phone: '+233 54 715 5939',
+                links: [
+                    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/emmanuel-yeboah-78b1a53a7/' },
+                    { label: 'TikTok',   url: 'https://www.tiktok.com/@championeky' },
+                    { label: 'Twitter',  url: 'https://twitter.com/emmanuel_kp' },
+                    { label: 'Instagram',url: 'https://instagram.com/emmanuel_kp' },
+                    { label: 'GitHub',   url: 'https://github.com/emmanuelyeboah1t-netizen' },
+                ]
+            },
+            godwin: {
+                img: 'Godwin.jpg', name: 'Godwin Ntiri-Dankyi', title: 'Chief Tech Officer',
+                bio: 'Technology visionary driving digital transformation and innovation across KP Group. With expertise in cloud architecture, cybersecurity, and scalable systems, Godwin leads the group\'s digital strategy.',
+                email: 'ntiridankyigodwin@gmail.com', phone: '+233 55 357 1171',
+                links: [
+                    { label: 'LinkedIn', url: 'https://linkedin.com/in/godwin-ntiri' },
+                    { label: 'TikTok',   url: 'https://www.tiktok.com/@officialkdee1' },
+                    { label: 'Twitter',  url: 'https://twitter.com/godwin_tech' },
+                    { label: 'Instagram',url: 'https://instagram.com/godwin_kp_tech' },
+                    { label: 'GitHub',   url: 'https://github.com/godwin-kp' },
+                ]
+            },
+            princess: {
+                img: 'Princess.jpg', name: 'Princess Esther Maame Esi Aidoo', title: 'Head of Strategy',
+                bio: 'Strategic planning leader overseeing business development and market expansion for KP Group. Focuses on identifying growth opportunities, managing partnerships, and driving strategic initiatives.',
+                email: 'princessestheraidoo@gmail.com', phone: '+233 50 413 7713',
+                links: [
+                    { label: 'LinkedIn', url: 'https://linkedin.com/in/strategy-kp' },
+                    { label: 'TikTok',   url: 'https://www.tiktok.com/@mhixpea' },
+                    { label: 'Twitter',  url: 'https://twitter.com/strategy_kp' },
+                    { label: 'Instagram',url: 'https://instagram.com/strategy_kp' },
+                ]
+            },
+            enam: {
+                img: 'enam.jpg', name: 'Acolatsey Amenya Enam', title: 'Head of Partnerships',
+                bio: 'Strategic partnership leader driving business relationships and cross-industry collaborations. Oversees alliance development, vendor management, and partnership expansion initiatives.',
+                email: 'acolatseyenam@gmail.com', phone: '+233 53 170 5885',
+                links: [
+                    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/enam-acolatsey-b49b9531b/' },
+                    { label: 'TikTok',   url: 'https://tiktok.com/@partnerships_kp' },
+                    { label: 'Twitter',  url: 'https://twitter.com/partnerships_kp' },
+                    { label: 'Instagram',url: 'https://instagram.com/partnerships_kp' },
+                ]
+            },
+            debrah: {
+                img: 'debrah.jpeg', name: 'Emmanuel Debrah', title: 'HR Manager',
+                bio: 'People-first HR leader dedicated to talent acquisition, learning & development, and employee wellbeing. Ensures KP Group has the right culture, skills, and management practices to thrive.',
+                email: 'emmanuel.debrah@kpgroup.com', phone: '+233 55 883 1019',
+                links: [
+                    { label: 'LinkedIn', url: 'https://linkedin.com/in/emmanuel-debrah' },
+                    { label: 'TikTok',   url: 'https://www.tiktok.com/@emmanuel_debrah' },
+                    { label: 'Twitter',  url: 'https://twitter.com/emmanuel_debrah' },
+                    { label: 'Instagram',url: 'https://instagram.com/emmanuel_debrah' },
+                    { label: 'GitHub',   url: 'https://github.com/emmanuel-debrah' },
+                ]
+            }
+        };
+
+        function openProfile(id) {
+            const p = profiles[id];
+            if (!p) return;
+            const socials = p.links.map(l =>
+                `<a href="${l.url}" target="_blank"
+                    style="border:1px solid rgba(255,62,0,0.4); color:#fff; font-size:0.75rem; font-weight:700; padding:6px 12px; border-radius:999px; text-decoration:none; display:inline-block; transition:background 0.2s"
+                    onmouseover="this.style.background='rgba(255,62,0,0.2)'"
+                    onmouseout="this.style.background='transparent'">${l.label}</a>`
+            ).join('');
+
+            document.getElementById('profile-content').innerHTML = `
+                <button onclick="closeProfile()" class="absolute top-5 right-5 p-2 rounded-full transition-all"
+                        style="border:1px solid rgba(255,255,255,0.15); color:#fff; background:none; cursor:pointer"
+                        onmouseover="this.style.borderColor='#FF3E00'; this.style.color='#FF3E00'"
+                        onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='#fff'">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="width:16px;height:16px">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+                <div style="display:flex; align-items:flex-start; gap:16px; margin-bottom:20px">
+                    <img src="${p.img}" alt="${p.name}" style="width:80px;height:80px;border-radius:999px;object-fit:cover;border:2px solid #FF3E00;flex-shrink:0" onerror="this.src='https://via.placeholder.com/80'">
+                    <div>
+                        <p style="font-size:1.25rem;font-weight:800;color:#fff;margin-bottom:4px">${p.name}</p>
+                        <p style="color:#FF875E;font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em">${p.title}</p>
+                    </div>
+                </div>
+                <p style="color:#D2D8E3;font-size:0.9rem;line-height:1.65;margin-bottom:20px">${p.bio}</p>
+                <p style="color:#A6ADBA;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px">Contact</p>
+                <div style="margin-bottom:20px">
+                    <a href="mailto:${p.email}" style="display:block;color:#FF875E;font-weight:600;font-size:0.875rem;margin-bottom:6px;text-decoration:none">${p.email}</a>
+                    <a href="tel:${p.phone.replace(/\s/g,'')}" style="display:block;color:#FF875E;font-weight:600;font-size:0.875rem;text-decoration:none">${p.phone}</a>
+                </div>
+                <p style="color:#A6ADBA;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px">Connect</p>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">${socials}</div>
+            `;
+
+            document.getElementById('profile-modal').classList.add('open');
+        }
+
+        function closeProfile() {
+            document.getElementById('profile-modal').classList.remove('open');
+        }
+
+        /* ── Contact form ── */
         const contactForm = document.getElementById('contactForm');
         const feedback    = document.getElementById('contactFeedback');
 
@@ -338,17 +652,13 @@
             feedback.classList.remove('hidden', 'text-red-400', 'text-green-400');
             feedback.classList.add('text-white');
             feedback.textContent = 'Sending...';
-
             const formData = new FormData(contactForm);
             try {
                 const response = await fetch('https://formspree.io/f/maqpgbkd', {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
+                    method: 'POST', body: formData, headers: { 'Accept': 'application/json' }
                 });
                 if (response.ok) {
                     contactForm.reset();
-                    feedback.classList.remove('text-red-400');
                     feedback.classList.add('text-green-400');
                     feedback.textContent = 'Message sent. Thank you!';
                 } else {
@@ -356,7 +666,6 @@
                     throw new Error((data.errors && data.errors[0].message) || 'Submission failed.');
                 }
             } catch (error) {
-                feedback.classList.remove('text-green-400');
                 feedback.classList.add('text-red-400');
                 feedback.textContent = 'Unable to send message now. Please try again later.';
                 console.error(error);

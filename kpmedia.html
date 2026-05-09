@@ -1,374 +1,333 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" href="images/mylogo.jpeg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KP Media - Creative Media Solutions</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { overflow-x: hidden; min-width: 0; }
+
         body {
             font-family: 'Poppins', sans-serif;
             scroll-behavior: smooth;
         }
-        
+
+        /* ── Loader ── */
+        #loader {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100vh;
+            background: #003c7c;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999;
+            transition: opacity 0.4s ease;
+        }
+        #loader.hide { opacity: 0; pointer-events: none; }
+        .loader-box { width: 120px; height: 45px; border: 6px solid white; padding: 3px; }
+        .loader-bar { width: 0%; height: 100%; background: #e30c0c; animation: load 2s forwards; }
+        @keyframes load { from { width: 0; } to { width: 100%; } }
+
+        /* ── Hero ── */
         .hero-gradient {
             background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
         }
-        
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        
+
+        /* ── Service cards ── */
         .service-card {
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
-        .nav-link {
-            position: relative;
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.12), 0 10px 10px -5px rgba(0,0,0,0.05);
         }
-        
+
+        /* ── Nav underline ── */
+        .nav-link { position: relative; }
         .nav-link::after {
             content: '';
             position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -2px;
-            left: 0;
+            width: 0; height: 2px;
+            bottom: -2px; left: 0;
             background-color: #3b82f6;
             transition: width 0.3s ease;
         }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
+        .nav-link:hover::after { width: 100%; }
+
+        /* ── Float animation ── */
         .animate-float {
             animation: float 3s ease-in-out infinite;
         }
-        
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+            0%   { transform: translateY(0px); }
+            50%  { transform: translateY(-15px); }
             100% { transform: translateY(0px); }
         }
-        
-        .hidden-fade { opacity:0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
-        .animate-fadeIn { opacity:1; transform: translateY(0); }
+
+        /* ── Fade-in on scroll ── */
+        .hidden-fade { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+        .animate-fadeIn { opacity: 1; transform: translateY(0); }
+
+        /* ── Mobile menu ── */
+        #mobile-menu { display: none; }
+        #mobile-menu.open { display: block; }
+
+        /* ── Responsive hero image ── */
+        .hero-img { width: 100%; max-width: 480px; border-radius: 0.75rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4); }
+
+        /* ── Form inputs consistent ── */
+        .form-input {
+            width: 100%;
+            padding: 0.625rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            outline: none;
+            transition: box-shadow 0.2s, border-color 0.2s;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            background: #fff;
+        }
+        .form-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+        }
     </style>
 </head>
 
 <body class="bg-gray-50">
-    <!-- Loader (must be inside body) -->
+
+    <!-- Loader -->
     <div id="loader">
-        <div class="box"><div class="bar"></div></div>
+        <div class="loader-box"><div class="loader-bar"></div></div>
     </div>
 
-    <style>
-        #loader { position: fixed; top:0; left:0; width:100%; height:100vh; background:#003c7c; display:flex; justify-content:center; align-items:center; z-index:9999; }
-        .box{ width:120px; height:45px; border:6px solid white; padding:3px; }
-        .bar{ width:0%; height:100%; background:#e30c0c; animation:load 2s forwards; }
-        @keyframes load { from{width:0;} to{width:100%;} }
-    </style>
-    <script> setTimeout(()=>document.getElementById("loader").style.display="none", 2000); </script>
-
-    <!-- Navigation -->
+    <!-- ═══ NAVIGATION ═══ -->
     <nav class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-3">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
             <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <a href="#" class="text-2xl font-bold text-blue-600">KP <span class="text-gray-800">Media</span></a>
-                </div>
-                
-                <!-- Mobile menu button -->
-                <div class="md:hidden">
-                    <button id="menu-toggle" class="text-gray-800 focus:outline-none">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
-                </div>
-                
+
+                <!-- Logo -->
+                <a href="#" class="text-xl sm:text-2xl font-bold text-blue-600 flex-shrink-0">
+                    KP <span class="text-gray-800">Media</span>
+                </a>
+
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="nav-link text-gray-800 hover:text-blue-600">Home</a>
-                    <a href="#services" class="nav-link text-gray-800 hover:text-blue-600">Services</a>
-                    <a href="#portfolio" class="nav-link text-gray-800 hover:text-blue-600">Portfolio</a>
-                    <a href="#about" class="nav-link text-gray-800 hover:text-blue-600">About</a>
-                    <a href="#contact" class="nav-link text-gray-800 hover:text-blue-600">Contact</a>
-                    <a href="tel:+233257722786" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition ml-4">Donate</a>
+                <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
+                    <a href="#home"      class="nav-link text-gray-800 hover:text-blue-600 text-sm font-medium">Home</a>
+                    <a href="#services"  class="nav-link text-gray-800 hover:text-blue-600 text-sm font-medium">Services</a>
+                    <a href="#portfolio" class="nav-link text-gray-800 hover:text-blue-600 text-sm font-medium">Portfolio</a>
+                    <a href="#about"     class="nav-link text-gray-800 hover:text-blue-600 text-sm font-medium">About</a>
+                    <a href="#contact"   class="nav-link text-gray-800 hover:text-blue-600 text-sm font-medium">Contact</a>
+                    <a href="tel:+233257722786"
+                       class="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-blue-700 transition whitespace-nowrap">
+                        Donate
+                    </a>
                 </div>
+
+                <!-- Hamburger -->
+                <button id="menu-toggle" class="md:hidden text-gray-800 focus:outline-none p-2" aria-label="Toggle menu">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
             </div>
-            
+
             <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden py-4">
-                <a href="#home" class="block py-2 text-gray-800 hover:text-blue-600">Home</a>
-                <a href="#services" class="block py-2 text-gray-800 hover:text-blue-600">Services</a>
-                <a href="#portfolio" class="block py-2 text-gray-800 hover:text-blue-600">Portfolio</a>
-                <a href="#about" class="block py-2 text-gray-800 hover:text-blue-600">About</a>
-                <a href="#contact" class="block py-2 text-gray-800 hover:text-blue-600">Contact</a>
-                <a href="tel:+233257722786" class="block bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition mt-4 text-center">Donate</a>
+            <div id="mobile-menu" class="md:hidden pt-4 pb-2 border-t border-gray-100 mt-3">
+                <a href="#home"      class="block py-2.5 px-2 text-gray-800 hover:text-blue-600 font-medium text-sm">Home</a>
+                <a href="#services"  class="block py-2.5 px-2 text-gray-800 hover:text-blue-600 font-medium text-sm">Services</a>
+                <a href="#portfolio" class="block py-2.5 px-2 text-gray-800 hover:text-blue-600 font-medium text-sm">Portfolio</a>
+                <a href="#about"     class="block py-2.5 px-2 text-gray-800 hover:text-blue-600 font-medium text-sm">About</a>
+                <a href="#contact"   class="block py-2.5 px-2 text-gray-800 hover:text-blue-600 font-medium text-sm">Contact</a>
+                <a href="tel:+233257722786"
+                   class="block bg-blue-600 text-white px-4 py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition mt-3 text-center text-sm">
+                    Donate
+                </a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero-gradient text-white py-20 md:py-32">
-        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 mb-12 md:mb-0">
-                <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4">Elevate Your Brand with KP Media</h1>
-                <p class="text-xl md:text-2xl mb-8 opacity-90">Creative solutions for the digital age. We craft compelling media experiences that connect with your audience.</p>
-                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                    <a href="#contact" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold text-center hover:bg-gray-100 transition duration-300">Get Started</a>
-                    <a href="#services" class="border-2 border-white px-8 py-3 rounded-lg font-semibold text-center hover:bg-white hover:text-blue-600 transition duration-300">Our Services</a>
+    <!-- ═══ HERO ═══ -->
+    <section id="home" class="hero-gradient text-white py-16 sm:py-20 md:py-28 lg:py-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-10 lg:gap-16">
+            <div class="w-full md:w-1/2 text-center md:text-left">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4">
+                    Elevate Your Brand with KP Media
+                </h1>
+                <p class="text-lg sm:text-xl md:text-2xl mb-8 opacity-90">
+                    Creative solutions for the digital age. We craft compelling media experiences that connect with your audience.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#contact"
+                       class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold text-center hover:bg-gray-100 transition duration-300">
+                        Get Started
+                    </a>
+                    <a href="#services"
+                       class="border-2 border-white px-8 py-3 rounded-lg font-semibold text-center hover:bg-white hover:text-blue-600 transition duration-300">
+                        Our Services
+                    </a>
                 </div>
             </div>
-            <div class="md:w-1/2 flex justify-center">
-                <img src="https://www.shutterstock.com/image-photo/video-editor-arranging-recorded-stock-600nw-2489078227.jpg" alt="Creative Media" class="rounded-lg shadow-2xl animate-float max-w-full h-auto">
+            <div class="w-full md:w-1/2 flex justify-center">
+                <img src="https://www.shutterstock.com/image-photo/video-editor-arranging-recorded-stock-600nw-2489078227.jpg"
+                     alt="Creative Media" class="hero-img animate-float">
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="services" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Services</h2>
+    <!-- ═══ SERVICES ═══ -->
+    <section id="services" class="py-16 sm:py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Our Services</h2>
                 <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
-                <p class="text-gray-600 max-w-2xl mx-auto">We offer a comprehensive range of media services to help your brand stand out in the digital landscape.</p>
+                <p class="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">
+                    We offer a comprehensive range of media services to help your brand stand out in the digital landscape.
+                </p>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Service 1 -->
-                <div class="service-card bg-gray-50 p-8 rounded-lg border border-gray-200">
-                    <div class="text-blue-600 mb-4">
-                        <i class="fas fa-video text-4xl"></i>
-                    </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div class="service-card bg-gray-50 p-6 sm:p-8 rounded-xl border border-gray-200">
+                    <div class="text-blue-600 mb-4"><i class="fas fa-video text-4xl"></i></div>
                     <h3 class="text-xl font-semibold text-gray-800 mb-3">Video Production</h3>
-                    <p class="text-gray-600">Professional video production services from concept to final edit. We create engaging content that tells your story effectively.</p>
+                    <p class="text-gray-600 text-sm sm:text-base">Professional video production services from concept to final edit. We create engaging content that tells your story effectively.</p>
                 </div>
-                
-                <!-- Service 2 -->
-                <div class="service-card bg-gray-50 p-8 rounded-lg border border-gray-200">
-                    <div class="text-blue-600 mb-4">
-                        <i class="fas fa-camera-retro text-4xl"></i>
-                    </div>
+
+                <div class="service-card bg-gray-50 p-6 sm:p-8 rounded-xl border border-gray-200">
+                    <div class="text-blue-600 mb-4"><i class="fas fa-camera-retro text-4xl"></i></div>
                     <h3 class="text-xl font-semibold text-gray-800 mb-3">Photography</h3>
-                    <p class="text-gray-600">High-quality photography services for products, events, and portraits that capture the essence of your brand.</p>
+                    <p class="text-gray-600 text-sm sm:text-base">High-quality photography services for products, events, and portraits that capture the essence of your brand.</p>
                 </div>
-                
-                <!-- Service 3 -->
-                <div class="service-card bg-gray-50 p-8 rounded-lg border border-gray-200">
-                    <div class="text-blue-600 mb-4">
-                        <i class="fas fa-paint-brush text-4xl"></i>
-                    </div>
+
+                <div class="service-card bg-gray-50 p-6 sm:p-8 rounded-xl border border-gray-200">
+                    <div class="text-blue-600 mb-4"><i class="fas fa-paint-brush text-4xl"></i></div>
                     <h3 class="text-xl font-semibold text-gray-800 mb-3">Graphic Design</h3>
-                    <p class="text-gray-600">Creative graphic design solutions including logos, branding materials, and marketing collateral that make an impact.</p>
+                    <p class="text-gray-600 text-sm sm:text-base">Creative graphic design solutions including logos, branding materials, and marketing collateral that make an impact.</p>
                 </div>
-                
-                <!-- Service 4 -->
-                <div class="service-card bg-gray-50 p-8 rounded-lg border border-gray-200">
-                    <div class="text-blue-600 mb-4">
-                        <i class="fas fa-ad text-4xl"></i>
-                    </div>
+
+                <div class="service-card bg-gray-50 p-6 sm:p-8 rounded-xl border border-gray-200">
+                    <div class="text-blue-600 mb-4"><i class="fas fa-ad text-4xl"></i></div>
                     <h3 class="text-xl font-semibold text-gray-800 mb-3">Digital Marketing</h3>
-                    <p class="text-gray-600">Strategic digital marketing campaigns that increase your online presence and drive meaningful engagement.</p>
+                    <p class="text-gray-600 text-sm sm:text-base">Strategic digital marketing campaigns that increase your online presence and drive meaningful engagement.</p>
                 </div>
-                
-                <!-- Service 5 -->
-                <div class="service-card bg-gray-50 p-8 rounded-lg border border-gray-200">
-                    <div class="text-blue-600 mb-4">
-                        <i class="fas fa-globe text-4xl"></i>
-                    </div>
+
+                <div class="service-card bg-gray-50 p-6 sm:p-8 rounded-xl border border-gray-200">
+                    <div class="text-blue-600 mb-4"><i class="fas fa-globe text-4xl"></i></div>
                     <h3 class="text-xl font-semibold text-gray-800 mb-3">Web Development</h3>
-                    <p class="text-gray-600">Custom website development that's responsive, user-friendly, and optimized for performance and conversions.</p>
+                    <p class="text-gray-600 text-sm sm:text-base">Custom website development that's responsive, user-friendly, and optimized for performance and conversions.</p>
                 </div>
-                
-                <!-- Service 6 -->
-                <div class="service-card bg-gray-50 p-8 rounded-lg border border-gray-200">
-                    <div class="text-blue-600 mb-4">
-                        <i class="fas fa-bullhorn text-4xl"></i>
-                    </div>
+
+                <div class="service-card bg-gray-50 p-6 sm:p-8 rounded-xl border border-gray-200">
+                    <div class="text-blue-600 mb-4"><i class="fas fa-bullhorn text-4xl"></i></div>
                     <h3 class="text-xl font-semibold text-gray-800 mb-3">Social Media Management</h3>
-                    <p class="text-gray-600">Comprehensive social media strategies and management to grow your audience and strengthen your brand online.</p>
+                    <p class="text-gray-600 text-sm sm:text-base">Comprehensive social media strategies and management to grow your audience and strengthen your brand online.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Portfolio</h2>
+    <!-- ═══ PORTFOLIO ═══ -->
+    <section id="portfolio" class="py-16 sm:py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Our Portfolio</h2>
                 <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
-                <p class="text-gray-600 max-w-2xl mx-auto">Explore some of our recent projects and see how we've helped clients achieve their media goals.</p>
+                <p class="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">
+                    Explore some of our recent projects and see how we've helped clients achieve their media goals.
+                </p>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Portfolio Item 1 -->
-                <div class="group relative overflow-hidden rounded-lg shadow-lg">
-                    <img src="https://media.licdn.com/dms/image/sync/v2/D4E27AQGMo6dBZR5hbg/articleshare-shrink_800/B4EZjI3_5SGcAI-/0/1755716779948?e=2147483647&v=beta&t=rftojpjYGPCVnnlrz3Q9YndXSTEBmfI7MjcGRh1ImCs" alt="Project 1" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <div class="text-center p-4 text-white">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+                <div class="group relative overflow-hidden rounded-xl shadow-lg">
+                    <img src="https://media.licdn.com/dms/image/sync/v2/D4E27AQGMo6dBZR5hbg/articleshare-shrink_800/B4EZjI3_5SGcAI-/0/1755716779948?e=2147483647&v=beta&t=rftojpjYGPCVnnlrz3Q9YndXSTEBmfI7MjcGRh1ImCs"
+                         alt="Corporate Video Series" class="w-full h-56 sm:h-64 object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 p-4">
+                        <div class="text-center text-white">
                             <h3 class="text-xl font-bold mb-2">Corporate Video Series</h3>
-                            <p class="text-gray-300 mb-4">A comprehensive video campaign for a Fortune 500 company</p>
-                            <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">View Project</a>
+                            <p class="text-gray-300 mb-4 text-sm">A comprehensive video campaign for a Fortune 500 company</p>
+                            <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition text-sm">View Project</a>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Portfolio Item 2 -->
-                <div class="group relative overflow-hidden rounded-lg shadow-lg">
-                    <img src="https://static.vecteezy.com/system/resources/thumbnails/074/180/344/small/photography-studio-with-four-professional-lights-two-black-and-two-white-octabox-softboxes-and-gray-backdrop-photo.jpg" alt="Project 2" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <div class="text-center p-4 text-white">
+
+                <div class="group relative overflow-hidden rounded-xl shadow-lg">
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/074/180/344/small/photography-studio-with-four-professional-lights-two-black-and-two-white-octabox-softboxes-and-gray-backdrop-photo.jpg"
+                         alt="E-commerce Brand Photography" class="w-full h-56 sm:h-64 object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 p-4">
+                        <div class="text-center text-white">
                             <h3 class="text-xl font-bold mb-2">E-commerce Brand Photography</h3>
-                            <p class="text-gray-300 mb-4">Product photography for a leading online retailer</p>
-                            <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">View Project</a>
+                            <p class="text-gray-300 mb-4 text-sm">Product photography for a leading online retailer</p>
+                            <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition text-sm">View Project</a>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Portfolio Item 3 -->
-                <div class="group relative overflow-hidden rounded-lg shadow-lg">
-                    <img src="https://www.webtreeonline.com/wp-content/uploads/2016/11/Webtree-apr-2025-1-01.jpg" alt="Project 3" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <div class="text-center p-4 text-white">
+
+                <div class="group relative overflow-hidden rounded-xl shadow-lg sm:col-span-2 lg:col-span-1">
+                    <img src="https://www.webtreeonline.com/wp-content/uploads/2016/11/Webtree-apr-2025-1-01.jpg"
+                         alt="Social Media Campaign" class="w-full h-56 sm:h-64 object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 p-4">
+                        <div class="text-center text-white">
                             <h3 class="text-xl font-bold mb-2">Social Media Campaign</h3>
-                            <p class="text-gray-300 mb-4">Comprehensive social media strategy and content creation for brand awareness</p>
-                            <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">View Project</a>
+                            <p class="text-gray-300 mb-4 text-sm">Comprehensive social media strategy and content creation for brand awareness</p>
+                            <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition text-sm">View Project</a>
                         </div>
                     </div>
                 </div>
-                
             </div>
-            
-            <div class="text-center mt-12">
-                <a href="portfolio.html" class="inline-block border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition duration-300">View All Projects</a>
+
+            <div class="text-center mt-10 sm:mt-12">
+                <a href="portfolio.html"
+                   class="inline-block border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition duration-300 text-sm sm:text-base">
+                    View All Projects
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center gap-10">
-                <div class="md:w-1/2">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">About KP Media</h2>
+    <!-- ═══ ABOUT ═══ -->
+    <section id="about" class="py-16 sm:py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-start gap-10 lg:gap-16">
+                <div class="w-full md:w-1/2">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">About KP Media</h2>
                     <div class="w-20 h-1 bg-blue-600 mb-6"></div>
-                    <p class="text-gray-600 mb-6">Founded in 2020, KP Media has grown from a small creative studio to a full-service media production agency serving clients across multiple industries.</p>
-                    <p class="text-gray-600 mb-6">Our team of passionate creatives, strategists, and technologists work together to deliver media solutions that not only look great but drive real results for our clients.</p>
-                    <p class="text-gray-600 mb-8">We believe in the power of storytelling and leverage the latest technologies to create media experiences that resonate with audiences and achieve business objectives.</p>
-                    <div class="flex flex-wrap gap-4">
-                        <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-medium">Creative</div>
-                        <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-medium">Innovative</div>
-                        <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-medium">Strategic</div>
+                    <p class="text-gray-600 mb-5 text-sm sm:text-base">Founded in 2020, KP Media has grown from a small creative studio to a full-service media production agency serving clients across multiple industries.</p>
+                    <p class="text-gray-600 mb-5 text-sm sm:text-base">Our team of passionate creatives, strategists, and technologists work together to deliver media solutions that not only look great but drive real results for our clients.</p>
+                    <p class="text-gray-600 mb-8 text-sm sm:text-base">We believe in the power of storytelling and leverage the latest technologies to create media experiences that resonate with audiences and achieve business objectives.</p>
+                    <div class="flex flex-wrap gap-3">
+                        <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-medium text-sm">Creative</div>
+                        <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-medium text-sm">Innovative</div>
+                        <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-medium text-sm">Strategic</div>
                     </div>
                 </div>
 
-                <div class="md:w-1/2 grid gap-6">
+                <div class="w-full md:w-1/2 space-y-5">
                     <div class="rounded-2xl p-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-xl">
-                      <div class="flex items-center justify-center mb-4">
-                        <i class="fas fa-users fa-3x"></i>
-                      </div>
-                      <h3 class="text-2xl font-bold mb-2 text-center">KP Media Team</h3>
-                      <p class="text-center opacity-90">Professional media producers and storytellers crafting visual solutions with data-driven strategy and creative consistency.</p>
+                        <div class="flex items-center justify-center mb-4">
+                            <i class="fas fa-users fa-3x"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2 text-center">KP Media Team</h3>
+                        <p class="text-center opacity-90 text-sm sm:text-base">Professional media producers and storytellers crafting visual solutions with data-driven strategy and creative consistency.</p>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div class="p-5 bg-blue-50 border border-blue-100 rounded-xl">
-                        <h4 class="text-2xl font-bold text-blue-700">5+</h4>
-                        <p class="text-gray-600">Years Experience</p>
-                      </div>
-                      <div class="p-5 bg-blue-50 border border-blue-100 rounded-xl">
-                        <h4 class="text-2xl font-bold text-blue-700">100+</h4>
-                        <p class="text-gray-600">Projects Delivered</p>
-                      </div>
-                      <div class="p-5 bg-blue-50 border border-blue-100 rounded-xl">
-                        <h4 class="text-2xl font-bold text-blue-700">30+</h4>
-                        <p class="text-gray-600">Happy Clients</p>
-                      </div>
-                      <div class="p-5 bg-blue-50 border border-blue-100 rounded-xl">
-                        <h4 class="text-2xl font-bold text-blue-700">10</h4>
-                        <p class="text-gray-600">Awards &amp; Recognitions</p>
-                      </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">What Our Clients Say</h2>
-                <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
-                <p class="text-gray-600 max-w-2xl mx-auto">Don't just take our word for it. Here's what our clients have to say about working with us.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
-                <div class="bg-white p-8 rounded-lg shadow-md">
-                    <div class="flex items-center mb-4">
-                        <div class="text-yellow-400 mr-2">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-5 bg-blue-50 border border-blue-100 rounded-xl">
+                            <h4 class="text-2xl font-bold text-blue-700">5+</h4>
+                            <p class="text-gray-600 text-sm">Years Experience</p>
                         </div>
-                    </div>
-                    <p class="text-gray-600 mb-6">"KP Media transformed EKY Group Of Company's online presence. Their video production team created content that perfectly captured our company's values and mission."</p>
-                    <div class="flex items-center">
-                        <img src="Emma.JPG" alt="Emmanuel Kyeremeh Yeboah" class="w-12 h-12 rounded-full mr-4 object-cover">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Emmanuel Kyeremeh Yeboah</h4>
-                            <p class="text-sm text-gray-500">Director, EKY Group Of Companies</p>
+                        <div class="p-5 bg-blue-50 border border-blue-100 rounded-xl">
+                            <h4 class="text-2xl font-bold text-blue-700">100+</h4>
+                            <p class="text-gray-600 text-sm">Projects Delivered</p>
                         </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 2 -->
-                <div class="bg-white p-8 rounded-lg shadow-md">
-                    <div class="flex items-center mb-4">
-                        <div class="text-yellow-400 mr-2">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                        <div class="p-5 bg-blue-50 border border-blue-100 rounded-xl">
+                            <h4 class="text-2xl font-bold text-blue-700">30+</h4>
+                            <p class="text-gray-600 text-sm">Happy Clients</p>
                         </div>
-                    </div>
-                    <p class="text-gray-600 mb-6">"We were very satisfied with KP Media's photography services. They delivered high-quality product images that met all our requirements."</p>
-                    <div class="flex items-center">
-                        <img src="images/Hero.JPG" alt="Seth Okyere" class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Seth Okyere</h4>
-                            <p class="text-sm text-gray-500">CEO Of VVIM Consult</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 3 -->
-                <div class="bg-white p-8 rounded-lg shadow-md">
-                    <div class="flex items-center mb-4">
-                        <div class="text-yellow-400 mr-2">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-6">"KP Media provided excellent social media management services. They helped us establish a consistent posting schedule and improved our online presence."</p>
-                    <div class="flex items-center">
-                        <img src="Princess.jpg" alt="Princess Esther" class="w-12 h-12 rounded-full mr-4 object-cover">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Princess Esther</h4>
-                            <p class="text-sm text-gray-500">Business Owner</p>
+                        <div class="p-5 bg-blue-50 border border-blue-100 rounded-xl">
+                            <h4 class="text-2xl font-bold text-blue-700">10</h4>
+                            <p class="text-gray-600 text-sm">Awards &amp; Recognitions</p>
                         </div>
                     </div>
                 </div>
@@ -376,351 +335,346 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Get In Touch</h2>
+    <!-- ═══ TESTIMONIALS ═══ -->
+    <section class="py-16 sm:py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">What Our Clients Say</h2>
                 <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
-                <p class="text-gray-600 max-w-2xl mx-auto">Ready to start your next project with us? Send us a message and we'll get back to you as soon as possible.</p>
+                <p class="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">Don't just take our word for it. Here's what our clients have to say about working with us.</p>
             </div>
-            
-            <div class="flex flex-col md:flex-row">
-                <div class="md:w-1/2 mb-12 md:mb-0 md:pr-12">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div class="bg-white p-6 sm:p-8 rounded-xl shadow-md">
+                    <div class="text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 text-sm sm:text-base">"KP Media transformed EKY Group Of Company's online presence. Their video production team created content that perfectly captured our company's values and mission."</p>
+                    <div class="flex items-center">
+                        <img src="Emma.JPG" alt="Emmanuel Kyeremeh Yeboah" class="w-12 h-12 rounded-full mr-4 object-cover flex-shrink-0">
+                        <div>
+                            <h4 class="font-semibold text-gray-800 text-sm">Emmanuel Kyeremeh Yeboah</h4>
+                            <p class="text-xs text-gray-500">Director, EKY Group Of Companies</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 sm:p-8 rounded-xl shadow-md">
+                    <div class="text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 text-sm sm:text-base">"We were very satisfied with KP Media's photography services. They delivered high-quality product images that met all our requirements."</p>
+                    <div class="flex items-center">
+                        <img src="images/Hero.JPG" alt="Seth Okyere" class="w-12 h-12 rounded-full mr-4 object-cover flex-shrink-0">
+                        <div>
+                            <h4 class="font-semibold text-gray-800 text-sm">Seth Okyere</h4>
+                            <p class="text-xs text-gray-500">CEO Of VVIM Consult</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 sm:p-8 rounded-xl shadow-md sm:col-span-2 lg:col-span-1">
+                    <div class="text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 text-sm sm:text-base">"KP Media provided excellent social media management services. They helped us establish a consistent posting schedule and improved our online presence."</p>
+                    <div class="flex items-center">
+                        <img src="Princess.jpg" alt="Princess Esther" class="w-12 h-12 rounded-full mr-4 object-cover flex-shrink-0">
+                        <div>
+                            <h4 class="font-semibold text-gray-800 text-sm">Princess Esther</h4>
+                            <p class="text-xs text-gray-500">Business Owner</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ CONTACT ═══ -->
+    <section id="contact" class="py-16 sm:py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Get In Touch</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">Ready to start your next project with us? Send us a message and we'll get back to you as soon as possible.</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-10 lg:gap-16">
+
+                <!-- Contact info + map -->
+                <div class="w-full lg:w-1/2">
                     <h3 class="text-xl font-semibold text-gray-800 mb-6">Contact Information</h3>
-                    
-                    <div class="flex items-start mb-6">
-                        <div class="text-blue-600 mr-4 mt-1">
-                            <i class="fas fa-map-marker-alt text-xl"></i>
-                        </div>
+
+                    <div class="flex items-start mb-5">
+                        <div class="text-blue-600 mr-4 mt-1 flex-shrink-0"><i class="fas fa-map-marker-alt text-xl"></i></div>
                         <div>
                             <h4 class="font-medium text-gray-800">Our Office</h4>
-                            <p class="text-gray-600">Koforidua<br>Eastern Region, Ghana</p>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-start mb-6">
-                        <div class="text-blue-600 mr-4 mt-1">
-                            <i class="fas fa-envelope text-xl"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-medium text-gray-800">Email Us</h4>
-                            <p class="text-gray-600">edufulgodfred22@gmail.com</p>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-start mb-6">
-                        <div class="text-blue-600 mr-4 mt-1">
-                            <i class="fas fa-phone-alt text-xl"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-medium text-gray-800">Call Us</h4>
-                            <p class="text-gray-600">+233 257722786 (Godfred Eduful, CEO)<br>Mon-Fri, 9am-6pm GMT</p>
+                            <p class="text-gray-600 text-sm">Koforidua<br>Eastern Region, Ghana</p>
                         </div>
                     </div>
 
-                    <!-- Added map block -->
-                    <div class="mt-8 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
-                      <h4 class="text-lg font-semibold text-gray-800 px-4 py-3 bg-gray-50">Find Us</h4>
-                      <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.5630777690837!2d-0.1704848847836872!3d6.094684023127254!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdb9395cb7d0f31%3A0x907066a7c482e6aa!2sKoforidua%2C%20Ghana!5e0!3m2!1sen!2sus!4v1700000000000"
-                        class="w-full h-72 border-0"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                      </iframe>
-                      <div class="p-4 text-gray-600">
-                        <p class="font-medium">KP Media Office</p>
-                        <p>Koforidua, Eastern Region, Ghana</p>
-                        <p>Mon - Fri: 9am - 6pm GMT</p>
-                        <!-- <a href="https://maps.app.goo.gl/j33LuQupPoTWbfaf8"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="mt-3 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-                          Open in Google Maps
-                        </a> -->
-                      </div>
+                    <div class="flex items-start mb-5">
+                        <div class="text-blue-600 mr-4 mt-1 flex-shrink-0"><i class="fas fa-envelope text-xl"></i></div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">Email Us</h4>
+                            <p class="text-gray-600 text-sm break-all">edufulgodfred22@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start mb-8">
+                        <div class="text-blue-600 mr-4 mt-1 flex-shrink-0"><i class="fas fa-phone-alt text-xl"></i></div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">Call Us</h4>
+                            <p class="text-gray-600 text-sm">+233 257722786 (Godfred Eduful, CEO)<br>Mon-Fri, 9am-6pm GMT</p>
+                        </div>
+                    </div>
+
+                    <!-- Map -->
+                    <div class="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+                        <h4 class="text-base font-semibold text-gray-800 px-4 py-3 bg-gray-50">Find Us</h4>
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.5630777690837!2d-0.1704848847836872!3d6.094684023127254!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdb9395cb7d0f31%3A0x907066a7c482e6aa!2sKoforidua%2C%20Ghana!5e0!3m2!1sen!2sus!4v1700000000000"
+                            class="w-full h-64 sm:h-72 border-0"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                        <div class="p-4 text-gray-600 text-sm">
+                            <p class="font-medium">KP Media Office</p>
+                            <p>Koforidua, Eastern Region, Ghana</p>
+                            <p>Mon - Fri: 9am - 6pm GMT</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="md:w-1/2">
-                    <div class="relative group w-full max-w-md rounded-lg overflow-hidden shadow-lg mb-8">
-                      <img src="ceo.jpeg"
-                           alt="CEO Founder of KP MEDIA"
-                           class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-
-                      <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <div class="text-center p-4 text-white">
-                          <h3 class="text-xl font-bold mb-2">Godfred Eduful</h3>
-                          <p class="text-sm mb-4">Founder &amp; CEO, KP Media</p>
-
-                          <div class="text-left text-sm">
-                            <h4 class="font-semibold text-white mb-2">Education</h4>
-                            <ul class="list-disc list-inside space-y-1">
-                              <li>BTech Computer Science – Koforidua Technical University</li>
-                              <li>Code Yourself! An Introduction to Programming – The University of Edinburgh (Coursera)</li>
-                              <li>Introduction to Dark Web, Anonymity, and Cryptocurrency – EC Council Certificate</li>
-                            </ul>
-                          </div>
+                <!-- CEO card + Contact form -->
+                <div class="w-full lg:w-1/2 space-y-8">
+                    <!-- CEO card -->
+                    <div class="group relative rounded-xl overflow-hidden shadow-lg">
+                        <img src="ceo.jpeg" alt="CEO Founder of KP MEDIA"
+                             class="w-full h-56 sm:h-64 object-cover transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 p-6">
+                            <div class="text-center text-white">
+                                <h3 class="text-xl font-bold mb-1">Godfred Eduful</h3>
+                                <p class="text-sm mb-4 opacity-80">Founder &amp; CEO, KP Media</p>
+                                <div class="text-left text-sm">
+                                    <h4 class="font-semibold text-white mb-2">Education</h4>
+                                    <ul class="list-disc list-inside space-y-1 opacity-90">
+                                        <li>BTech Computer Science – Koforidua Technical University</li>
+                                        <li>Code Yourself! – The University of Edinburgh (Coursera)</li>
+                                        <li>Introduction to Dark Web, Anonymity & Cryptocurrency – EC Council</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
 
-                    <form id="contactForm" 
-      action="https://formspree.io/f/maqpgbkd" 
-      method="POST"
-      class="bg-gray-50 p-8 rounded-lg shadow-md">
+                    <!-- Contact form — FIX: removed action attr + _redirect, handled via JS only -->
+                    <form id="contactForm" class="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-md space-y-5">
+                        <div>
+                            <label for="name" class="block text-gray-700 font-medium mb-2 text-sm">Your Name</label>
+                            <input type="text" name="name" id="name" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 font-medium mb-2 text-sm">Email Address</label>
+                            <input type="email" name="email" id="email" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="subject" class="block text-gray-700 font-medium mb-2 text-sm">Subject</label>
+                            <input type="text" name="subject" id="subject" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-gray-700 font-medium mb-2 text-sm">Your Message</label>
+                            <textarea name="message" id="message" rows="5" class="form-input resize-none" required></textarea>
+                        </div>
+                        <button type="submit"
+                                class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition duration-300 text-sm sm:text-base">
+                            Send Message
+                        </button>
 
-  <div class="mb-6">
-    <label for="name" class="block text-gray-700 font-medium mb-2">Your Name</label>
-    <input type="text" name="name" id="name" 
-      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" 
-      required>
-  </div>
-
-  <div class="mb-6">
-    <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
-    <input type="email" name="email" id="email" 
-      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" 
-      required>
-  </div>
-
-  <div class="mb-6">
-    <label for="subject" class="block text-gray-700 font-medium mb-2">Subject</label>
-    <input type="text" name="subject" id="subject" 
-      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" 
-      required>
-  </div>
-
-  <div class="mb-6">
-    <label for="message" class="block text-gray-700 font-medium mb-2">Your Message</label>
-    <textarea name="message" id="message" rows="5" 
-      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" 
-      required></textarea>
-  </div>
-
-  <!-- Optional: redirect after submit -->
-  <input type="hidden" name="_redirect" value="https://yourwebsite.com/thank-you.html">
-
-  <button type="submit" 
-    class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
-    Send Message
-  </button>
-</form>
-                    
-                    <div id="formSuccess" class="hidden mt-4 p-4 bg-green-100 text-green-800 rounded-lg">
-                        <i class="fas fa-check-circle mr-2"></i> Your message has been sent successfully! We'll get back to you soon.
-                    </div>
-                    
-                    <div id="formError" class="hidden mt-4 p-4 bg-red-100 text-red-800 rounded-lg">
-                        <i class="fas fa-exclamation-circle mr-2"></i> There was an error sending your message. Please try again or contact us directly.
-                    </div>
+                        <div id="formSuccess" class="hidden p-4 bg-green-100 text-green-800 rounded-lg text-sm">
+                            <i class="fas fa-check-circle mr-2"></i> Your message has been sent successfully! We'll get back to you soon.
+                        </div>
+                        <div id="formError" class="hidden p-4 bg-red-100 text-red-800 rounded-lg text-sm">
+                            <i class="fas fa-exclamation-circle mr-2"></i> There was an error sending your message. Please try again or contact us directly.
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Newsletter Section -->
-    <section class="py-16 bg-blue-600 text-white">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-2xl md:text-3xl font-bold mb-4">Subscribe to Our Newsletter</h2>
-            <p class="max-w-2xl mx-auto mb-8 opacity-90">Stay updated with our latest projects, industry insights, and special offers.</p>
-            
-            <form id="newsletterForm" class="max-w-md mx-auto flex" action="https://formspree.io/f/maqpgbkd" method="POST">
+    <!-- ═══ NEWSLETTER ═══ -->
+    <section class="py-14 sm:py-16 bg-blue-600 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-3">Subscribe to Our Newsletter</h2>
+            <p class="max-w-2xl mx-auto mb-8 opacity-90 text-sm sm:text-base">Stay updated with our latest projects, industry insights, and special offers.</p>
+
+            <form id="newsletterForm" class="max-w-md mx-auto flex flex-col sm:flex-row gap-3 sm:gap-0">
                 <input type="hidden" name="_subject" value="Newsletter Subscription">
-                <input type="email" name="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-l-lg focus:outline-none text-gray-800" required>
-                <button type="submit" id="newsletterSubmit" class="bg-blue-800 px-6 py-3 rounded-r-lg font-semibold hover:bg-blue-900 transition duration-300">Subscribe</button>
+                <input type="email" name="email" placeholder="Your email address"
+                       class="flex-grow px-4 py-3 sm:rounded-l-lg sm:rounded-r-none rounded-lg focus:outline-none text-gray-800 text-sm" required>
+                <button type="submit" id="newsletterSubmit"
+                        class="bg-blue-800 px-6 py-3 sm:rounded-r-lg sm:rounded-l-none rounded-lg font-semibold hover:bg-blue-900 transition duration-300 text-sm whitespace-nowrap">
+                    Subscribe
+                </button>
             </form>
-            
-            <div id="newsletterSuccess" class="hidden mt-4 p-4 bg-green-100 text-green-800 rounded-lg max-w-md mx-auto">
+
+            <div id="newsletterSuccess" class="hidden mt-4 p-4 bg-green-100 text-green-800 rounded-lg max-w-md mx-auto text-sm">
                 <i class="fas fa-check-circle mr-2"></i> Thanks for subscribing! We'll keep you updated.
             </div>
-            
-            <div id="newsletterError" class="hidden mt-4 p-4 bg-red-100 text-red-800 rounded-lg max-w-md mx-auto">
+            <div id="newsletterError" class="hidden mt-4 p-4 bg-red-100 text-red-800 rounded-lg max-w-md mx-auto text-sm">
                 <i class="fas fa-exclamation-circle mr-2"></i> There was an error. Please try again.
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="bg-gray-900 text-white py-12 sm:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
                 <div>
                     <h3 class="text-xl font-bold mb-4">KP Media</h3>
-                    <p class="text-gray-400">Creative media solutions for the digital age. We help brands tell their stories through compelling visuals and strategic content.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">Creative media solutions for the digital age. We help brands tell their stories through compelling visuals and strategic content.</p>
                 </div>
-                
+
                 <div>
                     <h4 class="font-semibold text-lg mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#home" class="text-gray-400 hover:text-white transition">Home</a></li>
-                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Services</a></li>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#home"      class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="#services"  class="text-gray-400 hover:text-white transition">Services</a></li>
                         <li><a href="#portfolio" class="text-gray-400 hover:text-white transition">Portfolio</a></li>
-                        <li><a href="#about" class="text-gray-400 hover:text-white transition">About Us</a></li>
-                        <li><a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                        <li><a href="#about"     class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="#contact"   class="text-gray-400 hover:text-white transition">Contact</a></li>
                     </ul>
                 </div>
-                
+
                 <div>
                     <h4 class="font-semibold text-lg mb-4">Services</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Video Production</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Photography</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Graphic Design</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Web Development</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Digital Marketing</a></li>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Video Production</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Photography</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Graphic Design</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Web Development</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Digital Marketing</a></li>
                     </ul>
                 </div>
-                
+
                 <div>
                     <h4 class="font-semibold text-lg mb-4">Contact</h4>
-                    <address class="not-italic text-gray-400">
-                        <p class="mb-2">Koforidua</p>
-                        <p class="mb-2">Eastern Region, Ghana</p>
-                        <p class="mb-2">edufulgodfred22@gmail.com</p>
+                    <address class="not-italic text-gray-400 text-sm space-y-2">
+                        <p>Koforidua</p>
+                        <p>Eastern Region, Ghana</p>
+                        <p class="break-all">edufulgodfred22@gmail.com</p>
                         <p>+233 257722786 (Godfred Eduful, CEO)</p>
-                        <a href="ceo2.jpeg" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition mt-4">CEO</a>
-                        <a href="tel:+233257722786" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition mt-4">Donate Now</a>
+                        <a href="tel:+233257722786"
+                           class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition mt-3 text-sm">
+                            Donate Now
+                        </a>
                     </address>
                 </div>
             </div>
-            
-            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 mb-4 md:mb-0">© 2025 KP Media. Under the Management of <a href="index.html" class="text-blue-500 hover:text-blue-400 transition">KP Group Of Companies</a>. All rights reserved.</p>
-                <div class="flex space-x-6">
-                    <a href="https://web.facebook.com/godfred.eduful.319" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook"></i></a>
-                    <a href="https://x.com/_kobby_pounds" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
-                    <a href="https://instagram.com/_kp_media" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/" class="text-gray-400 hover:text-white transition"><i class="fab fa-linkedin-in"></i></a>
+
+            <div class="border-t border-gray-800 mt-10 sm:mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p class="text-gray-400 text-sm text-center sm:text-left">
+                    © 2025 KP Media. Under the Management of
+                    <a href="index.html" class="text-blue-400 hover:text-blue-300 transition">KP Group Of Companies</a>.
+                    All rights reserved.
+                </p>
+                <div class="flex space-x-5 text-lg">
+                    <a href="https://web.facebook.com/godfred.eduful.319"              class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook"></i></a>
+                    <a href="https://x.com/_kobby_pounds"                              class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/_kp_media"                          class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/"    class="text-gray-400 hover:text-white transition"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Mobile menu toggle
-        document.getElementById('menu-toggle').addEventListener('click', function() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
+        // ── Loader ──
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.classList.add('hide');
+                setTimeout(() => loader.style.display = 'none', 400);
+            }, 2000);
         });
 
-        // Smooth scrolling for navigation links
+        // ── Mobile menu ──
+        document.getElementById('menu-toggle').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('open');
+        });
+
+        // ── Smooth scroll — only for hash links with matching elements ──
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-                
-                // Close mobile menu if open
-                document.getElementById('mobile-menu').classList.add('hidden');
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('mobile-menu').classList.remove('open');
+                }
             });
         });
 
-        // Form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
+        // ── Contact form (JS fetch only — no action attribute on form) ──
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            
             const form = this;
-            const formData = new FormData(form);
-            const submitButton = form.querySelector('button[type="submit"]');
-            const originalText = submitButton.textContent;
-            
-            // Disable button and show loading
-            submitButton.disabled = true;
-            submitButton.textContent = 'Sending...';
-            
-            // Submit to Formspree
-            fetch(form.action, {
+            const btn = form.querySelector('button[type="submit"]');
+            const orig = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+
+            fetch('https://formspree.io/f/maqpgbkd', {
                 method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
             })
-            .then(response => {
-                if (response.ok) {
-                    // Success
+            .then(res => {
+                if (res.ok) {
                     form.reset();
-                    document.getElementById('formSuccess').classList.remove('hidden');
-                    
-                    // Hide success message after 5 seconds
-                    setTimeout(() => {
-                        document.getElementById('formSuccess').classList.add('hidden');
-                    }, 5000);
+                    showMsg('formSuccess');
                 } else {
-                    // Error
-                    throw new Error('Form submission failed');
+                    showMsg('formError');
                 }
             })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('formError').classList.remove('hidden');
-                
-                // Hide error message after 5 seconds
-                setTimeout(() => {
-                    document.getElementById('formError').classList.add('hidden');
-                }, 5000);
-            })
-            .finally(() => {
-                // Re-enable button
-                submitButton.disabled = false;
-                submitButton.textContent = originalText;
-            });
+            .catch(() => showMsg('formError'))
+            .finally(() => { btn.disabled = false; btn.textContent = orig; });
         });
 
-        // Newsletter form submission
-        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+        // ── Newsletter form ──
+        document.getElementById('newsletterForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            
             const form = this;
-            const formData = new FormData(form);
-            const submitButton = document.getElementById('newsletterSubmit');
-            const originalText = submitButton.textContent;
-            
-            // Disable button and show loading
-            submitButton.disabled = true;
-            submitButton.textContent = 'Subscribing...';
-            
-            // Submit to Formspree
-            fetch(form.action, {
+            const btn = document.getElementById('newsletterSubmit');
+            const orig = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Subscribing...';
+
+            fetch('https://formspree.io/f/maqpgbkd', {
                 method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
             })
-            .then(response => {
-                if (response.ok) {
-                    // Success
-                    form.reset();
-                    document.getElementById('newsletterSuccess').classList.remove('hidden');
-                    
-                    // Hide success message after 5 seconds
-                    setTimeout(() => {
-                        document.getElementById('newsletterSuccess').classList.add('hidden');
-                    }, 5000);
-                } else {
-                    // Error
-                    throw new Error('Newsletter subscription failed');
-                }
+            .then(res => {
+                if (res.ok) { form.reset(); showMsg('newsletterSuccess'); }
+                else         { showMsg('newsletterError'); }
             })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('newsletterError').classList.remove('hidden');
-                
-                // Hide error message after 5 seconds
-                setTimeout(() => {
-                    document.getElementById('newsletterError').classList.add('hidden');
-                }, 5000);
-            })
-            .finally(() => {
-                // Re-enable button
-                submitButton.disabled = false;
-                submitButton.textContent = originalText;
-            });
+            .catch(() => showMsg('newsletterError'))
+            .finally(() => { btn.disabled = false; btn.textContent = orig; });
         });
+
+        function showMsg(id) {
+            const el = document.getElementById(id);
+            el.classList.remove('hidden');
+            setTimeout(() => el.classList.add('hidden'), 5000);
+        }
+
+        // ── Fade-in on scroll ──
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('animate-fadeIn'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.hidden-fade').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
