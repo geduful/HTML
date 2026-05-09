@@ -174,18 +174,33 @@
             border-color: var(--primary);
         }
 
-        .header-btn.primary:hover {
+.header-btn.primary:hover {
             background: var(--primary-dark);
         }
 
-        /* Mobile Menu Toggle */
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
+        /* Sidebar Toggle Button */
+        .sidebar-toggle-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 12px;
             color: var(--text);
-            font-size: 1.5rem;
+            font-family: inherit;
+            font-size: 0.9rem;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-toggle-btn:hover {
+            border-color: var(--primary);
+            background: rgba(255, 77, 0, 0.1);
+        }
+
+        .menu-toggle:hover {
+            color: var(--primary);
         }
 
         /* Sidebar */
@@ -203,55 +218,401 @@
             transition: transform 0.3s ease;
         }
 
+        /* Sidebar Collapse */
+        .sidebar.collapsed {
+            transform: translateX(-280px);
+        }
+
+        .sidebar-collapse-toggle {
+            position: fixed;
+            left: 280px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 50px;
+            background: var(--primary);
+            border: none;
+            border-radius: 0 8px 8px 0;
+            color: white;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar.collapsed + .sidebar-collapse-toggle {
+            left: 0;
+        }
+
+        .main {
+            margin-left: 280px;
+            margin-top: 73px;
+            padding: 2rem;
+            min-height: calc(100vh - 73px);
+            transition: margin-left 0.3s ease;
+        }
+
+        .main.collapsed {
+            margin-left: 0;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 992px) {
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .sidebar-toggle-btn {
+                display: flex;
+            }
+
+            .sidebar-collapse-toggle {
+                display: none;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                width: 300px;
+                padding-top: 1rem;
+                position: fixed;
+                top: 0;
+                height: 100vh;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-close {
+                display: flex;
+            }
+
+            .sidebar-overlay.display {
+                display: block;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .search-bar {
+                display: none;
+            }
+
+            .header-btn span {
+                display: none;
+            }
+
+            .header-actions {
+                gap: 0.5rem;
+            }
+        }
+
+        @media (min-width: 993px) {
+            .sidebar-toggle-btn {
+                display: none;
+            }
+        }
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 73px;
+            left: 0;
+            width: 280px;
+            height: calc(100vh - 73px);
+            background: var(--surface-light);
+            border-right: 1px solid var(--border);
+            padding: 1.5rem;
+            overflow-y: auto;
+            z-index: 999;
+            transition: transform 0.3s ease;
+        }
+
+        /* Sidebar Header with Search */
+        .sidebar-search {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-search input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-search input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .sidebar-search i {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Sidebar Section */
         .sidebar-section {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
 
         .sidebar-title {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-muted);
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--primary);
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 1rem;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
+        .sidebar-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border), transparent);
+        }
+
+        /* Sidebar Links */
         .sidebar-links {
             list-style: none;
         }
 
         .sidebar-links li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
 
         .sidebar-links a {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.75rem 1rem;
+            padding: 0.65rem 0.85rem;
             color: var(--text-muted);
             text-decoration: none;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-left: 2px solid transparent;
         }
 
-        .sidebar-links a:hover,
+        .sidebar-links a:hover {
+            background: rgba(255, 77, 0, 0.08);
+            color: var(--text);
+            border-left-color: var(--primary);
+            padding-left: 1rem;
+        }
+
         .sidebar-links a.active {
-            background: rgba(255, 77, 0, 0.1);
+            background: rgba(255, 77, 0, 0.12);
             color: var(--primary);
+            border-left-color: var(--primary);
+            font-weight: 600;
         }
 
         .sidebar-links a i {
-            width: 20px;
+            width: 18px;
+            text-align: center;
+            font-size: 0.8rem;
         }
 
-        /* Main Content */
-        .main {
-            margin-left: 280px;
-            margin-top: 73px;
-            padding: 2rem;
-            min-height: calc(100vh - 73px);
+        .sidebar-links a .count {
+            margin-left: auto;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.5rem;
+            background: var(--surface);
+            border-radius: 10px;
+            color: var(--text-muted);
+        }
+
+        /* Sidebar Brand Info */
+        .sidebar-brand {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 14px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .sidebar-brand .logo-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 0.75rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .sidebar-brand h4 {
+            font-family: 'Clash Display', sans-serif;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .sidebar-brand p {
+            font-size: 0.75rem;
+            opacity: 0.85;
+        }
+
+        /* Sidebar Contact Card */
+        .sidebar-contact {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .sidebar-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            transition: all 0.25s ease;
+        }
+
+        .sidebar-contact-item:hover {
+            color: var(--primary);
+        }
+
+        .sidebar-contact-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Sidebar Social */
+        .sidebar-social {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .sidebar-social a {
+            width: 36px;
+            height: 36px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: all 0.25s ease;
+        }
+
+        .sidebar-social a:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Sidebar Close Button */
+        .sidebar-close {
+            display: none;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 36px;
+            height: 36px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-close:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Mobile Sidebar Toggle */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 998;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: 300px;
+                padding-top: 1rem;
+                position: fixed;
+                top: 0;
+                height: 100vh;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-close {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .sidebar-overlay.display {
+                display: block;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .search-bar {
+                display: none;
+            }
+
+            .header-btn span {
+                display: none;
+            }
+
+            .header-actions {
+                gap: 0.5rem;
+            }
         }
 
         /* Hero Section */
@@ -1531,9 +1892,13 @@
                     <i class="fas fa-envelope"></i>
                     <span>Contact</span>
                 </button>
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-th"></i>
+                    <span>Menu</span>
+                </button>
                 <a href="tel:+233257722786" class="header-btn primary">
                     <i class="fas fa-phone-alt"></i>
-                    <span>Call Now</span>
+                    <span>Call</span>
                 </a>
             </div>
         </div>
@@ -1541,20 +1906,66 @@
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
+        <!-- Close Button (Mobile) -->
+        <button class="sidebar-close" onclick="toggleSidebar()">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Brand Header -->
+        <div class="sidebar-brand">
+            <div class="logo-icon">
+                <i class="fas fa-microchip"></i>
+            </div>
+            <h4>KP Electronics</h4>
+            <p>Ghana's Tech Store</p>
+        </div>
+
+        <!-- Search -->
+        <div class="sidebar-search">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search products...">
+        </div>
+
+        <!-- Categories -->
         <div class="sidebar-section">
             <h4 class="sidebar-title">Shop By Category</h4>
             <ul class="sidebar-links">
-                <li><a href="#" class="active" onclick="switchCategory('all')"><i class="fas fa-layer-group"></i> All Products</a></li>
-                <li><a href="#" onclick="switchCategory('tvs')"><i class="fas fa-tv"></i> TVs & Monitors</a></li>
-                <li><a href="#" onclick="switchCategory('laptops')"><i class="fas fa-laptop"></i> Laptops & Computers</a></li>
-                <li><a href="#" onclick="switchCategory('mobile')"><i class="fas fa-mobile-alt"></i> Mobile Phones</a></li>
-                <li><a href="#" onclick="switchCategory('appliances')"><i class="fas fa-blender"></i> Home Appliances</a></li>
-                <li><a href="#" onclick="switchCategory('audio')"><i class="fas fa-headphones"></i> Audio & Sound</a></li>
-                <li><a href="#" onclick="switchCategory('gaming')"><i class="fas fa-gamepad"></i> Gaming</a></li>
-                <li><a href="#" onclick="switchCategory('cameras')"><i class="fas fa-camera"></i> Cameras & Drones</a></li>
+                <li><a href="#" class="active" onclick="switchCategory('all')">
+                    <i class="fas fa-layer-group"></i> All Products
+                    <span class="count">500+</span>
+                </a></li>
+                <li><a href="#" onclick="switchCategory('tvs')">
+                    <i class="fas fa-tv"></i> TVs & Monitors
+                    <span class="count">120+</span>
+                </a></li>
+                <li><a href="#" onclick="switchCategory('laptops')">
+                    <i class="fas fa-laptop"></i> Laptops
+                    <span class="count">80+</span>
+                </a></li>
+                <li><a href="#" onclick="switchCategory('mobile')">
+                    <i class="fas fa-mobile-alt"></i> Mobile
+                    <span class="count">150+</span>
+                </a></li>
+                <li><a href="#" onclick="switchCategory('appliances')">
+                    <i class="fas fa-blender"></i> Appliances
+                    <span class="count">200+</span>
+                </a></li>
+                <li><a href="#" onclick="switchCategory('audio')">
+                    <i class="fas fa-headphones"></i> Audio
+                    <span class="count">95+</span>
+                </a></li>
+                <li><a href="#" onclick="switchCategory('gaming')">
+                    <i class="fas fa-gamepad"></i> Gaming
+                    <span class="count">75+</span>
+                </a></li>
+                <li><a href="#" onclick="switchCategory('cameras')">
+                    <i class="fas fa-camera"></i> Cameras
+                    <span class="count">45+</span>
+                </a></li>
             </ul>
         </div>
 
+        <!-- Services -->
         <div class="sidebar-section">
             <h4 class="sidebar-title">Services</h4>
             <ul class="sidebar-links">
@@ -1565,15 +1976,63 @@
             </ul>
         </div>
 
+        <!-- Contact -->
         <div class="sidebar-section">
-            <h4 class="sidebar-title">Contact Info</h4>
-            <ul class="sidebar-links">
-                <li><a href="#"><i class="fas fa-map-marker-alt"></i> Koforidua, Ghana</a></li>
-                <li><a href="tel:+233257722786"><i class="fas fa-phone-alt"></i> +233 257722786</a></li>
-                <li><a href="mailto:edufulgodfred22@gmail.com"><i class="fas fa-envelope"></i> Email Us</a></li>
-            </ul>
+            <h4 class="sidebar-title">Contact Us</h4>
+            <div class="sidebar-contact">
+                <a href="tel:+233257722786" class="sidebar-contact-item">
+                    <i class="fas fa-phone-alt"></i> +233 257722786
+                </a>
+                <a href="mailto:edufulgodfred22@gmail.com" class="sidebar-contact-item">
+                    <i class="fas fa-envelope"></i> Email Us
+                </a>
+                <a href="#contact" class="sidebar-contact-item">
+                    <i class="fas fa-map-marker-alt"></i> Koforidua, Ghana
+                </a>
+            </div>
+            <div class="sidebar-social">
+                <a href="https://web.facebook.com/godfred.eduful.319"><i class="fab fa-facebook"></i></a>
+                <a href="https://x.com/_kobby_pounds"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com/_kp_media"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/"><i class="fab fa-linkedin-in"></i></a>
+            </div>
         </div>
     </aside>
+
+    <!-- Sidebar Collapse Toggle Button -->
+    <button class="sidebar-collapse-toggle" id="sidebarCollapseBtn" onclick="toggleSidebarCollapse()">
+        <i class="fas fa-chevron-left" id="collapseIcon"></i>
+    </button>
+                <li><a href="#services"><i class="fas fa-shield-alt"></i> Warranty</a></li>
+                <li><a href="#services"><i class="fas fa-credit-card"></i> Installments</a></li>
+            </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="sidebar-section">
+            <h4 class="sidebar-title">Contact Us</h4>
+            <div class="sidebar-contact">
+                <a href="tel:+233257722786" class="sidebar-contact-item">
+                    <i class="fas fa-phone-alt"></i> +233 257722786
+                </a>
+                <a href="mailto:edufulgodfred22@gmail.com" class="sidebar-contact-item">
+                    <i class="fas fa-envelope"></i> Email Us
+                </a>
+                <a href="#contact" class="sidebar-contact-item">
+                    <i class="fas fa-map-marker-alt"></i> Koforidua, Ghana
+                </a>
+            </div>
+            <div class="sidebar-social">
+                <a href="https://web.facebook.com/godfred.eduful.319"><i class="fab fa-facebook"></i></a>
+                <a href="https://x.com/_kobby_pounds"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com/_kp_media"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Sidebar Overlay (Mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
     <!-- Main Content -->
     <main class="main">
@@ -1990,10 +2449,43 @@
         };
 
         let currentCategory = 'all';
+        let sidebarCollapsed = false;
 
-        // Sidebar toggle
+        // Sidebar toggle (mobile)
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('display');
+        }
+
+        // Sidebar collapse toggle (desktop)
+        function toggleSidebarCollapse() {
+            sidebarCollapsed = !sidebarCollapsed;
+            const sidebar = document.getElementById('sidebar');
+            const main = document.querySelector('.main');
+            const btn = document.getElementById('sidebarCollapseBtn');
+            const icon = document.getElementById('collapseIcon');
+            
+            if (sidebarCollapsed) {
+                sidebar.classList.add('collapsed');
+                main.classList.add('collapsed');
+                icon.classList.remove('fa-chevron-left');
+                icon.classList.add('fa-chevron-right');
+            } else {
+                sidebar.classList.remove('collapsed');
+                main.classList.remove('collapsed');
+                icon.classList.remove('fa-chevron-right');
+                icon.classList.add('fa-chevron-left');
+            }
+        }
+
+        // Update active link styling
+        function updateActiveLink(category) {
+            document.querySelectorAll('.sidebar-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('onclick') === "switchCategory('" + category + "')") {
+                    link.classList.add('active');
+                }
+            });
         }
 
         // Switch category tab
@@ -2012,8 +2504,16 @@
             });
             document.getElementById('tab-' + category).classList.add('active');
             
+            // Update sidebar active link
+            updateActiveLink(category);
+            
             // Render products
             renderProducts(category);
+            
+            // Close sidebar on mobile
+            if (window.innerWidth < 992) {
+                toggleSidebar();
+            }
         }
 
         // Render products
