@@ -218,9 +218,12 @@
             transition: transform 0.3s ease;
         }
 
-        /* Sidebar Collapse */
-        .sidebar.collapsed {
+.sidebar.collapsed {
             transform: translateX(-280px);
+        }
+
+        .sidebar.collapsed ~ .sidebar-collapse-toggle {
+            left: 0;
         }
 
         .sidebar-collapse-toggle {
@@ -235,6 +238,160 @@
             border-radius: 0 8px 8px 0;
             color: white;
             cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-collapse-toggle:hover {
+            background: var(--primary-dark);
+        }
+
+        .main {
+            margin-left: 280px;
+            margin-top: 73px;
+            padding: 2rem;
+            min-height: calc(100vh - 73px);
+            transition: margin-left 0.3s ease;
+        }
+
+        .main.collapsed {
+            margin-left: 0;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 992px) {
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .sidebar-toggle-btn {
+                display: flex;
+            }
+
+.sidebar-collapse-toggle {
+                display: none;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                width: 300px;
+                padding-top: 1rem;
+                position: fixed;
+                top: 0;
+                height: 100vh;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-close {
+                display: flex;
+            }
+
+            .sidebar-overlay.display {
+                display: block;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .search-bar {
+                display: none;
+            }
+
+            .header-btn span {
+                display: none;
+            }
+
+            .header-actions {
+                gap: 0.5rem;
+            }
+        }
+
+        @media (min-width: 993px) {
+            .sidebar-toggle-btn {
+                display: none;
+            }
+
+            .sidebar-collapse-toggle {
+                display: flex;
+            }
+        }
+
+        /* Sidebar Collapse for Desktop */
+        .sidebar.collapsed {
+            transform: translateX(-280px);
+        }
+
+        .sidebar.collapsed ~ .sidebar-collapse-toggle,
+        .sidebar-collapse-toggle.collapsed {
+            left: 0;
+        }
+
+        .sidebar-collapse-toggle {
+            position: fixed;
+            left: 280px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 50px;
+            background: var(--primary);
+            border: none;
+            border-radius: 0 8px 8px 0;
+            color: white;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-collapse-toggle:hover {
+            background: var(--primary-dark);
+        }
+
+        .main {
+            margin-left: 280px;
+            margin-top: 73px;
+            padding: 2rem;
+            min-height: calc(100vh - 73px);
+            transition: margin-left 0.3s ease;
+        }
+
+        .main.collapsed {
+            margin-left: 0;
+        }
+
+        /* Hero Section */
+            position: fixed;
+            left: 280px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 50px;
+            background: var(--primary);
+            border: none;
+            border-radius: 0 8px 8px 0;
+            color: white;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-collapse-toggle:hover {
+            background: var(--primary-dark);
+        }
             z-index: 1001;
             display: flex;
             align-items: center;
@@ -382,6 +539,47 @@
             border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
+        }
+
+        /* Sidebar Quick Actions */
+        .sidebar-quick-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-action-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .sidebar-action-btn.call {
+            background: var(--primary);
+            color: white;
+        }
+
+        .sidebar-action-btn.call:hover {
+            background: var(--primary-dark);
+        }
+
+        .sidebar-action-btn.email {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .sidebar-action-btn.email:hover {
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
         .sidebar-title {
@@ -1920,6 +2118,16 @@
             <p>Ghana's Tech Store</p>
         </div>
 
+        <!-- Quick Contact Buttons -->
+        <div class="sidebar-quick-actions">
+            <a href="tel:+233257722786" class="sidebar-action-btn call">
+                <i class="fas fa-phone-alt"></i> Call Now
+            </a>
+            <a href="mailto:edufulgodfred22@gmail.com" class="sidebar-action-btn email">
+                <i class="fas fa-envelope"></i> Email
+            </a>
+        </div>
+
         <!-- Search -->
         <div class="sidebar-search">
             <i class="fas fa-search"></i>
@@ -1986,7 +2194,7 @@
                 <a href="mailto:edufulgodfred22@gmail.com" class="sidebar-contact-item">
                     <i class="fas fa-envelope"></i> Email Us
                 </a>
-                <a href="#contact" class="sidebar-contact-item">
+                <a href="#contact-section" class="sidebar-contact-item">
                     <i class="fas fa-map-marker-alt"></i> Koforidua, Ghana
                 </a>
             </div>
@@ -1999,40 +2207,13 @@
         </div>
     </aside>
 
-    <!-- Sidebar Collapse Toggle Button -->
+    <!-- Sidebar Collapse Toggle Button - Must be AFTER sidebar for CSS sibling selector to work -->
     <button class="sidebar-collapse-toggle" id="sidebarCollapseBtn" onclick="toggleSidebarCollapse()">
         <i class="fas fa-chevron-left" id="collapseIcon"></i>
     </button>
-                <li><a href="#services"><i class="fas fa-shield-alt"></i> Warranty</a></li>
-                <li><a href="#services"><i class="fas fa-credit-card"></i> Installments</a></li>
-            </ul>
-        </div>
-
-        <!-- Contact -->
-        <div class="sidebar-section">
-            <h4 class="sidebar-title">Contact Us</h4>
-            <div class="sidebar-contact">
-                <a href="tel:+233257722786" class="sidebar-contact-item">
-                    <i class="fas fa-phone-alt"></i> +233 257722786
-                </a>
-                <a href="mailto:edufulgodfred22@gmail.com" class="sidebar-contact-item">
-                    <i class="fas fa-envelope"></i> Email Us
-                </a>
-                <a href="#contact" class="sidebar-contact-item">
-                    <i class="fas fa-map-marker-alt"></i> Koforidua, Ghana
-                </a>
-            </div>
-            <div class="sidebar-social">
-                <a href="https://web.facebook.com/godfred.eduful.319"><i class="fab fa-facebook"></i></a>
-                <a href="https://x.com/_kobby_pounds"><i class="fab fa-twitter"></i></a>
-                <a href="https://instagram.com/_kp_media"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-        </div>
-    </aside>
 
     <!-- Sidebar Overlay (Mobile) -->
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
     <!-- Main Content -->
     <main class="main">
@@ -2047,7 +2228,7 @@
                         <a href="#products" class="btn btn-primary">
                             <i class="fas fa-shopping-bag"></i> Shop Now
                         </a>
-                        <a href="#contact" class="btn btn-outline">
+                        <a href="#contact-section" class="btn btn-outline">
                             <i class="fas fa-headset"></i> Contact Us
                         </a>
                     </div>
@@ -2205,7 +2386,7 @@
         </section>
 
         <!-- Contact -->
-        <section class="section" id="contact">
+        <section class="section" id="contact-section">
             <div class="contact-section">
                 <div class="contact-info">
                     <h2>Get In <span>Touch</span></h2>
@@ -2335,7 +2516,7 @@
                     <li><a href="#home">Home</a></li>
                     <li><a href="#products">Products</a></li>
                     <li><a href="#services">Services</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#contact-section">Contact</a></li>
                 </ul>
             </div>
 
@@ -2468,11 +2649,13 @@
             if (sidebarCollapsed) {
                 sidebar.classList.add('collapsed');
                 main.classList.add('collapsed');
+                btn.style.left = '0';
                 icon.classList.remove('fa-chevron-left');
                 icon.classList.add('fa-chevron-right');
             } else {
                 sidebar.classList.remove('collapsed');
                 main.classList.remove('collapsed');
+                btn.style.left = '280px';
                 icon.classList.remove('fa-chevron-right');
                 icon.classList.add('fa-chevron-left');
             }
