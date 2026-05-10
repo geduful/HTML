@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="icon" href="images/mylogo.jpeg">
@@ -1868,6 +1868,45 @@
             font-size: 1rem;
         }
 
+        .bank-waiting {
+            background: rgba(255, 77, 0, 0.08);
+            border: 1px solid rgba(255, 77, 0, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .bank-waiting p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .waiting-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 0.25rem;
+        }
+
+        .waiting-dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: dotPulse 1.4s infinite ease-in-out both;
+        }
+
+        .waiting-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .waiting-dots span:nth-child(2) { animation-delay: -0.16s; }
+        .waiting-dots span:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes dotPulse {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
         .bank-instructions {
             background: rgba(255, 77, 0, 0.08);
             border: 1px solid rgba(255, 77, 0, 0.2);
@@ -2377,7 +2416,7 @@
             }
         }
 
-        /* 992px and below — tablet landscape, sidebar becomes off-canvas */
+        /* 992px and below â€” tablet landscape, sidebar becomes off-canvas */
         @media (max-width: 992px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -2480,7 +2519,7 @@
             }
         }
 
-        /* 768px and below — tablet portrait */
+        /* 768px and below â€” tablet portrait */
         @media (max-width: 768px) {
             html {
                 font-size: 15px;
@@ -2627,7 +2666,7 @@
             }
         }
 
-        /* 640px and below — large phones */
+        /* 640px and below â€” large phones */
         @media (max-width: 640px) {
             .header-content {
                 padding: 0.75rem 1rem;
@@ -2820,7 +2859,7 @@
             }
         }
 
-        /* 480px and below — small phones */
+        /* 480px and below â€” small phones */
         @media (max-width: 480px) {
             html {
                 font-size: 14px;
@@ -2908,7 +2947,7 @@
             }
         }
 
-        /* 380px and below — very small phones */
+        /* 380px and below â€” very small phones */
         @media (max-width: 380px) {
             html {
                 font-size: 13px;
@@ -3429,7 +3468,7 @@
         <div class="cart-footer" id="cartFooter" style="display:none">
             <div class="cart-total">
                 <span>Total</span>
-                <span id="cartTotal">GH₵ 0</span>
+                <span id="cartTotal">GHâ‚µ 0</span>
             </div>
             <button class="cart-checkout" onclick="openCheckout()">Checkout</button>
         </div>
@@ -3445,7 +3484,7 @@
                 <div class="checkout-items" id="checkoutItems"></div>
                 <div class="checkout-order-total">
                     <span>Total</span>
-                    <span id="checkoutTotal">GH₵ 0</span>
+                    <span id="checkoutTotal">GHâ‚µ 0</span>
                 </div>
                 <button class="checkout-btn" onclick="goToStep(2)">Proceed to Payment</button>
             </div>
@@ -3536,7 +3575,7 @@
                         </div>
                         <div class="bank-detail-row">
                             <span class="bank-detail-label">Amount</span>
-                            <span class="bank-detail-value bank-amount">GH₵ 0</span>
+                            <span class="bank-detail-value bank-amount">GHâ‚µ 0</span>
                         </div>
                         <div class="bank-detail-row">
                             <span class="bank-detail-label">Reference</span>
@@ -3563,10 +3602,10 @@
                     </div>
                     <div class="form-group">
                         <label>Amount</label>
-                        <div class="selected-payment" id="momoAmount">GH₵ 0</div>
+                        <div class="selected-payment" id="momoAmount">GHâ‚µ 0</div>
                     </div>
                     <p class="checkout-note">You will receive a prompt on your phone to confirm payment.</p>
-                    <button class="checkout-btn" onclick="processPayment()">Pay GH₵ <span id="momoPayAmount">0</span></button>
+                    <button class="checkout-btn" onclick="processPayment()">Pay GHâ‚µ <span id="momoPayAmount">0</span></button>
                     <button class="checkout-btn checkout-btn-secondary" onclick="goToStep(2)">Back</button>
                 </div>
                 <div id="cardForm" style="display:none">
@@ -3978,8 +4017,8 @@
                     <div class="product-category">${p.category}</div>
                     <h3 class="product-name">${p.name}</h3>
                     <div class="product-price">
-                        <span class="current">GH₵ ${p.price.toLocaleString()}</span>
-                        ${p.original ? '<span class="original">GH₵ ' + p.original.toLocaleString() + '</span>' : ''}
+                        <span class="current">GHâ‚µ ${p.price.toLocaleString()}</span>
+                        ${p.original ? '<span class="original">GHâ‚µ ' + p.original.toLocaleString() + '</span>' : ''}
                     </div>
                     <div class="product-actions">
                         <button class="btn-add" onclick="addToCart('${esc(p.name)}')">Add to Cart</button>
@@ -4075,7 +4114,7 @@
 
             footerEl.style.display = 'block';
             const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-            totalEl.textContent = 'GH₵ ' + total.toLocaleString();
+            totalEl.textContent = 'GHâ‚µ ' + total.toLocaleString();
 
             itemsEl.innerHTML = cart.map(item => `
                 <div class="cart-item">
@@ -4085,7 +4124,7 @@
                     <div class="cart-item-info">
                         <div class="cart-item-category">${item.category}</div>
                         <h4>${item.name}</h4>
-                        <div class="cart-item-price">GH₵ ${item.price.toLocaleString()}</div>
+                        <div class="cart-item-price">GHâ‚µ ${item.price.toLocaleString()}</div>
                     </div>
                     <div class="cart-item-actions">
                         <div class="cart-item-qty">
@@ -4107,6 +4146,58 @@
         let currentStep = 1;
         let selectedPayment = 'mtn';
         let pendingOrderRef = '';
+        let activeSSE = null;
+
+        function closeSSE() {
+            if (activeSSE) { activeSSE.close(); activeSSE = null; }
+        }
+
+        function openSSE(txRef) {
+            closeSSE();
+            try {
+                activeSSE = new EventSource('/api/order-status/' + txRef);
+                activeSSE.onmessage = function(e) {
+                    const data = JSON.parse(e.data);
+                    if (data.status === 'paid') {
+                        closeSSE();
+                        document.querySelectorAll('.checkout-step').forEach(s => s.style.display = 'none');
+                        document.getElementById('checkoutStep4').style.display = 'block';
+                        document.getElementById('checkoutProcessing').style.display = 'none';
+                        document.getElementById('checkoutPending').style.display = 'none';
+                        document.getElementById('checkoutSuccess').style.display = 'block';
+                        document.getElementById('checkoutSuccess').querySelector('p').textContent =
+                            'Payment of GH\u20B5 ' + Number(data.amount).toLocaleString() + ' received! Order ' + txRef + ' confirmed.';
+                        clearCartAfterPayment();
+                    }
+                };
+                activeSSE.onerror = function() {
+                    closeSSE();
+                    setTimeout(() => openSSE(txRef), 3000);
+                };
+            } catch(e) {
+                console.log('SSE unavailable, using fallback');
+            }
+        }
+
+        async function createBankOrder(amount) {
+            try {
+                const res = await fetch('/api/create-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount })
+                });
+                const data = await res.json();
+                if (data.success) return data.accountDetails;
+            } catch(e) {
+                console.error('Create order failed', e);
+            }
+            return {
+                bank: 'GC Bank (Ghana Commercial Bank)',
+                accountNumber: '0131001234567',
+                amount,
+                txRef: 'KPEL-' + Date.now()
+            };
+        }
 
         function openCheckout() {
             document.getElementById('checkoutOverlay').classList.add('active');
@@ -4118,7 +4209,7 @@
             const itemsEl = document.getElementById('checkoutItems');
             const totalEl = document.getElementById('checkoutTotal');
             const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-            totalEl.textContent = 'GH₵ ' + total.toLocaleString();
+            totalEl.textContent = 'GHâ‚µ ' + total.toLocaleString();
 
             itemsEl.innerHTML = cart.map(item => `
                 <div class="checkout-item">
@@ -4129,12 +4220,13 @@
                         <h4>${esc(item.name)}</h4>
                         <p>Qty: ${item.qty}</p>
                     </div>
-                    <div class="checkout-item-price">GH₵ ${(item.price * item.qty).toLocaleString()}</div>
+                    <div class="checkout-item-price">GHâ‚µ ${(item.price * item.qty).toLocaleString()}</div>
                 </div>
             `).join('');
         }
 
         function closeCheckout() {
+            closeSSE();
             document.getElementById('checkoutOverlay').classList.remove('active');
         }
 
@@ -4152,9 +4244,9 @@
 
             if (step === 3) {
                 const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-                document.getElementById('momoAmount').textContent = 'GH₵ ' + total.toLocaleString();
-                document.getElementById('momoPayAmount').textContent = 'GH₵ ' + total.toLocaleString();
-                document.getElementById('cardPayAmount').textContent = 'GH₵ ' + total.toLocaleString();
+                document.getElementById('momoAmount').textContent = 'GHâ‚µ ' + total.toLocaleString();
+                document.getElementById('momoPayAmount').textContent = 'GHâ‚µ ' + total.toLocaleString();
+                document.getElementById('cardPayAmount').textContent = 'GHâ‚µ ' + total.toLocaleString();
 
                 const networkNames = { mtn: 'MTN Mobile Money', at: 'AT Money', telecel: 'Telecel Cash' };
                 document.getElementById('selectedNetwork').textContent = networkNames[selectedPayment] || 'Mobile Money';
@@ -4167,9 +4259,15 @@
                     document.getElementById('cardForm').style.display = 'block';
                 } else if (selectedPayment === 'bank') {
                     document.getElementById('bankTransferForm').style.display = 'block';
-                    document.querySelector('.bank-amount').textContent = 'GH₵ ' + total.toLocaleString();
-                    pendingOrderRef = 'KPEL-' + Date.now();
-                    document.getElementById('bankRef').textContent = pendingOrderRef;
+                    document.getElementById('bankWaiting').style.display = 'block';
+                    createBankOrder(total).then(details => {
+                        document.getElementById('bankName').textContent = details.bank;
+                        document.getElementById('bankAccountNumber').textContent = details.accountNumber;
+                        document.getElementById('bankAmount').textContent = 'GH₵ ' + details.amount.toLocaleString();
+                        document.getElementById('bankRefText').textContent = details.txRef;
+                        pendingOrderRef = details.txRef;
+                        openSSE(details.txRef);
+                    });
                 } else {
                     document.getElementById('momoForm').style.display = 'block';
                 }
@@ -4199,7 +4297,7 @@
                 if (!cardName) { setCardError('cardNameError', 'Please enter the cardholder name'); hasError = true; }
                 if (!/^\d{3,4}$/.test(cardCvv)) { setCardError('cardCvvError', 'CVV must be 3 or 4 digits'); hasError = true; }
                 if (!isValidExpiry(cardExp)) { setCardError('cardExpiryError', 'Card is expired or expiry is invalid'); hasError = true; }
-                if (!luhnCheck(cleanNum)) { setCardError('cardNumberError', 'Card number is invalid — please check'); hasError = true; }
+                if (!luhnCheck(cleanNum)) { setCardError('cardNumberError', 'Card number is invalid â€” please check'); hasError = true; }
                 else if (!/^\d{13,19}$/.test(cleanNum)) { setCardError('cardNumberError', 'Card number must be 13-19 digits'); hasError = true; }
                 if (hasError) return;
 
@@ -4217,7 +4315,7 @@
                     },
                     customizations: {
                         title: 'KP Electronics',
-                        description: 'Card payment of GH₵ ' + total.toLocaleString(),
+                        description: 'Card payment of GHâ‚µ ' + total.toLocaleString(),
                         logo: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=100&q=80'
                     },
                     callback: function(response) {
@@ -4225,7 +4323,7 @@
                             document.getElementById('checkoutProcessing').style.display = 'none';
                             document.getElementById('checkoutSuccess').style.display = 'block';
                             document.getElementById('checkoutSuccess').querySelector('p').textContent =
-                                detectCardType(cardNum) + ' payment of GH₵ ' + total.toLocaleString() + ' successful!';
+                                detectCardType(cardNum) + ' payment of GHâ‚µ ' + total.toLocaleString() + ' successful!';
                             clearCartAfterPayment();
                         }
                     },
@@ -4240,13 +4338,14 @@
 
             } else if (selectedPayment === 'bank') {
                 const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-                showProcessing('Placing your order...');
+                showProcessing('Checking your transfer status...');
                 setTimeout(() => {
                     document.getElementById('checkoutProcessing').style.display = 'none';
                     document.getElementById('checkoutPending').style.display = 'block';
                     document.getElementById('pendingText').textContent =
-                        'Your transfer of GH\u20B5 ' + total.toLocaleString() + ' is being verified.';
+                        'Your transfer of GH\u20B5 ' + total.toLocaleString() + ' has been noted. Awaiting confirmation...';
                     document.getElementById('pendingRefDisplay').textContent = pendingOrderRef;
+                    document.getElementById('pendingRefText').style.display = 'block';
                     clearCartAfterPayment();
                 }, 1500);
                 return;
@@ -4274,7 +4373,7 @@
                     return;
                 }
                 if (detected !== selectedPayment) {
-                    phoneError.textContent = 'This number is on ' + networkName(detected) + ' — please select the correct network';
+                    phoneError.textContent = 'This number is on ' + networkName(detected) + ' â€” please select the correct network';
                     phoneError.style.display = 'block';
                     return;
                 }
@@ -4296,7 +4395,7 @@
                     },
                     customizations: {
                         title: 'KP Electronics',
-                        description: 'MoMo payment of GH₵ ' + total.toLocaleString(),
+                        description: 'MoMo payment of GHâ‚µ ' + total.toLocaleString(),
                         logo: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=100&q=80'
                     },
                     callback: function(response) {
@@ -4304,7 +4403,7 @@
                             document.getElementById('checkoutProcessing').style.display = 'none';
                             document.getElementById('checkoutSuccess').style.display = 'block';
                             document.getElementById('checkoutSuccess').querySelector('p').textContent =
-                                'Payment of GH₵ ' + total.toLocaleString() + ' via ' + networkName(detected) + ' successful!';
+                                'Payment of GHâ‚µ ' + total.toLocaleString() + ' via ' + networkName(detected) + ' successful!';
                             clearCartAfterPayment();
                         }
                     },
@@ -4450,3 +4549,9 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
