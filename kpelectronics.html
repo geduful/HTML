@@ -213,10 +213,16 @@
             height: calc(100vh - 73px);
             background: var(--surface-light);
             border-right: 1px solid var(--border);
-            padding: 1.5rem;
-            overflow-y: auto;
             z-index: 999;
             transition: transform 0.3s ease;
+        }
+
+        .sidebar-inner {
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            padding: 1.5rem;
         }
 
 .sidebar.collapsed {
@@ -540,6 +546,7 @@
             border-radius: 10px;
             color: var(--text);
             cursor: pointer;
+            z-index: 10;
             transition: all 0.3s ease;
         }
 
@@ -1612,6 +1619,22 @@
                 height: 50px;
                 font-size: 1.2rem;
             }
+
+            .scroll-top-btn {
+                bottom: calc(1.25rem + 50px + 10px);
+                right: 1.25rem;
+            }
+
+            .fab-container {
+                bottom: calc(1.25rem + 50px + 10px + 48px + 12px);
+                right: 1.25rem;
+            }
+
+            .fab {
+                width: 48px;
+                height: 48px;
+                font-size: 1.3rem;
+            }
         }
 
         /* Checkout Modal */
@@ -2418,11 +2441,19 @@
             .sidebar {
                 transform: translateX(-100%);
                 width: 300px;
-                padding-top: 1rem;
                 position: fixed;
                 top: 0;
                 height: 100vh;
                 z-index: 999;
+                padding: 0;
+            }
+
+            .sidebar-inner {
+                height: 100%;
+                overflow-y: auto;
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
+                padding: calc(1rem + 36px + 0.5rem) 1.5rem 2rem;
             }
 
             .sidebar.open {
@@ -2494,7 +2525,14 @@
             }
 
             .hero-image {
-                display: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .hero-image img {
+                max-width: min(280px, 100%);
+                transform: rotate(-3deg);
             }
 
             .stats-grid {
@@ -2586,11 +2624,21 @@
                 gap: 0.5rem;
                 margin-bottom: 1.25rem;
                 padding-bottom: 1rem;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .categories-tabs::-webkit-scrollbar {
+                display: none;
             }
 
             .category-tab {
                 padding: 0.6rem 1rem;
                 font-size: 0.8rem;
+                white-space: nowrap;
+                flex-shrink: 0;
             }
 
             .categories-grid {
@@ -2665,6 +2713,10 @@
 
         /* 640px and below â€” large phones */
         @media (max-width: 640px) {
+            .hero-image {
+                display: none;
+            }
+
             .header-content {
                 padding: 0.75rem 1rem;
             }
@@ -2820,6 +2872,10 @@
                 font-size: 0.8rem;
             }
 
+            .newsletter {
+                padding: 2rem 1.5rem;
+            }
+
             .service-card {
                 padding: 1.25rem;
             }
@@ -2909,7 +2965,8 @@
             }
 
             .category-products-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.6rem;
             }
 
             .categories-grid {
@@ -2932,6 +2989,23 @@
 
             .stat-card {
                 padding: 0.85rem;
+            }
+
+            .contact-section {
+                padding: 1rem;
+                gap: 1.5rem;
+            }
+
+            .contact-info h2 {
+                font-size: 1.75rem;
+            }
+
+            .newsletter {
+                padding: 1.5rem 1rem;
+            }
+
+            .newsletter h2 {
+                font-size: 1.35rem;
             }
 
             .footer-content {
@@ -2992,6 +3066,7 @@
 
             .category-products-grid {
                 gap: 0.6rem;
+                grid-template-columns: 1fr;
             }
 
             .product-card {
@@ -3014,16 +3089,15 @@
                 gap: 0.6rem;
             }
         }
-    </style>
-/* Floating Action Button Styles */
+    /* Floating Action Button Styles */
 .fab-container {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: calc(2rem + 56px + 12px + 50px + 16px);
+    right: 2rem;
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    z-index: 1000;
+    flex-direction: column-reverse;
+    gap: 12px;
+    z-index: 999;
 }
 
 .fab {
@@ -3106,14 +3180,75 @@
     transform: rotate(90deg);
 }
 
-.newsletter-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 1.5rem;
+/* Newsletter Modal */
+.newsletter-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 1rem;
 }
 
-.newsletter-form input {
+.newsletter-overlay.active {
+    display: flex;
+}
+
+.newsletter-dialog {
+    background: var(--surface-light);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 480px;
+    position: relative;
+    animation: modalFadeIn 0.3s ease;
+}
+
+.newsletter-close {
+    position: absolute;
+    right: 1.25rem;
+    top: 1.25rem;
+    width: 36px;
+    height: 36px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.newsletter-close:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.newsletter-dialog h2 {
+    font-family: 'Clash Display', sans-serif;
+    margin-bottom: 0.75rem;
+}
+
+.newsletter-dialog > p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.nl-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.nl-form input {
+    width: 100%;
     padding: 0.9rem 1.2rem;
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -3124,26 +3259,35 @@
     transition: all 0.3s ease;
 }
 
-.newsletter-form input:focus {
+.nl-form input:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px var(--glow);
 }
 
-.newsletter-form .btn-primary {
+.nl-btn {
+    width: 100%;
+    padding: 0.9rem;
     background: var(--primary);
     color: white;
     border: none;
-    padding: 0.9rem 1.5rem;
     border-radius: 10px;
+    font-family: inherit;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.newsletter-form .btn-primary:hover {
+.nl-btn:hover {
     background: var(--primary-dark);
     transform: translateY(-2px);
+}
+
+.nl-muted {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-align: center;
 }
 
 /* Live Chat Widget Styles */
@@ -3266,8 +3410,8 @@
 /* Scroll to Top Button Styles */
 .scroll-top-btn {
     position: fixed;
-    bottom: 30px;
-    left: 30px;
+    bottom: calc(2rem + 56px + 12px);
+    right: 2rem;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -3296,127 +3440,48 @@
     transform: translateY(-3px);
 }
 
-/* Enhanced Product Card Hover Effects */
-.product-card {
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-    overflow: hidden;
-}
+        /* Pulse animation kept for cart icon */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 77, 0, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 77, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 77, 0, 0); }
+        }
 
-.product-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 16px 32px rgba(0,0,0,0.2);
-}
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
 
-.product-card:hover .product-badge {
-    background: var(--primary-dark);
-}
+        /* Floating elements animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
 
-.product-card:hover .product-actions {
-    opacity: 1;
-    transform: translateY(0);
-}
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
 
-.product-badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    background: var(--primary);
-    color: white;
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-}
+        /* Chat widget responsive */
+        @media (max-width: 768px) {
+            .chat-widget {
+                width: 280px;
+                height: 400px;
+                bottom: 20px;
+                left: 20px;
+            }
+        }
 
-.product-actions {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    justify-content: space-around;
-    padding: 0.8rem 0;
-    opacity: 0;
-    transform: translateY(100%);
-    transition: all 0.4s ease;
-}
-
-.product-actions button {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.3);
-    color: white;
-    padding: 0.5rem 0.8rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    transition: all 0.3s ease;
-}
-
-.product-actions button:hover {
-    background: var(--primary);
-    border-color: var(--primary);
-}
-
-/* Enhanced Animations */
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(255, 77, 0, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(255, 77, 0, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(255, 77, 0, 0); }
-}
-
-.pulse-animation {
-    animation: pulse 2s infinite;
-}
-
-/* Floating elements animation */
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-}
-
-.float-animation {
-    animation: float 4s ease-in-out infinite;
-}
-
-/* Responsive adjustments for new components */
-@media (max-width: 768px) {
-    .fab-container {
-        bottom: 20px;
-        right: 20px;
-    }
-    
-    .fab {
-        width: 48px;
-        height: 48px;
-        font-size: 1.3rem;
-    }
-    
-    .chat-widget {
-        width: 280px;
-        height: 400px;
-        bottom: 20px;
-        left: 20px;
-    }
-    
-    .scroll-top-btn {
-        width: 45px;
-        height: 45px;
-        bottom: 20px;
-        left: 20px;
-    }
-    
-    .modal-content {
-        width: 95%;
-        margin: 10% auto;
-        padding: 2rem;
-    }
-}
+        @media (max-width: 480px) {
+            .chat-widget {
+                width: calc(100vw - 40px);
+                height: 380px;
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+            }
+        }
+</style>
 </head>
 <body>
     <!-- Header -->
@@ -3457,105 +3522,107 @@
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
-        <!-- Close Button (Mobile) -->
+        <!-- Close Button (Mobile) — outside scroll container -->
         <button class="sidebar-close" onclick="toggleSidebar()">
             <i class="fas fa-times"></i>
         </button>
 
-        <!-- Brand Header -->
-        <div class="sidebar-brand">
-            <div class="logo-icon">
-                <i class="fas fa-microchip"></i>
+        <div class="sidebar-inner">
+            <!-- Brand Header -->
+            <div class="sidebar-brand">
+                <div class="logo-icon">
+                    <i class="fas fa-microchip"></i>
+                </div>
+                <h4>KP Electronics</h4>
+                <p>Ghana's Tech Store</p>
             </div>
-            <h4>KP Electronics</h4>
-            <p>Ghana's Tech Store</p>
-        </div>
 
-        <!-- Quick Contact Buttons -->
-        <div class="sidebar-quick-actions">
-            <a href="tel:+233257722786" class="sidebar-action-btn call">
-                <i class="fas fa-phone-alt"></i> Call Now
-            </a>
-            <a href="mailto:edufulgodfred22@gmail.com" class="sidebar-action-btn email">
-                <i class="fas fa-envelope"></i> Email
-            </a>
-        </div>
-
-        <!-- Search -->
-        <div class="sidebar-search">
-            <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search products...">
-        </div>
-
-        <!-- Categories -->
-        <div class="sidebar-section">
-            <h4 class="sidebar-title">Shop By Category</h4>
-            <ul class="sidebar-links">
-                <li><a href="#" class="active" onclick="switchCategory('all'); return false;">
-                    <i class="fas fa-layer-group"></i> All Products
-                    <span class="count">500+</span>
-                </a></li>
-                <li><a href="#" onclick="switchCategory('tvs'); return false;">
-                    <i class="fas fa-tv"></i> TVs & Monitors
-                    <span class="count">120+</span>
-                </a></li>
-                <li><a href="#" onclick="switchCategory('laptops'); return false;">
-                    <i class="fas fa-laptop"></i> Laptops
-                    <span class="count">80+</span>
-                </a></li>
-                <li><a href="#" onclick="switchCategory('mobile'); return false;">
-                    <i class="fas fa-mobile-alt"></i> Mobile
-                    <span class="count">150+</span>
-                </a></li>
-                <li><a href="#" onclick="switchCategory('appliances'); return false;">
-                    <i class="fas fa-blender"></i> Appliances
-                    <span class="count">200+</span>
-                </a></li>
-                <li><a href="#" onclick="switchCategory('audio'); return false;">
-                    <i class="fas fa-headphones"></i> Audio
-                    <span class="count">95+</span>
-                </a></li>
-                <li><a href="#" onclick="switchCategory('gaming'); return false;">
-                    <i class="fas fa-gamepad"></i> Gaming
-                    <span class="count">75+</span>
-                </a></li>
-                <li><a href="#" onclick="switchCategory('cameras'); return false;">
-                    <i class="fas fa-camera"></i> Cameras
-                    <span class="count">45+</span>
-                </a></li>
-            </ul>
-        </div>
-
-        <!-- Services -->
-        <div class="sidebar-section">
-            <h4 class="sidebar-title">Services</h4>
-            <ul class="sidebar-links">
-                <li><a href="#services"><i class="fas fa-tools"></i> Repairs</a></li>
-                <li><a href="#services"><i class="fas fa-truck"></i> Delivery</a></li>
-                <li><a href="#services"><i class="fas fa-shield-alt"></i> Warranty</a></li>
-                <li><a href="#services"><i class="fas fa-credit-card"></i> Installments</a></li>
-            </ul>
-        </div>
-
-        <!-- Contact -->
-        <div class="sidebar-section">
-            <h4 class="sidebar-title">Contact Us</h4>
-            <div class="sidebar-contact">
-                <a href="tel:+233257722786" class="sidebar-contact-item">
-                    <i class="fas fa-phone-alt"></i> +233 257722786
+            <!-- Quick Contact Buttons -->
+            <div class="sidebar-quick-actions">
+                <a href="tel:+233257722786" class="sidebar-action-btn call">
+                    <i class="fas fa-phone-alt"></i> Call Now
                 </a>
-                <a href="mailto:edufulgodfred22@gmail.com" class="sidebar-contact-item">
-                    <i class="fas fa-envelope"></i> Email Us
-                </a>
-                <a href="#contact-section" class="sidebar-contact-item">
-                    <i class="fas fa-map-marker-alt"></i> Koforidua, Ghana
+                <a href="mailto:edufulgodfred22@gmail.com" class="sidebar-action-btn email">
+                    <i class="fas fa-envelope"></i> Email
                 </a>
             </div>
-            <div class="sidebar-social">
-                <a href="https://web.facebook.com/godfred.eduful.319"><i class="fab fa-facebook"></i></a>
-                <a href="https://x.com/_kobby_pounds"><i class="fab fa-twitter"></i></a>
-                <a href="https://instagram.com/_kp_media"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/"><i class="fab fa-linkedin-in"></i></a>
+
+            <!-- Search -->
+            <div class="sidebar-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search products...">
+            </div>
+
+            <!-- Categories -->
+            <div class="sidebar-section">
+                <h4 class="sidebar-title">Shop By Category</h4>
+                <ul class="sidebar-links">
+                    <li><a href="#" class="active" onclick="switchCategory('all'); return false;">
+                        <i class="fas fa-layer-group"></i> All Products
+                        <span class="count">500+</span>
+                    </a></li>
+                    <li><a href="#" onclick="switchCategory('tvs'); return false;">
+                        <i class="fas fa-tv"></i> TVs & Monitors
+                        <span class="count">120+</span>
+                    </a></li>
+                    <li><a href="#" onclick="switchCategory('laptops'); return false;">
+                        <i class="fas fa-laptop"></i> Laptops
+                        <span class="count">80+</span>
+                    </a></li>
+                    <li><a href="#" onclick="switchCategory('mobile'); return false;">
+                        <i class="fas fa-mobile-alt"></i> Mobile
+                        <span class="count">150+</span>
+                    </a></li>
+                    <li><a href="#" onclick="switchCategory('appliances'); return false;">
+                        <i class="fas fa-blender"></i> Appliances
+                        <span class="count">200+</span>
+                    </a></li>
+                    <li><a href="#" onclick="switchCategory('audio'); return false;">
+                        <i class="fas fa-headphones"></i> Audio
+                        <span class="count">95+</span>
+                    </a></li>
+                    <li><a href="#" onclick="switchCategory('gaming'); return false;">
+                        <i class="fas fa-gamepad"></i> Gaming
+                        <span class="count">75+</span>
+                    </a></li>
+                    <li><a href="#" onclick="switchCategory('cameras'); return false;">
+                        <i class="fas fa-camera"></i> Cameras
+                        <span class="count">45+</span>
+                    </a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="sidebar-section">
+                <h4 class="sidebar-title">Services</h4>
+                <ul class="sidebar-links">
+                    <li><a href="#services"><i class="fas fa-tools"></i> Repairs</a></li>
+                    <li><a href="#services"><i class="fas fa-truck"></i> Delivery</a></li>
+                    <li><a href="#services"><i class="fas fa-shield-alt"></i> Warranty</a></li>
+                    <li><a href="#services"><i class="fas fa-credit-card"></i> Installments</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="sidebar-section">
+                <h4 class="sidebar-title">Contact Us</h4>
+                <div class="sidebar-contact">
+                    <a href="tel:+233257722786" class="sidebar-contact-item">
+                        <i class="fas fa-phone-alt"></i> +233 257722786
+                    </a>
+                    <a href="mailto:edufulgodfred22@gmail.com" class="sidebar-contact-item">
+                        <i class="fas fa-envelope"></i> Email Us
+                    </a>
+                    <a href="#contact-section" class="sidebar-contact-item">
+                        <i class="fas fa-map-marker-alt"></i> Koforidua, Ghana
+                    </a>
+                </div>
+                <div class="sidebar-social">
+                    <a href="https://web.facebook.com/godfred.eduful.319"><i class="fab fa-facebook"></i></a>
+                    <a href="https://x.com/_kobby_pounds"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/_kp_media"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/"><i class="fab fa-linkedin-in"></i></a>
+                </div>
             </div>
         </div>
     </aside>
@@ -4115,6 +4182,50 @@
             <p>&copy; 2026 KP Electronics. <a href="index.html">KP Group Of Companies</a>. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Floating Action Buttons -->
+    <div class="fab-container">
+        <button class="fab" onclick="window.open('https://wa.me/233257722786', '_blank')" title="Chat on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </button>
+        <button class="fab fab-secondary" onclick="document.getElementById('newsletter-modal').classList.add('active')" title="Subscribe to Newsletter">
+            <i class="fas fa-envelope"></i>
+        </button>
+    </div>
+
+    <!-- Newsletter Subscription Modal -->
+    <div id="newsletter-modal" class="newsletter-overlay" onclick="if(event.target===this)this.classList.remove('active')">
+        <div class="newsletter-dialog">
+            <span class="newsletter-close" onclick="document.getElementById('newsletter-modal').classList.remove('active')">&times;</span>
+            <h2 class="font-display">Stay Updated with KP Electronics</h2>
+            <p>Get the latest deals, new arrivals, and exclusive offers directly to your inbox.</p>
+            <form id="newsletter-form" class="nl-form">
+                <input type="email" id="newsletter-email" placeholder="Enter your email address" required>
+                <button type="submit" class="nl-btn">Subscribe</button>
+                <p class="nl-muted">We respect your privacy. Unsubscribe anytime.</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Live Chat Widget -->
+    <div class="chat-widget">
+        <div class="chat-header">
+            <i class="fas fa-comments"></i>
+            <span>Need Help?</span>
+        </div>
+        <div class="chat-body">
+            <p class="chat-message bot-message">Hello! How can I assist you today?</p>
+        </div>
+        <div class="chat-footer">
+            <input type="text" placeholder="Type a message..." id="chat-input">
+            <button class="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" class="scroll-top-btn" title="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <script src="https://checkout.flutterwave.com/v3.js"></script>
     <script>
@@ -4923,11 +5034,14 @@
             searchProducts(this.value);
         });
 
-        // Newsletter form
-        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            showToast('Thanks for subscribing!');
-            this.reset();
+        // Newsletter forms (inline + modal)
+        document.querySelectorAll('.newsletter-form, #newsletter-form').forEach(function(form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                showToast('Thanks for subscribing!');
+                this.reset();
+                document.getElementById('newsletter-modal').classList.remove('active');
+            });
         });
 
         // Scroll effect for header
@@ -4940,190 +5054,58 @@
             }
         });
 
+        // Scroll to Top Button
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Chat Widget Toggle
+        document.querySelector('.chat-header')?.addEventListener('click', function() {
+            document.querySelector('.chat-widget')?.classList.toggle('active');
+        });
+
+        // Chat send
+        document.querySelector('.chat-send-btn')?.addEventListener('click', function() {
+            const input = document.getElementById('chat-input');
+            const msg = input.value.trim();
+            if (msg) {
+                const chatBody = document.querySelector('.chat-body');
+                chatBody.innerHTML += '<p class="chat-message user-message">' + msg + '</p>';
+                chatBody.scrollTop = chatBody.scrollHeight;
+                input.value = '';
+            }
+        });
+        document.getElementById('chat-input')?.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') document.querySelector('.chat-send-btn')?.click();
+        });
+
+        // Modal close
+        document.querySelectorAll('.close-modal').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                this.closest('.modal').style.display = 'none';
+            });
+        });
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        });
+
         // Initialize products on page load
         document.addEventListener('DOMContentLoaded', function() {
             loadCart();
             updateCartUI();
             switchCategory('all');
         });
-    </script>
-// Newsletter Modal Functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const newsletterModal = document.getElementById('newsletter-modal');
-    const closeModal = document.querySelector('.close-modal');
-    const newsletterForm = document.getElementById('newsletter-form');
-    
-    // Close modal when clicking X
-    if (closeModal) {
-        closeModal.addEventListener('click', function() {
-            newsletterModal.style.display = 'none';
-        });
-    }
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-        if (event.target === newsletterModal) {
-            newsletterModal.style.display = 'none';
-        }
-    });
-    
-    // Handle newsletter form submission
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const emailInput = document.getElementById('newsletter-email');
-            const email = emailInput.value.trim();
-            
-            if (email) {
-                // Here you would typically send the email to your backend
-                // For now, we'll show a success message
-                alert('Thank you for subscribing! We\'ll keep you updated with our latest offers.');
-                emailInput.value = '';
-                newsletterModal.style.display = 'none';
-            }
-        });
-    }
-    
-    // Live Chat Widget Functionality
-    const chatWidget = document.querySelector('.chat-widget');
-    const chatHeader = document.querySelector('.chat-header');
-    const chatInput = document.getElementById('chat-input');
-    const chatSendBtn = document.querySelector('.chat-send-btn');
-    const chatBody = document.querySelector('.chat-body');
-    
-    // Toggle chat widget
-    if (chatHeader && chatWidget) {
-        chatHeader.addEventListener('click', function() {
-            chatWidget.classList.toggle('active');
-        });
-    }
-    
-    // Send chat message
-    function sendChatMessage() {
-        const message = chatInput.value.trim();
-        if (message) {
-            // Add user message
-            const userMessage = document.createElement('p');
-            userMessage.className = 'chat-message user-message';
-            userMessage.textContent = message;
-            chatBody.appendChild(userMessage);
-            
-            // Clear input
-            chatInput.value = '';
-            
-            // Scroll to bottom
-            chatBody.scrollTop = chatBody.scrollHeight;
-            
-            // Simulate bot response after delay
-            setTimeout(function() {
-                const botMessage = document.createElement('p');
-                botMessage.className = 'chat-message bot-message';
-                botMessage.textContent = 'Thanks for your message! Our support team will get back to you shortly.';
-                chatBody.appendChild(botMessage);
-                chatBody.scrollTop = chatBody.scrollHeight;
-            }, 1500);
-        }
-    }
-    
-    if (chatSendBtn) {
-        chatSendBtn.addEventListener('click', sendChatMessage);
-    }
-    
-    if (chatInput) {
-        chatInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendChatMessage();
-            }
-        });
-    }
-    
-    // Scroll to Top Button Functionality
-    const scrollTopBtn = document.getElementById('scrollTopBtn');
-    
-    window.addEventListener('scroll', function() {
-        if (scrollTopBtn) {
-            if (window.pageYOffset > 300) {
-                scrollTopBtn.classList.add('visible');
-            } else {
-                scrollTopBtn.classList.remove('visible');
-            }
-        }
-    });
-    
-    if (scrollTopBtn) {
-        scrollTopBtn.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
-    
-    // Add pulse animation to logo for visual appeal
-    const logoIcon = document.querySelector('.logo-icon');
-    if (logoIcon) {
-        logoIcon.classList.add('pulse-animation');
-    }
-    
-    // Add float animation to featured products
-    const featuredProducts = document.querySelectorAll('.product-card.featured, .product-card:nth-child(3n)');
-    featuredProducts.forEach(function(product, index) {
-        product.style.animationDelay = (index * 0.5) + 's';
-        product.classList.add('float-animation');
-    });
-});
+</script>
+
 </body>
-    <!-- Floating Action Button for Quick Contact -->
-    <div class="fab-container">
-        <button class="fab" onclick="window.open('https://wa.me/', '_blank')" title="Chat on WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-        </button>
-        <button class="fab fab-secondary" onclick="document.getElementById('newsletter-modal').style.display='block'" title="Subscribe to Newsletter">
-            <i class="fas fa-envelope"></i>
-        </button>
-    </div>
-
-    <!-- Newsletter Subscription Modal -->
-    <div id="newsletter-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2 class="font-display">Stay Updated with KP Electronics</h2>
-            <p>Get the latest deals, new arrivals, and exclusive offers directly to your inbox.</p>
-            <form id="newsletter-form" class="newsletter-form">
-                <div class="form-group">
-                    <input type="email" id="newsletter-email" placeholder="Enter your email address" required>
-                    <button type="submit" class="btn-primary">Subscribe</button>
-                </div>
-                <p class="text-muted small">We respect your privacy. Unsubscribe anytime.</p>
-            </form>
-        </div>
-    </div>
-
-    <!-- Live Chat Widget -->
-    <div class="chat-widget">
-        <div class="chat-header">
-            <i class="fas fa-comments"></i>
-            <span>Need Help?</span>
-        </div>
-        <div class="chat-body">
-            <p class="chat-message bot-message">Hello! How can I assist you today?</p>
-        </div>
-        <div class="chat-footer">
-            <input type="text" placeholder="Type a message..." id="chat-input">
-            <button class="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
-
-    <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" title="Back to Top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
 </html>
-
-
-
-
-
-
-
-
