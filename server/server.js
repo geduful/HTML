@@ -115,7 +115,7 @@ app.post('/api/webhook', (req, res) => {
       // Close SSE after notification
       order.sseRes.end();
       order.sseRes = null;
-      console.log(`Payment detected: ${tx_ref} — GH\u20B5 ${amount}`);
+      console.log(`Payment detected: ${tx_ref} — GHS ${amount}`);
     }
   }
 

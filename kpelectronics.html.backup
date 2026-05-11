@@ -777,10 +777,11 @@
             color: var(--primary);
         }
 
-.product-price .original {
-             font-size: 0.9rem;
-             color: var(--text-muted);
-             text-decoration: line-through         }
+        .product-price .original {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
 
         .product-actions {
             display: flex;
@@ -2161,10 +2162,11 @@
             color: var(--primary);
         }
 
-.product-modal-card .original-price {
-             font-size: 0.8rem;
-             color: var(--text-muted);
-             text-decoration: line-through         }
+        .product-modal-card .original-price {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
 
         .product-modal-card .btn-add-modal {
             width: 100%;
@@ -2345,7 +2347,8 @@
         .product-card .product-price .original {
             font-size: 0.9rem;
             color: var(--text-muted);
-            text-decoration: line-through         }
+            text-decoration: line-through;
+        }
 
         .product-card .product-actions {
             display: flex;
@@ -3015,408 +3018,6 @@
             }
         }
     </style>
-/* Floating Action Button Styles */
-.fab-container {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    z-index: 1000;
-}
-
-.fab {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--primary);
-    color: white;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.fab:hover {
-    background: var(--primary-dark);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-}
-
-.fab-secondary {
-    background: var(--surface-light);
-    color: var(--text);
-    border: 1px solid var(--border);
-}
-
-.fab-secondary:hover {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
-}
-
-/* Modal Styles */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1001;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.8);
-}
-
-.modal-content {
-    background-color: var(--surface-light);
-    margin: 5% auto;
-    padding: 2.5rem;
-    width: 90%;
-    max-width: 500px;
-    border-radius: 16px;
-    position: relative;
-    animation: modalFadeIn 0.3s ease;
-}
-
-@keyframes modalFadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.close-modal {
-    position: absolute;
-    right: 1.5rem;
-    top: 1.5rem;
-    font-size: 1.8rem;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.close-modal:hover {
-    color: var(--primary);
-    transform: rotate(90deg);
-}
-
-.newsletter-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-.newsletter-form input {
-    padding: 0.9rem 1.2rem;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: var(--surface);
-    color: var(--text);
-    font-family: inherit;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.newsletter-form input:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px var(--glow);
-}
-
-.newsletter-form .btn-primary {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 0.9rem 1.5rem;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.newsletter-form .btn-primary:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-}
-
-/* Live Chat Widget Styles */
-.chat-widget {
-    position: fixed;
-    bottom: 30px;
-    left: 30px;
-    width: 320px;
-    height: 450px;
-    background: var(--surface-light);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-    display: flex;
-    flex-direction: column;
-    z-index: 1000;
-    border: 1px solid var(--border);
-    overflow: hidden;
-    transform: scale(0.8);
-    opacity: 0;
-    transition: all 0.4s ease;
-}
-
-.chat-widget.active {
-    transform: scale(1);
-    opacity: 1;
-}
-
-.chat-header {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    color: white;
-    padding: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.chat-header i {
-    font-size: 1.3rem;
-}
-
-.chat-header span {
-    font-weight: 600;
-    font-size: 1.1rem;
-}
-
-.chat-body {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1.2rem;
-    background: var(--surface);
-}
-
-.chat-message {
-    margin-bottom: 1rem;
-    max-width: 80%;
-    padding: 0.8rem 1.2rem;
-    border-radius: 18px;
-    font-size: 0.9rem;
-    line-height: 1.4;
-}
-
-.bot-message {
-    background: var(--primary);
-    color: white;
-    margin-left: 0;
-    border-bottom-left-radius: 8px;
-}
-
-.user-message {
-    background: var(--surface-lighter);
-    color: var(--text);
-    margin-left: auto;
-    border-bottom-right-radius: 8px;
-}
-
-.chat-footer {
-    display: flex;
-    padding: 1rem;
-    border-top: 1px solid var(--border);
-    gap: 0.5rem;
-}
-
-.chat-footer input {
-    flex: 1;
-    padding: 0.9rem 1.2rem;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: var(--surface);
-    color: var(--text);
-    font-family: inherit;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
-
-.chat-footer input:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px var(--glow);
-}
-
-.chat-send-btn {
-    background: var(--primary);
-    color: white;
-    border: none;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.chat-send-btn:hover {
-    background: var(--primary-dark);
-    transform: scale(1.1);
-}
-
-/* Scroll to Top Button Styles */
-.scroll-top-btn {
-    position: fixed;
-    bottom: 30px;
-    left: 30px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: var(--primary);
-    color: white;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 999;
-}
-
-.scroll-top-btn.visible {
-    opacity: 1;
-    visibility: visible;
-}
-
-.scroll-top-btn:hover {
-    background: var(--primary-dark);
-    transform: translateY(-3px);
-}
-
-/* Enhanced Product Card Hover Effects */
-.product-card {
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-    overflow: hidden;
-}
-
-.product-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 16px 32px rgba(0,0,0,0.2);
-}
-
-.product-card:hover .product-badge {
-    background: var(--primary-dark);
-}
-
-.product-card:hover .product-actions {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.product-badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    background: var(--primary);
-    color: white;
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-}
-
-.product-actions {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    justify-content: space-around;
-    padding: 0.8rem 0;
-    opacity: 0;
-    transform: translateY(100%);
-    transition: all 0.4s ease;
-}
-
-.product-actions button {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.3);
-    color: white;
-    padding: 0.5rem 0.8rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    transition: all 0.3s ease;
-}
-
-.product-actions button:hover {
-    background: var(--primary);
-    border-color: var(--primary);
-}
-
-/* Enhanced Animations */
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(255, 77, 0, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(255, 77, 0, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(255, 77, 0, 0); }
-}
-
-.pulse-animation {
-    animation: pulse 2s infinite;
-}
-
-/* Floating elements animation */
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-}
-
-.float-animation {
-    animation: float 4s ease-in-out infinite;
-}
-
-/* Responsive adjustments for new components */
-@media (max-width: 768px) {
-    .fab-container {
-        bottom: 20px;
-        right: 20px;
-    }
-    
-    .fab {
-        width: 48px;
-        height: 48px;
-        font-size: 1.3rem;
-    }
-    
-    .chat-widget {
-        width: 280px;
-        height: 400px;
-        bottom: 20px;
-        left: 20px;
-    }
-    
-    .scroll-top-btn {
-        width: 45px;
-        height: 45px;
-        bottom: 20px;
-        left: 20px;
-    }
-    
-    .modal-content {
-        width: 95%;
-        margin: 10% auto;
-        padding: 2rem;
-    }
-}
 </head>
 <body>
     <!-- Header -->
@@ -3867,7 +3468,7 @@
         <div class="cart-footer" id="cartFooter" style="display:none">
             <div class="cart-total">
                 <span>Total</span>
-                <span id="cartTotal">GHS 0</span>
+                <span id="cartTotal">GHâ‚µ 0</span>
             </div>
             <button class="cart-checkout" onclick="openCheckout()">Checkout</button>
         </div>
@@ -3883,7 +3484,7 @@
                 <div class="checkout-items" id="checkoutItems"></div>
                 <div class="checkout-order-total">
                     <span>Total</span>
-                    <span id="checkoutTotal">GHS 0</span>
+                    <span id="checkoutTotal">GHâ‚µ 0</span>
                 </div>
                 <button class="checkout-btn" onclick="goToStep(2)">Proceed to Payment</button>
             </div>
@@ -3974,19 +3575,18 @@
                         </div>
                         <div class="bank-detail-row">
                             <span class="bank-detail-label">Amount</span>
-                            <span class="bank-detail-value" id="bankAmount">GHS 0</span>
+                            <span class="bank-detail-value bank-amount">GHâ‚µ 0</span>
                         </div>
                         <div class="bank-detail-row">
                             <span class="bank-detail-label">Reference</span>
-                            <span class="bank-detail-value bank-ref" id="bankRefText">KPEL-XXXXXXXX</span>
+                            <span class="bank-detail-value bank-ref" id="bankRef">KPEL-XXXXXXXX</span>
                         </div>
                     </div>
-                    <div class="bank-waiting" id="bankWaiting">
-                        <div class="waiting-dots"><span></span><span></span><span></span></div>
-                        <p>Waiting for your transfer... We'll notify you instantly once received.</p>
+                    <div class="bank-instructions">
+                        <p><i class="fas fa-info-circle"></i> Transfer the exact amount above to the account details provided. Your order will be processed once payment is confirmed.</p>
                     </div>
                     <button class="checkout-btn" onclick="processPayment()">I've Made the Transfer</button>
-                    <button class="checkout-btn checkout-btn-secondary" onclick="goToStep(2); closeSSE();">Back</button>
+                    <button class="checkout-btn checkout-btn-secondary" onclick="goToStep(2)">Back</button>
                 </div>
                 <div id="momoForm">
                     <h2>Enter Mobile Money Details</h2>
@@ -4002,10 +3602,10 @@
                     </div>
                     <div class="form-group">
                         <label>Amount</label>
-                        <div class="selected-payment" id="momoAmount">GHS 0</div>
+                        <div class="selected-payment" id="momoAmount">GHâ‚µ 0</div>
                     </div>
                     <p class="checkout-note">You will receive a prompt on your phone to confirm payment.</p>
-                    <button class="checkout-btn" onclick="processPayment()">Pay GHS <span id="momoPayAmount">0</span></button>
+                    <button class="checkout-btn" onclick="processPayment()">Pay GHâ‚µ <span id="momoPayAmount">0</span></button>
                     <button class="checkout-btn checkout-btn-secondary" onclick="goToStep(2)">Back</button>
                 </div>
                 <div id="cardForm" style="display:none">
@@ -4417,8 +4017,8 @@
                     <div class="product-category">${p.category}</div>
                     <h3 class="product-name">${p.name}</h3>
                     <div class="product-price">
-                        <span class="current">GHS ${p.price.toLocaleString()}</span>
-                        ${p.original ? '<span class="original">GHS ' + p.original.toLocaleString() + '</span>' : ''}
+                        <span class="current">GHâ‚µ ${p.price.toLocaleString()}</span>
+                        ${p.original ? '<span class="original">GHâ‚µ ' + p.original.toLocaleString() + '</span>' : ''}
                     </div>
                     <div class="product-actions">
                         <button class="btn-add" onclick="addToCart('${esc(p.name)}')">Add to Cart</button>
@@ -4514,7 +4114,7 @@
 
             footerEl.style.display = 'block';
             const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-            totalEl.textContent = 'GHS ' + total.toLocaleString();
+            totalEl.textContent = 'GHâ‚µ ' + total.toLocaleString();
 
             itemsEl.innerHTML = cart.map(item => `
                 <div class="cart-item">
@@ -4524,7 +4124,7 @@
                     <div class="cart-item-info">
                         <div class="cart-item-category">${item.category}</div>
                         <h4>${item.name}</h4>
-                        <div class="cart-item-price">GHS ${item.price.toLocaleString()}</div>
+                        <div class="cart-item-price">GHâ‚µ ${item.price.toLocaleString()}</div>
                     </div>
                     <div class="cart-item-actions">
                         <div class="cart-item-qty">
@@ -4566,7 +4166,7 @@
                         document.getElementById('checkoutPending').style.display = 'none';
                         document.getElementById('checkoutSuccess').style.display = 'block';
                         document.getElementById('checkoutSuccess').querySelector('p').textContent =
-                            'Payment of GHS ' + Number(data.amount).toLocaleString() + ' received! Order ' + txRef + ' confirmed.';
+                            'Payment of GHC ' + Number(data.amount).toLocaleString() + ' received! Order ' + txRef + ' confirmed.';
                         clearCartAfterPayment();
                     }
                 };
@@ -4609,7 +4209,7 @@
             const itemsEl = document.getElementById('checkoutItems');
             const totalEl = document.getElementById('checkoutTotal');
             const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-            totalEl.textContent = 'GHS ' + total.toLocaleString();
+            totalEl.textContent = 'GHâ‚µ ' + total.toLocaleString();
 
             itemsEl.innerHTML = cart.map(item => `
                 <div class="checkout-item">
@@ -4620,7 +4220,7 @@
                         <h4>${esc(item.name)}</h4>
                         <p>Qty: ${item.qty}</p>
                     </div>
-                    <div class="checkout-item-price">GHS ${(item.price * item.qty).toLocaleString()}</div>
+                    <div class="checkout-item-price">GHâ‚µ ${(item.price * item.qty).toLocaleString()}</div>
                 </div>
             `).join('');
         }
@@ -4644,9 +4244,9 @@
 
             if (step === 3) {
                 const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-                document.getElementById('momoAmount').textContent = 'GHS ' + total.toLocaleString();
-                document.getElementById('momoPayAmount').textContent = 'GHS ' + total.toLocaleString();
-                document.getElementById('cardPayAmount').textContent = 'GHS ' + total.toLocaleString();
+                document.getElementById('momoAmount').textContent = 'GHâ‚µ ' + total.toLocaleString();
+                document.getElementById('momoPayAmount').textContent = 'GHâ‚µ ' + total.toLocaleString();
+                document.getElementById('cardPayAmount').textContent = 'GHâ‚µ ' + total.toLocaleString();
 
                 const networkNames = { mtn: 'MTN Mobile Money', at: 'AT Money', telecel: 'Telecel Cash' };
                 document.getElementById('selectedNetwork').textContent = networkNames[selectedPayment] || 'Mobile Money';
@@ -4663,7 +4263,7 @@
                     createBankOrder(total).then(details => {
                         document.getElementById('bankName').textContent = details.bank;
                         document.getElementById('bankAccountNumber').textContent = details.accountNumber;
-                        document.getElementById('bankAmount').textContent = 'GHS ' + details.amount.toLocaleString();
+                        document.getElementById('bankAmount').textContent = 'GHC ' + details.amount.toLocaleString();
                         document.getElementById('bankRefText').textContent = details.txRef;
                         pendingOrderRef = details.txRef;
                         openSSE(details.txRef);
@@ -4715,7 +4315,7 @@
                     },
                     customizations: {
                         title: 'KP Electronics',
-                        description: 'Card payment of GHS ' + total.toLocaleString(),
+                        description: 'Card payment of GHâ‚µ ' + total.toLocaleString(),
                         logo: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=100&q=80'
                     },
                     callback: function(response) {
@@ -4723,7 +4323,7 @@
                             document.getElementById('checkoutProcessing').style.display = 'none';
                             document.getElementById('checkoutSuccess').style.display = 'block';
                             document.getElementById('checkoutSuccess').querySelector('p').textContent =
-                                detectCardType(cardNum) + ' payment of GHS ' + total.toLocaleString() + ' successful!';
+                                detectCardType(cardNum) + ' payment of GHâ‚µ ' + total.toLocaleString() + ' successful!';
                             clearCartAfterPayment();
                         }
                     },
@@ -4743,7 +4343,7 @@
                     document.getElementById('checkoutProcessing').style.display = 'none';
                     document.getElementById('checkoutPending').style.display = 'block';
                     document.getElementById('pendingText').textContent =
-                        'Your transfer of GHS ' + total.toLocaleString() + ' has been noted. Awaiting confirmation...';
+                        'Your transfer of GHC ' + total.toLocaleString() + ' has been noted. Awaiting confirmation...';
                     document.getElementById('pendingRefDisplay').textContent = pendingOrderRef;
                     document.getElementById('pendingRefText').style.display = 'block';
                     clearCartAfterPayment();
@@ -4795,7 +4395,7 @@
                     },
                     customizations: {
                         title: 'KP Electronics',
-                        description: 'MoMo payment of GHS ' + total.toLocaleString(),
+                        description: 'MoMo payment of GHâ‚µ ' + total.toLocaleString(),
                         logo: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=100&q=80'
                     },
                     callback: function(response) {
@@ -4803,7 +4403,7 @@
                             document.getElementById('checkoutProcessing').style.display = 'none';
                             document.getElementById('checkoutSuccess').style.display = 'block';
                             document.getElementById('checkoutSuccess').querySelector('p').textContent =
-                                'Payment of GHS ' + total.toLocaleString() + ' via ' + networkName(detected) + ' successful!';
+                                'Payment of GHâ‚µ ' + total.toLocaleString() + ' via ' + networkName(detected) + ' successful!';
                             clearCartAfterPayment();
                         }
                     },
@@ -4947,179 +4547,8 @@
             switchCategory('all');
         });
     </script>
-// Newsletter Modal Functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const newsletterModal = document.getElementById('newsletter-modal');
-    const closeModal = document.querySelector('.close-modal');
-    const newsletterForm = document.getElementById('newsletter-form');
-    
-    // Close modal when clicking X
-    if (closeModal) {
-        closeModal.addEventListener('click', function() {
-            newsletterModal.style.display = 'none';
-        });
-    }
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-        if (event.target === newsletterModal) {
-            newsletterModal.style.display = 'none';
-        }
-    });
-    
-    // Handle newsletter form submission
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const emailInput = document.getElementById('newsletter-email');
-            const email = emailInput.value.trim();
-            
-            if (email) {
-                // Here you would typically send the email to your backend
-                // For now, we'll show a success message
-                alert('Thank you for subscribing! We\'ll keep you updated with our latest offers.');
-                emailInput.value = '';
-                newsletterModal.style.display = 'none';
-            }
-        });
-    }
-    
-    // Live Chat Widget Functionality
-    const chatWidget = document.querySelector('.chat-widget');
-    const chatHeader = document.querySelector('.chat-header');
-    const chatInput = document.getElementById('chat-input');
-    const chatSendBtn = document.querySelector('.chat-send-btn');
-    const chatBody = document.querySelector('.chat-body');
-    
-    // Toggle chat widget
-    if (chatHeader && chatWidget) {
-        chatHeader.addEventListener('click', function() {
-            chatWidget.classList.toggle('active');
-        });
-    }
-    
-    // Send chat message
-    function sendChatMessage() {
-        const message = chatInput.value.trim();
-        if (message) {
-            // Add user message
-            const userMessage = document.createElement('p');
-            userMessage.className = 'chat-message user-message';
-            userMessage.textContent = message;
-            chatBody.appendChild(userMessage);
-            
-            // Clear input
-            chatInput.value = '';
-            
-            // Scroll to bottom
-            chatBody.scrollTop = chatBody.scrollHeight;
-            
-            // Simulate bot response after delay
-            setTimeout(function() {
-                const botMessage = document.createElement('p');
-                botMessage.className = 'chat-message bot-message';
-                botMessage.textContent = 'Thanks for your message! Our support team will get back to you shortly.';
-                chatBody.appendChild(botMessage);
-                chatBody.scrollTop = chatBody.scrollHeight;
-            }, 1500);
-        }
-    }
-    
-    if (chatSendBtn) {
-        chatSendBtn.addEventListener('click', sendChatMessage);
-    }
-    
-    if (chatInput) {
-        chatInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendChatMessage();
-            }
-        });
-    }
-    
-    // Scroll to Top Button Functionality
-    const scrollTopBtn = document.getElementById('scrollTopBtn');
-    
-    window.addEventListener('scroll', function() {
-        if (scrollTopBtn) {
-            if (window.pageYOffset > 300) {
-                scrollTopBtn.classList.add('visible');
-            } else {
-                scrollTopBtn.classList.remove('visible');
-            }
-        }
-    });
-    
-    if (scrollTopBtn) {
-        scrollTopBtn.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
-    
-    // Add pulse animation to logo for visual appeal
-    const logoIcon = document.querySelector('.logo-icon');
-    if (logoIcon) {
-        logoIcon.classList.add('pulse-animation');
-    }
-    
-    // Add float animation to featured products
-    const featuredProducts = document.querySelectorAll('.product-card.featured, .product-card:nth-child(3n)');
-    featuredProducts.forEach(function(product, index) {
-        product.style.animationDelay = (index * 0.5) + 's';
-        product.classList.add('float-animation');
-    });
-});
 </body>
-    <!-- Floating Action Button for Quick Contact -->
-    <div class="fab-container">
-        <button class="fab" onclick="window.open('https://wa.me/', '_blank')" title="Chat on WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-        </button>
-        <button class="fab fab-secondary" onclick="document.getElementById('newsletter-modal').style.display='block'" title="Subscribe to Newsletter">
-            <i class="fas fa-envelope"></i>
-        </button>
-    </div>
-
-    <!-- Newsletter Subscription Modal -->
-    <div id="newsletter-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2 class="font-display">Stay Updated with KP Electronics</h2>
-            <p>Get the latest deals, new arrivals, and exclusive offers directly to your inbox.</p>
-            <form id="newsletter-form" class="newsletter-form">
-                <div class="form-group">
-                    <input type="email" id="newsletter-email" placeholder="Enter your email address" required>
-                    <button type="submit" class="btn-primary">Subscribe</button>
-                </div>
-                <p class="text-muted small">We respect your privacy. Unsubscribe anytime.</p>
-            </form>
-        </div>
-    </div>
-
-    <!-- Live Chat Widget -->
-    <div class="chat-widget">
-        <div class="chat-header">
-            <i class="fas fa-comments"></i>
-            <span>Need Help?</span>
-        </div>
-        <div class="chat-body">
-            <p class="chat-message bot-message">Hello! How can I assist you today?</p>
-        </div>
-        <div class="chat-footer">
-            <input type="text" placeholder="Type a message..." id="chat-input">
-            <button class="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
-
-    <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" title="Back to Top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
 </html>
-
 
 
 
