@@ -73,6 +73,82 @@
             box-shadow: 0 16px 32px -8px rgba(0,168,107,0.25);
         }
 
+        .cat-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            min-height: 260px;
+            display: flex;
+            align-items: flex-end;
+            cursor: pointer;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+        }
+        .cat-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 24px 48px -12px rgba(0,168,107,0.35);
+        }
+        .cat-card img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .cat-card:hover img {
+            transform: scale(1.08);
+        }
+        .cat-card .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.05) 100%);
+        }
+        .cat-card .content {
+            position: relative;
+            z-index: 2;
+            padding: 1.5rem;
+            width: 100%;
+        }
+        .cat-card .content h3 {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+        .cat-card .content p {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.5;
+        }
+        .cat-card .content .badge {
+            display: inline-block;
+            background: rgba(0,168,107,0.9);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 0.7rem;
+            border-radius: 999px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .cat-card .icon-bg {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 2;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
         @media (max-width: 768px) {
             .hero-img { max-width: 320px; }
         }
@@ -115,10 +191,11 @@
     </nav>
 
     <!-- ═══ HERO ═══ -->
-    <section id="home" class="hero-gradient min-h-screen flex items-center pt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 w-full">
+    <section id="home" class="hero-gradient min-h-screen flex items-center pt-16 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/20 z-0"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 w-full relative z-10">
             <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
+                <div class="hidden-fade">
                     <div class="inline-flex items-center gap-2 bg-white/20 rounded-full px-5 py-2 text-white text-sm font-medium mb-6">
                         <i class="fas fa-store"></i> KP Group Subsidiary
                     </div>
@@ -139,10 +216,16 @@
                         </a>
                     </div>
                 </div>
-                <div class="flex justify-center md:justify-end">
+                <div class="flex justify-center md:justify-end hidden-fade">
                     <div class="relative">
-                        <div class="w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-white/10 animate-float flex items-center justify-center">
-                            <i class="fas fa-shopping-bag text-8xl text-white/60"></i>
+                        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&q=80"
+                             alt="KP Retail Store"
+                             class="w-72 h-72 sm:w-96 sm:h-96 rounded-full object-cover shadow-2xl animate-float border-4 border-white/20">
+                        <div class="absolute -bottom-4 -left-4 bg-white rounded-2xl px-5 py-3 shadow-xl">
+                            <p class="text-sm font-bold text-[#00A86B]">500+ Products</p>
+                        </div>
+                        <div class="absolute -top-4 -right-4 bg-white rounded-2xl px-5 py-3 shadow-xl">
+                            <p class="text-sm font-bold text-[#00A86B]">10k+ Customers</p>
                         </div>
                     </div>
                 </div>
@@ -154,19 +237,19 @@
     <section class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="stat-card text-center p-6 rounded-2xl glass-card">
+                <div class="stat-card text-center p-6 rounded-2xl glass-card hidden-fade">
                     <p class="text-3xl sm:text-4xl font-black text-[#00A86B]">500+</p>
                     <p class="text-sm font-medium text-gray-500 mt-1">Products</p>
                 </div>
-                <div class="stat-card text-center p-6 rounded-2xl glass-card">
+                <div class="stat-card text-center p-6 rounded-2xl glass-card hidden-fade">
                     <p class="text-3xl sm:text-4xl font-black text-[#00A86B]">50+</p>
                     <p class="text-sm font-medium text-gray-500 mt-1">Brand Partners</p>
                 </div>
-                <div class="stat-card text-center p-6 rounded-2xl glass-card">
+                <div class="stat-card text-center p-6 rounded-2xl glass-card hidden-fade">
                     <p class="text-3xl sm:text-4xl font-black text-[#00A86B]">10k+</p>
                     <p class="text-sm font-medium text-gray-500 mt-1">Happy Customers</p>
                 </div>
-                <div class="stat-card text-center p-6 rounded-2xl glass-card">
+                <div class="stat-card text-center p-6 rounded-2xl glass-card hidden-fade">
                     <p class="text-3xl sm:text-4xl font-black text-[#00A86B]">5</p>
                     <p class="text-sm font-medium text-gray-500 mt-1">Locations</p>
                 </div>
@@ -177,52 +260,179 @@
     <!-- ═══ CATEGORIES ═══ -->
     <section id="categories" class="py-16 sm:py-20" style="background:#f5f7f6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <p class="text-[#00A86B] font-bold text-sm uppercase tracking-widest mb-3">Shop by Category</p>
-                <h2 class="text-3xl sm:text-5xl font-black">What We Offer</h2>
+            <div class="text-center mb-12 hidden-fade">
+                <p class="text-[#00A86B] font-bold text-sm uppercase tracking-widest mb-3">Everything You Need</p>
+                <h2 class="text-3xl sm:text-5xl font-black">Browse by Category</h2>
+                <p class="text-gray-500 mt-4 max-w-2xl mx-auto">From school supplies to home essentials — we've got every corner of your life covered.</p>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="category-card bg-white rounded-2xl p-6 sm:p-8 text-center">
-                    <div class="w-16 h-16 rounded-full bg-[#00A86B]/10 flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-apple-alt text-2xl text-[#00A86B]"></i>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+
+                <div class="cat-card hidden-fade">
+                    <img src="https://images.unsplash.com/photo-1452860606245-08befc0ff44b?w=400&q=80" alt="Stationery & School">
+                    <div class="overlay"></div>
+                    <div class="icon-bg"><i class="fas fa-pen-fancy"></i></div>
+                    <div class="content">
+                        <span class="badge">Bestseller</span>
+                        <h3>Stationery & School</h3>
+                        <p>Exercise books, pens, pencils, rulers, crayons, erasers, glue, scissors &amp; everything for class.</p>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">Groceries</h3>
-                    <p class="text-gray-500 text-sm">Fresh produce, dairy, beverages, and pantry essentials sourced from trusted suppliers.</p>
                 </div>
-                <div class="category-card bg-white rounded-2xl p-6 sm:p-8 text-center">
-                    <div class="w-16 h-16 rounded-full bg-[#00A86B]/10 flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-tshirt text-2xl text-[#00A86B]"></i>
+
+                <div class="cat-card hidden-fade">
+                    <img src="https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=400&q=80" alt="Home Cleaning">
+                    <div class="overlay"></div>
+                    <div class="icon-bg"><i class="fas fa-soap"></i></div>
+                    <div class="content">
+                        <span class="badge">Essentials</span>
+                        <h3>Cleaning & Hygiene</h3>
+                        <p>Soaps, detergents, bleach, disinfectants, mops, brooms, dustpans, sponges &amp; floor cleaners.</p>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">Fashion</h3>
-                    <p class="text-gray-500 text-sm">Trendy clothing, accessories, and footwear for men, women, and children.</p>
                 </div>
-                <div class="category-card bg-white rounded-2xl p-6 sm:p-8 text-center">
-                    <div class="w-16 h-16 rounded-full bg-[#00A86B]/10 flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-mobile-alt text-2xl text-[#00A86B]"></i>
+
+                <div class="cat-card hidden-fade">
+                    <img src="https://images.unsplash.com/photo-1585232351009-aa8c7e2e9a5a?w=400&q=80" alt="Tissues & Paper">
+                    <div class="overlay"></div>
+                    <div class="icon-bg"><i class="fas fa-toilet-paper"></i></div>
+                    <div class="content">
+                        <span class="badge">Daily Use</span>
+                        <h3>Tissues & Paper Products</h3>
+                        <p>Toilet tissue, facial tissues, kitchen towels, napkins, paper towels &amp; tissue packs.</p>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">Electronics</h3>
-                    <p class="text-gray-500 text-sm">Phones, laptops, accessories, and home appliances at competitive prices.</p>
                 </div>
-                <div class="category-card bg-white rounded-2xl p-6 sm:p-8 text-center">
-                    <div class="w-16 h-16 rounded-full bg-[#00A86B]/10 flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-home text-2xl text-[#00A86B]"></i>
+
+                <div class="cat-card hidden-fade">
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80" alt="Kitchen & Dining">
+                    <div class="overlay"></div>
+                    <div class="icon-bg"><i class="fas fa-utensils"></i></div>
+                    <div class="content">
+                        <span class="badge">Top Picks</span>
+                        <h3>Kitchen & Dining</h3>
+                        <p>Plastic bowls, plates, cups, cutlery, food flasks, coolers, food containers &amp; cooking utensils.</p>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">Home &amp; Living</h3>
-                    <p class="text-gray-500 text-sm">Furniture, kitchenware, decor, and household essentials for everyday living.</p>
                 </div>
-                <div class="category-card bg-white rounded-2xl p-6 sm:p-8 text-center">
-                    <div class="w-16 h-16 rounded-full bg-[#00A86B]/10 flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-baby text-2xl text-[#00A86B]"></i>
+
+                <div class="cat-card hidden-fade">
+                    <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=400&q=80" alt="Storage & Bins">
+                    <div class="overlay"></div>
+                    <div class="icon-bg"><i class="fas fa-trash-alt"></i></div>
+                    <div class="content">
+                        <span class="badge">Organisation</span>
+                        <h3>Storage & Bins</h3>
+                        <p>Trolls (trash bins), plastic packs, storage boxes, laundry baskets, shelves &amp; drawer organisers.</p>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">Baby &amp; Kids</h3>
-                    <p class="text-gray-500 text-sm">Baby care products, toys, clothing, and school supplies for children of all ages.</p>
                 </div>
-                <div class="category-card bg-white rounded-2xl p-6 sm:p-8 text-center">
-                    <div class="w-16 h-16 rounded-full bg-[#00A86B]/10 flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-first-aid text-2xl text-[#00A86B]"></i>
+
+                <div class="cat-card hidden-fade">
+                    <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&q=80" alt="Personal Care">
+                    <div class="overlay"></div>
+                    <div class="icon-bg"><i class="fas fa-hand-holding-heart"></i></div>
+                    <div class="content">
+                        <span class="badge">Self Care</span>
+                        <h3>Personal Care</h3>
+                        <p>Body wash, shampoo, toothpaste, deodorant, lotions, sanitary pads, shaving sticks &amp; vaseline.</p>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">Health &amp; Beauty</h3>
-                    <p class="text-gray-500 text-sm">Personal care, cosmetics, vitamins, and wellness products for a healthier you.</p>
+                </div>
+
+                <div class="cat-card hidden-fade">
+                    <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=400&q=80" alt="Home Essentials">
+                    <div class="overlay"></div>
+                    <div class="icon-bg"><i class="fas fa-lightbulb"></i></div>
+                    <div class="content">
+                        <span class="badge">Everyday</span>
+                        <h3>Home Essentials</h3>
+                        <p>Light bulbs, batteries, matches, candles, insect killer, air freshener, rope &amp; duct tape.</p>
+                    </div>
+                </div>
+
+                <div class="cat-card hidden-fade">
+                    <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?w=400&q=80" alt="Baby & Kids">
+                    <div class="overlay"></div>
+                    <div class="icon-bg"><i class="fas fa-baby"></i></div>
+                    <div class="content">
+                        <span class="badge">Little Ones</span>
+                        <h3>Baby & Kids</h3>
+                        <p>Diapers, baby wipes, baby soap, powder, baby lotion, toys, school bags &amp; sippy cups.</p>
+                    </div>
+                </div>
+
+                <div class="cat-card hidden-fade" style="grid-column: span 1;">
+                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=80" alt="Food & Beverages">
+                    <div class="overlay"></div>
+                    <div class="icon-bg"><i class="fas fa-apple-alt"></i></div>
+                    <div class="content">
+                        <span class="badge">Groceries</span>
+                        <h3>Food & Beverages</h3>
+                        <p>Rice, cooking oil, canned goods, soft drinks, biscuits, spices, milk, sugar &amp; bottled water.</p>
+                    </div>
+                </div>
+
+                <div class="cat-card hidden-fade">
+                    <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=400&q=80" alt="Office Supplies">
+                    <div class="overlay"></div>
+                    <div class="icon-bg"><i class="fas fa-briefcase"></i></div>
+                    <div class="content">
+                        <span class="badge">Work</span>
+                        <h3>Office & Work</h3>
+                        <p>Files, folders, staplers, sticky notes, calculators, printers, stamp pads &amp; desk accessories.</p>
+                    </div>
+                </div>
+
+                <div class="cat-card hidden-fade">
+                    <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?w=400&q=80" alt="Fashion & Textiles">
+                    <div class="overlay"></div>
+                    <div class="icon-bg"><i class="fas fa-tshirt"></i></div>
+                    <div class="content">
+                        <span class="badge">Style</span>
+                        <h3>Fashion & Textiles</h3>
+                        <p>Towels, bed sheets, pillowcases, slippers, clothing basics, school uniforms &amp; fabrics.</p>
+                    </div>
+                </div>
+
+                <div class="cat-card hidden-fade">
+                    <img src="https://images.unsplash.com/photo-1577003833119-5d8d7c925bf3?w=400&q=80" alt="Party & Events">
+                    <div class="overlay"></div>
+                    <div class="icon-bg"><i class="fas fa-birthday-cake"></i></div>
+                    <div class="content">
+                        <span class="badge">Celebrate</span>
+                        <h3>Party & Events</h3>
+                        <p>Disposable cups, plates, party decorations, balloons, gift wrap, ribbons &amp; greeting cards.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="text-center mt-10 hidden-fade">
+                <p class="text-gray-400 text-sm">Plus much more — visit us in-store or contact us for bulk orders!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ BRANDS ═══ -->
+    <section class="py-16 bg-white border-t border-[#00A86B]/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10 hidden-fade">
+                <p class="text-[#00A86B] font-bold text-sm uppercase tracking-widest mb-3">Our Partners</p>
+                <h2 class="text-3xl sm:text-5xl font-black">Trusted Brands</h2>
+            </div>
+            <div class="grid grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center opacity-60 hidden-fade">
+                <div class="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-400">
+                    <i class="fas fa-apple-alt text-3xl"></i>
+                </div>
+                <div class="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-400">
+                    <i class="fas fa-camera text-3xl"></i>
+                </div>
+                <div class="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-400">
+                    <i class="fas fa-mobile-alt text-3xl"></i>
+                </div>
+                <div class="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-400">
+                    <i class="fas fa-laptop text-3xl"></i>
+                </div>
+                <div class="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-400">
+                    <i class="fas fa-tshirt text-3xl"></i>
+                </div>
+                <div class="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-400">
+                    <i class="fas fa-tv text-3xl"></i>
                 </div>
             </div>
         </div>
@@ -232,7 +442,7 @@
     <section id="about" class="py-16 sm:py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
+                <div class="hidden-fade">
                     <p class="text-[#00A86B] font-bold text-sm uppercase tracking-widest mb-3">About KP Retail</p>
                     <h2 class="text-3xl sm:text-5xl font-black mb-6">
                         More Than<br>
@@ -244,11 +454,11 @@
                         with leading brands and local suppliers to bring you the best value every day.
                     </p>
                     <p class="text-gray-600 leading-relaxed mb-8">
-                        From our humble beginnings to multiple locations, we continue to expand our 
+                        From our humble beginnings to multiple locations across the Eastern Region, we continue to expand our 
                         reach while maintaining the personal touch and reliability that our customers 
                         have come to trust.
                     </p>
-                    <div class="flex gap-4">
+                    <div class="grid grid-cols-2 gap-4 mb-8">
                         <div class="flex items-center gap-2">
                             <i class="fas fa-check-circle text-[#00A86B]"></i>
                             <span class="text-sm font-medium">Quality Guaranteed</span>
@@ -261,12 +471,26 @@
                             <i class="fas fa-check-circle text-[#00A86B]"></i>
                             <span class="text-sm font-medium">Nationwide Delivery</span>
                         </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check-circle text-[#00A86B]"></i>
+                            <span class="text-sm font-medium">100% Authentic</span>
+                        </div>
                     </div>
+                    <a href="#contact" class="inline-block bg-[#00A86B] text-white px-8 py-4 rounded-full font-bold text-base hover:brightness-110 transition-all shadow-lg">
+                        Visit Our Store <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
                 </div>
-                <div class="flex justify-center">
-                    <div class="w-full max-w-md aspect-square rounded-3xl overflow-hidden shadow-2xl">
-                        <div class="w-full h-full bg-gradient-to-br from-[#00A86B]/20 to-[#00A86B]/5 flex items-center justify-center">
-                            <i class="fas fa-store-alt text-8xl text-[#00A86B]/30"></i>
+                <div class="flex justify-center hidden-fade">
+                    <div class="w-full max-w-md aspect-square rounded-3xl overflow-hidden shadow-2xl relative">
+                        <img src="https://images.unsplash.com/photo-1561715276-a2d2e1a0da7f?w=600&q=80"
+                             alt="KP Retail Store"
+                             class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <div class="bg-white/90 backdrop-blur rounded-xl px-4 py-3">
+                                <p class="text-xs font-bold text-[#00A86B]">Est. 2021</p>
+                                <p class="text-sm font-bold">Serving Ghana with Quality</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -277,12 +501,12 @@
     <!-- ═══ TESTIMONIALS ═══ -->
     <section class="py-16 sm:py-20" style="background:#f5f7f6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
+            <div class="text-center mb-12 hidden-fade">
                 <p class="text-[#00A86B] font-bold text-sm uppercase tracking-widest mb-3">Testimonials</p>
                 <h2 class="text-3xl sm:text-5xl font-black">What Our Customers Say</h2>
             </div>
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="glass-card p-6 sm:p-8 rounded-2xl">
+                <div class="glass-card p-6 sm:p-8 rounded-2xl hidden-fade">
                     <div class="flex gap-1 text-yellow-400 mb-4">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
@@ -295,7 +519,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="glass-card p-6 sm:p-8 rounded-2xl">
+                <div class="glass-card p-6 sm:p-8 rounded-2xl hidden-fade">
                     <div class="flex gap-1 text-yellow-400 mb-4">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
@@ -308,7 +532,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="glass-card p-6 sm:p-8 rounded-2xl">
+                <div class="glass-card p-6 sm:p-8 rounded-2xl hidden-fade">
                     <div class="flex gap-1 text-yellow-400 mb-4">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
@@ -329,7 +553,7 @@
     <section id="contact" class="py-16 sm:py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-12">
-                <div>
+                <div class="hidden-fade">
                     <p class="text-[#00A86B] font-bold text-sm uppercase tracking-widest mb-3">Get in Touch</p>
                     <h2 class="text-3xl sm:text-5xl font-black mb-6">Let's Connect</h2>
                     <p class="text-gray-600 leading-relaxed mb-8">
@@ -364,8 +588,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="flex gap-4 mt-8">
+                        <a href="https://web.facebook.com/godfred.eduful.319" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-[#00A86B] hover:text-white transition-all"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/_kobby_pounds" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-[#00A86B] hover:text-white transition-all"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://instagram.com/_kp_media" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-[#00A86B] hover:text-white transition-all"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-[#00A86B] hover:text-white transition-all"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
                 </div>
-                <form id="contactForm" class="glass-card p-6 sm:p-10 rounded-3xl space-y-6">
+                <form id="contactForm" class="glass-card p-6 sm:p-10 rounded-3xl space-y-6 hidden-fade">
                     <input type="text" name="name" placeholder="Full Name" required
                            class="w-full bg-white border border-gray-200 rounded-xl px-5 py-3.5 outline-none focus:border-[#00A86B] transition-colors text-sm">
                     <input type="email" name="email" placeholder="Email Address" required
@@ -384,10 +614,52 @@
         </div>
     </section>
 
+    <!-- ═══ NEWSLETTER ═══ -->
+    <section class="py-16 hero-gradient">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center hidden-fade">
+            <p class="text-white/80 font-bold text-sm uppercase tracking-widest mb-3">Stay Updated</p>
+            <h2 class="text-3xl sm:text-5xl font-black text-white mb-4">Subscribe to Our Newsletter</h2>
+            <p class="text-white/70 max-w-lg mx-auto mb-8">Get the latest deals, new arrivals, and exclusive offers delivered to your inbox.</p>
+            <form class="max-w-md mx-auto flex gap-3" onsubmit="alert('Thank you for subscribing!');this.reset();return false">
+                <input type="email" placeholder="Enter your email" required class="flex-1 bg-white/20 border border-white/20 rounded-full px-6 py-3.5 text-white text-sm outline-none focus:bg-white/30 placeholder:text-white/50">
+                <button type="submit" class="bg-white text-[#00A86B] px-6 py-3.5 rounded-full font-bold text-sm hover:shadow-xl transition-all whitespace-nowrap">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
     <!-- ═══ FOOTER ═══ -->
-    <footer class="py-10" style="background:#141e19; color: rgba(255,255,255,0.6);">
+    <footer class="py-12" style="background:#141e19; color: rgba(255,255,255,0.6);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-9 h-9 rounded-lg flex items-center justify-center font-bold text-white shadow-lg" style="background:#00A86B">
+                            <i class="fas fa-store-alt text-sm"></i>
+                        </div>
+                        <span class="font-bold text-base tracking-tight text-white">KP Retail</span>
+                    </div>
+                    <p class="text-sm leading-relaxed max-w-xs">Your trusted retail partner offering quality products at competitive prices across Ghana.</p>
+                </div>
+                <div>
+                    <p class="text-white font-bold text-sm mb-4">Quick Links</p>
+                    <div class="flex flex-col gap-2 text-sm">
+                        <a href="#home" class="hover:text-[#00A86B] transition-colors">Home</a>
+                        <a href="#categories" class="hover:text-[#00A86B] transition-colors">Categories</a>
+                        <a href="#about" class="hover:text-[#00A86B] transition-colors">About</a>
+                        <a href="#contact" class="hover:text-[#00A86B] transition-colors">Contact</a>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-white font-bold text-sm mb-4">Follow Us</p>
+                    <div class="flex gap-3">
+                        <a href="https://web.facebook.com/godfred.eduful.319" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#00A86B] transition-all"><i class="fab fa-facebook-f text-sm"></i></a>
+                        <a href="https://x.com/_kobby_pounds" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#00A86B] transition-all"><i class="fab fa-x-twitter text-sm"></i></a>
+                        <a href="https://instagram.com/_kp_media" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#00A86B] transition-all"><i class="fab fa-instagram text-sm"></i></a>
+                        <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#00A86B] transition-all"><i class="fab fa-linkedin-in text-sm"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <p class="text-xs font-medium uppercase tracking-widest">© 2026 KP Retail — A KP Group Subsidiary</p>
                 <div class="flex gap-6 text-xs font-bold uppercase tracking-widest">
                     <a href="index.html" class="hover:text-[#00A86B] transition-colors">KP Group</a>
@@ -396,6 +668,12 @@
             </div>
         </div>
     </footer>
+
+    <!-- ═══ WHATSAPP FAB ═══ -->
+    <a href="https://wa.me/233257722786" target="_blank" rel="noopener"
+       class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center text-2xl shadow-lg hover:scale-110 transition-transform z-50">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
     <div id="privacy-modal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.9);padding:1.25rem;overflow-y:auto" class="flex items-center justify-center">
         <div style="background:#111317;color:#eceff4;border:1px solid rgba(255,255,255,0.1);max-width:600px;width:100%;padding:2rem;border-radius:24px;position:relative">

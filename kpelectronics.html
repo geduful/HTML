@@ -523,6 +523,7 @@
         .sidebar-social a {
             color: var(--text-muted);
             font-size: 1.1rem;
+            text-decoration: none;
             transition: color 0.25s ease;
         }
 
@@ -1181,6 +1182,7 @@
 
         .social-links a {
             color: var(--text-muted);
+            text-decoration: none;
             transition: color 0.3s ease;
         }
 
@@ -3342,21 +3344,22 @@
     background: var(--surface-light);
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-    display: flex;
+    display: none;
     flex-direction: column;
     z-index: 1000;
     border: 1px solid var(--border);
     overflow: hidden;
-    transform: scale(0.8);
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.4s ease;
+    transform-origin: bottom left;
 }
 
 .chat-widget.active {
-    transform: scale(1);
-    opacity: 1;
-    pointer-events: auto;
+    display: flex;
+    animation: chatPopIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes chatPopIn {
+    0% { transform: scale(0.85) translateY(15px); }
+    100% { transform: scale(1) translateY(0); }
 }
 
 .chat-header {
@@ -3412,6 +3415,7 @@
     padding: 1rem;
     border-top: 1px solid var(--border);
     gap: 0.5rem;
+    background: var(--surface-light);
 }
 
 .chat-footer input {
@@ -5121,18 +5125,114 @@
         // Chat Widget Toggle
         document.getElementById('chatToggleBtn')?.addEventListener('click', function() {
             const widget = document.querySelector('.chat-widget');
-            widget?.classList.add('active');
+            if (widget) {
+                widget.style.display = 'flex';
+                void widget.offsetHeight;
+                widget.classList.add('active');
+            }
             this.style.display = 'none';
         });
 
         // Close chat widget
         function closeChat() {
-            document.querySelector('.chat-widget')?.classList.remove('active');
+            const widget = document.querySelector('.chat-widget');
+            if (widget) {
+                widget.classList.remove('active');
+                widget.style.display = 'none';
+            }
             const btn = document.getElementById('chatToggleBtn');
             if (btn) btn.style.display = '';
         }
 
         document.querySelector('.chat-header .fa-times')?.addEventListener('click', closeChat);
+
+        // Chat bot responses
+        function getBotReply(msg) {
+            const q = msg.toLowerCase();
+
+            if (/ceo|director|owner|boss|founder|personal|private/.test(q) && /address|phone|number|email|contact|home|live|location/.test(q))
+                return "For privacy and security, personal contact details of our management are confidential. Please reach our official office at +233 257 722 786, email edufulgodfred22@gmail.com, or visit our shop in Koforidua, Eastern Region. Our team is available Mon–Sat, 8 AM – 6 PM.";
+
+            if (/about|who are you|tell me about/.test(q))
+                return "KP Electronics is a trusted electronics store based in Koforidua, Ghana, and a proud member of the KP Group Of Companies. We've been serving customers for over 5 years, offering quality tech products, professional services, and a seamless shopping experience. Follow us on social media — Facebook, X (Twitter), Instagram, and LinkedIn.";
+
+            if (/offer|what do you|services|what can you/.test(q))
+                return "We offer a wide range of electronics and services: 500+ products across 7 categories (TVs, laptops, mobile phones, appliances, audio, gaming, cameras), professional repairs, home delivery, warranty support, tech consultation, flexible payment plans with installments, 24/7 customer support, and a newsletter with exclusive deals. We also carry 50+ top brands!";
+
+            if (/hi|hello|hey|sup|good morning|good afternoon|good evening/.test(q))
+                return "Hello! Welcome to KP Electronics — Ghana's trusted tech store. How can I assist you today? You can ask about our products, services, delivery, payments, or anything else!";
+
+            if (/delivery|shipping|ship|deliver/.test(q))
+                return "We deliver across Ghana! Standard delivery takes 2–5 business days depending on your location, with fees of GHS 20–50. Same-day delivery is available within the Koforidua area. Free delivery on orders over GHS 2,000.";
+
+            if (/return|refund|exchange|policy/.test(q))
+                return "We offer a 7-day return policy for defective items. Items must be returned in original packaging with proof of purchase. Refunds are processed within 3–5 business days after inspection. Contact us to initiate a return — we're here to help!";
+
+            if (/warranty/.test(q))
+                return "All our products come with a manufacturer warranty — 1 year for most electronics, 2 years for major appliances. Extended warranty plans are also available for select products. We also back our repair services with warranty on all work done.";
+
+            if (/pay|payment|mobile ?money|momo|mtn|airtel|telecel|bank|transfer|card|flutterwave/.test(q))
+                return "We accept multiple payment methods: MTN Mobile Money, AirtelTigo (AT) Money, Telecel Cash, bank transfer (GC Bank — Account: 0131001234567, name: KP Electronics), and card payments (Visa, Mastercard, Amex) via Flutterwave. All transactions are secure and encrypted.";
+
+            if (/price|cost|how much|cheap|expensive|affordable/.test(q))
+                return "We offer competitive prices across all our products. Prices vary by category and brand. Browse our product categories in the sidebar, use the search bar, or contact us for specific pricing. We also have installment plans on selected items!";
+
+            if (/phone|call|contact|reach/.test(q))
+                return "You can reach us at +233 257 722 786 or email edufulgodfred22@gmail.com. Our support team is available Mon–Sat, 8 AM – 6 PM. You can also use the contact form on our page, visit our shop in Koforidua, or chat with us on WhatsApp!";
+
+            if (/location|address|shop|store|where|koforidua/.test(q))
+                return "Our shop is located in Koforidua, Eastern Region, Ghana. We're open Mon–Sat, 8 AM – 6 PM. Visit us for the best selection of electronics, appliances, and expert advice. You can also shop online with delivery across Ghana!";
+
+            if (/laptop|computer|pc|macbook|hp|dell|lenovo/.test(q))
+                return "We stock a wide range of laptops — gaming, business, and everyday use — from top brands like HP, Dell, Lenovo, and more. Browse our Laptops category in the sidebar or use the search bar to find your perfect match!";
+
+            if (/tv|television|monitor|led|oled|smart.?tv/.test(q))
+                return "We offer a great selection of TVs — Smart TVs, LED, OLED, and 4K — from leading brands. Sizes range from 32\" to 75\". Perfect for home entertainment! Check our TVs & Monitors category.";
+
+            if (/phone|mobile|smartphone|iphone|samsung|tecno|nokia|tablet/.test(q))
+                return "We carry the latest smartphones and tablets, including iPhone, Samsung, Tecno, and more. Whether you need a budget phone or a flagship device, check our Mobile category in the sidebar!";
+
+            if (/appliance|fridge|freezer|washing|microwave|fridge|kitchen|home/.test(q))
+                return "We sell home and kitchen appliances — refrigerators, freezers, washing machines, microwave ovens, blenders, and more. Top brands at great prices. Check our Appliances category!";
+
+            if (/gaming|playstation|xbox|game|console|controller|accessories/.test(q))
+                return "We have everything for gamers — PlayStation, Xbox, Nintendo, gaming accessories, controllers, headsets, and the latest games. Check our Gaming category!";
+
+            if (/camera|photography|lens|canon|nikon|sony|dslr/.test(q))
+                return "We stock cameras, lenses, and photography accessories from Canon, Nikon, Sony, and more. Whether you're a pro or a beginner, browse our Cameras category!";
+
+            if (/audio|speaker|headphone|earphone|sound|earbuds|headset/.test(q))
+                return "We offer speakers, headphones, earphones, earbuds, and audio systems from premium brands. For a great sound experience, check our Audio category!";
+
+            if (/brand/.test(q))
+                return "We carry 50+ top brands including Samsung, LG, Apple, HP, Dell, Lenovo, Sony, Canon, Nikon, Tecno, and many more. Quality is our priority!";
+
+            if (/repair|fix|broken|damaged/.test(q))
+                return "We provide professional repair services for smartphones, laptops, TVs, and home appliances. All repairs come with a warranty on work done. Visit our shop or contact us for a free quote!";
+
+            if (/installment|credit|pay.?later|finance|plan/.test(q))
+                return "We offer flexible installment plans on selected products. Spread your payments into manageable chunks with zero or low interest. Contact us for details and eligibility requirements!";
+
+            if (/open|hour|time|when/.test(q))
+                return "We are open Monday to Saturday, 8 AM – 6 PM. Closed on Sundays and public holidays. For inquiries outside business hours, send us an email or use the contact form and we'll get back to you!";
+
+            if (/newsletter|subscribe|deal|offer|promo|discount|sale/.test(q))
+                return "Subscribe to our newsletter to get the latest deals, new arrivals, and exclusive offers delivered to your inbox. Click the envelope button on the bottom-right to subscribe!";
+
+            if (/thank|thanks|appreciate/.test(q))
+                return "You're welcome! We're always happy to help. If you have any more questions, feel free to ask. Visit KP Electronics for all your tech needs!";
+
+            if (/bye|goodbye|see you|talk later/.test(q))
+                return "Thank you for visiting KP Electronics! We're always here when you need us. Have a great day!";
+
+            if (/secure|safe|trust|protect|encrypt|private|privacy/.test(q))
+                return "Your security is our priority! All payments are processed through Flutterwave, a PCI-DSS compliant payment gateway that encrypts your data end-to-end. We never store your card or MoMo details. Our website uses secure connections, and your personal information is kept confidential. You can shop with confidence at KP Electronics!";
+
+            if (/what.*(?:category|product|sell|have|stock|available)/.test(q))
+                return "We have 500+ products across 7 categories: TVs & Monitors, Laptops, Mobile Phones & Tablets, Home Appliances, Audio Systems, Gaming, and Cameras. Browse by category in the sidebar or use the search bar to find what you need!";
+
+            return "I'm not sure I understand. You can ask me about: what we offer, products (TVs, laptops, phones, appliances, audio, gaming, cameras), services (repairs, delivery, warranty, installments), payments (MoMo, bank transfer, card), returns, contact info, store hours, or our brands. What would you like to know?";
+        }
 
         // Chat send
         document.querySelector('.chat-send-btn')?.addEventListener('click', function() {
@@ -5143,6 +5243,10 @@
                 chatBody.innerHTML += '<p class="chat-message user-message">' + msg + '</p>';
                 chatBody.scrollTop = chatBody.scrollHeight;
                 input.value = '';
+                setTimeout(function() {
+                    chatBody.innerHTML += '<p class="chat-message bot-message">' + getBotReply(msg) + '</p>';
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }, 500);
             }
         });
         document.getElementById('chat-input')?.addEventListener('keydown', function(e) {
