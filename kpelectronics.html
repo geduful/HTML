@@ -19,16 +19,16 @@
         }
 
         :root {
-            --primary: #ff4d00;
-            --primary-dark: #cc3d00;
-            --surface: #0d0d0d;
-            --surface-light: #1a1a1a;
-            --surface-lighter: #252525;
-            --text: #ffffff;
-            --text-muted: #888888;
-            --border: #333333;
-            --success: #00c853;
-            --glow: rgba(255, 77, 0, 0.4);
+            --primary: #7c3aed;
+            --primary-dark: #6d28d9;
+            --surface: #070713;
+            --surface-light: #0f0f23;
+            --surface-lighter: #1a1a3e;
+            --text: #f1f5f9;
+            --text-muted: #8899bb;
+            --border: #1e1e3f;
+            --success: #10b981;
+            --glow: rgba(124, 58, 237, 0.35);
         }
 
         html {
@@ -167,7 +167,7 @@
 
         .header-btn:hover {
             border-color: var(--primary);
-            background: rgba(255, 77, 0, 0.1);
+            background: rgba(124, 58, 237, 0.1);
         }
 
         .header-btn.primary {
@@ -197,7 +197,7 @@
 
         .sidebar-toggle-btn:hover {
             border-color: var(--primary);
-            background: rgba(255, 77, 0, 0.1);
+            background: rgba(124, 58, 237, 0.1);
         }
 
         .menu-toggle:hover {
@@ -213,19 +213,16 @@
             height: calc(100vh - 73px);
             background: var(--surface-light);
             border-right: 1px solid var(--border);
-            z-index: 999;
-            transition: transform 0.3s ease;
-            overflow: hidden;
-        }
-
-        .sidebar-inner {
-            position: absolute;
-            inset: 0;
+            padding: 1.5rem;
             overflow-y: auto;
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
-            overscroll-behavior: contain;
-            padding: 1.5rem;
+            z-index: 999;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-inner {
+            /* padding wrapper for sidebar content */
         }
 
 .sidebar.collapsed {
@@ -420,14 +417,14 @@
         }
 
         .sidebar-links a:hover {
-            background: rgba(255, 77, 0, 0.08);
+            background: rgba(124, 58, 237, 0.08);
             color: var(--text);
             border-left-color: var(--primary);
             padding-left: 1rem;
         }
 
         .sidebar-links a.active {
-            background: rgba(255, 77, 0, 0.12);
+            background: rgba(124, 58, 237, 0.12);
             color: var(--primary);
             border-left-color: var(--primary);
             font-weight: 600;
@@ -522,7 +519,7 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 10px;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             color: var(--text-muted);
@@ -582,13 +579,71 @@
 
         .hero-bg {
             position: absolute;
-            top: 0;
-            right: 0;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--primary) 0%, #ff6b00 100%);
+            inset: 0;
+            overflow: hidden;
+            border-radius: 24px;
+        }
+
+        .hero-bg::before,
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            animation: heroOrb 25s ease-in-out infinite;
+        }
+
+        .hero-bg::before {
+            width: 500px;
+            height: 500px;
+            background: var(--primary);
+            top: -10%;
+            left: -5%;
+            animation-delay: 0s;
+        }
+
+        .hero-bg::after {
+            width: 400px;
+            height: 400px;
+            background: #a78bfa;
+            bottom: -15%;
+            right: 5%;
+            animation-delay: -12s;
+        }
+
+        .hero-bg span {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
             opacity: 0.1;
-            border-radius: 0 24px 24px 0;
+            animation: heroOrb 30s ease-in-out infinite reverse;
+        }
+
+        .hero-bg span:nth-child(1) {
+            width: 350px;
+            height: 350px;
+            background: #c084fc;
+            top: 40%;
+            left: 30%;
+            animation-delay: -6s;
+        }
+
+        .hero-bg span:nth-child(2) {
+            width: 250px;
+            height: 250px;
+            background: #818cf8;
+            bottom: 10%;
+            left: 40%;
+            animation-delay: -18s;
+        }
+
+        @keyframes heroOrb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            20% { transform: translate(120px, -60px) scale(1.15); }
+            40% { transform: translate(-80px, 80px) scale(0.85); }
+            60% { transform: translate(60px, -30px) scale(1.05); }
+            80% { transform: translate(-100px, 60px) scale(0.95); }
         }
 
         .hero-content {
@@ -701,7 +756,7 @@
             width: 50px;
             height: 50px;
             margin: 0 auto 1rem;
-            background: rgba(255, 77, 0, 0.1);
+            background: rgba(124, 58, 237, 0.1);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -856,7 +911,7 @@
             width: 70px;
             height: 70px;
             margin: 0 auto 1rem;
-            background: linear-gradient(135deg, rgba(255, 77, 0, 0.2), rgba(255, 77, 0, 0.05));
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.05));
             border-radius: 20px;
             display: flex;
             align-items: center;
@@ -899,7 +954,7 @@
         .service-card .icon {
             width: 55px;
             height: 55px;
-            background: rgba(255, 77, 0, 0.1);
+            background: rgba(124, 58, 237, 0.1);
             border-radius: 14px;
             display: flex;
             align-items: center;
@@ -964,7 +1019,7 @@
         .contact-item .icon {
             width: 50px;
             height: 50px;
-            background: rgba(255, 77, 0, 0.1);
+            background: rgba(124, 58, 237, 0.1);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -1127,21 +1182,24 @@
         }
 
         .social-links a {
-            width: 40px;
-            height: 40px;
+            width: 34px;
+            height: 34px;
             background: var(--surface-lighter);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            display: flex;
+            border-radius: 8px;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             color: var(--text-muted);
+            font-size: 0.85rem;
+            text-decoration: none;
             transition: all 0.3s ease;
         }
 
         .social-links a:hover {
-            border-color: var(--primary);
             color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
         }
 
         .footer-col h4 {
@@ -1795,7 +1853,7 @@
 
         .payment-option:has(input:checked) {
             border-color: var(--primary);
-            background: rgba(255, 77, 0, 0.08);
+            background: rgba(124, 58, 237, 0.08);
         }
 
         .payment-option-content {
@@ -1825,7 +1883,7 @@
         }
 
         .pay-logo.mtn { color: #ffcc00; }
-        .pay-logo.at { color: #ff4d00; }
+        .pay-logo.at { color: var(--primary); }
         .pay-logo.telecel { color: #00b300; }
 
         .payment-option-content strong {
@@ -1894,8 +1952,8 @@
         }
 
         .bank-waiting {
-            background: rgba(255, 77, 0, 0.08);
-            border: 1px solid rgba(255, 77, 0, 0.2);
+            background: rgba(124, 58, 237, 0.08);
+            border: 1px solid rgba(124, 58, 237, 0.2);
             border-radius: 12px;
             padding: 1.25rem;
             margin-bottom: 1rem;
@@ -1933,8 +1991,8 @@
         }
 
         .bank-instructions {
-            background: rgba(255, 77, 0, 0.08);
-            border: 1px solid rgba(255, 77, 0, 0.2);
+            background: rgba(124, 58, 237, 0.08);
+            border: 1px solid rgba(124, 58, 237, 0.2);
             border-radius: 12px;
             padding: 1rem;
             margin-bottom: 1rem;
@@ -2116,7 +2174,7 @@
         .modal-icon {
             width: 50px;
             height: 50px;
-            background: rgba(255, 77, 0, 0.15);
+            background: rgba(124, 58, 237, 0.15);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -2444,22 +2502,15 @@
             .sidebar {
                 transform: translateX(-100%);
                 width: 300px;
+                padding: 1rem 1.5rem;
                 position: fixed;
                 top: 0;
                 height: 100vh;
                 z-index: 999;
-                padding: 0;
-                overflow: hidden;
             }
 
             .sidebar-inner {
-                position: absolute;
-                inset: 0;
-                overflow-y: auto;
-                overflow-x: hidden;
-                -webkit-overflow-scrolling: touch;
-                overscroll-behavior: contain;
-                padding: calc(1rem + 36px + 0.5rem) 1.5rem 2rem;
+                /* padding wrapper for sidebar content */
             }
 
             .sidebar.open {
@@ -3448,9 +3499,9 @@
 
         /* Pulse animation kept for cart icon */
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 77, 0, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 77, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 77, 0, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(124, 58, 237, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
         }
 
         .pulse-animation {
@@ -3624,10 +3675,10 @@
                     </a>
                 </div>
                 <div class="sidebar-social">
-                    <a href="https://web.facebook.com/godfred.eduful.319"><i class="fab fa-facebook"></i></a>
-                    <a href="https://x.com/_kobby_pounds"><i class="fab fa-twitter"></i></a>
-                    <a href="https://instagram.com/_kp_media"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://web.facebook.com/godfred.eduful.319" target="_blank" rel="noopener"><i class="fab fa-facebook"></i></a>
+                    <a href="https://x.com/_kobby_pounds" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/_kp_media" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
@@ -3645,7 +3696,10 @@
     <main class="main">
         <!-- Hero -->
         <section class="hero">
-            <div class="hero-bg"></div>
+            <div class="hero-bg">
+                <span></span>
+                <span></span>
+            </div>
             <div class="hero-content">
                 <div class="hero-text">
                     <h1>Upgrade Your<br><span>Tech Life</span></h1>
@@ -4147,10 +4201,10 @@
                 </a>
                 <p>Your trusted destination for premium electronics and home appliances in Ghana. Quality products, competitive prices, exceptional service.</p>
                 <div class="social-links">
-                    <a href="https://web.facebook.com/godfred.eduful.319"><i class="fab fa-facebook"></i></a>
-                    <a href="https://x.com/_kobby_pounds"><i class="fab fa-twitter"></i></a>
-                    <a href="https://instagram.com/_kp_media"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://web.facebook.com/godfred.eduful.319" target="_blank" rel="noopener"><i class="fab fa-facebook"></i></a>
+                    <a href="https://x.com/_kobby_pounds" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/_kp_media" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
 
@@ -4197,6 +4251,9 @@
         <button class="fab fab-secondary" onclick="document.getElementById('newsletter-modal').classList.add('active')" title="Subscribe to Newsletter">
             <i class="fas fa-envelope"></i>
         </button>
+        <button class="fab fab-secondary" id="chatToggleBtn" title="Need Help?">
+            <i class="fas fa-comments"></i>
+        </button>
     </div>
 
     <!-- Newsletter Subscription Modal -->
@@ -4218,6 +4275,7 @@
         <div class="chat-header">
             <i class="fas fa-comments"></i>
             <span>Need Help?</span>
+            <i class="fas fa-times" style="cursor:pointer;font-size:1.1rem;opacity:0.7;transition:opacity 0.2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7"></i>
         </div>
         <div class="chat-body">
             <p class="chat-message bot-message">Hello! How can I assist you today?</p>
@@ -5074,9 +5132,20 @@
         });
 
         // Chat Widget Toggle
-        document.querySelector('.chat-header')?.addEventListener('click', function() {
-            document.querySelector('.chat-widget')?.classList.toggle('active');
+        document.getElementById('chatToggleBtn')?.addEventListener('click', function() {
+            const widget = document.querySelector('.chat-widget');
+            widget?.classList.add('active');
+            this.style.display = 'none';
         });
+
+        // Close chat widget
+        function closeChat() {
+            document.querySelector('.chat-widget')?.classList.remove('active');
+            const btn = document.getElementById('chatToggleBtn');
+            if (btn) btn.style.display = '';
+        }
+
+        document.querySelector('.chat-header .fa-times')?.addEventListener('click', closeChat);
 
         // Chat send
         document.querySelector('.chat-send-btn')?.addEventListener('click', function() {
