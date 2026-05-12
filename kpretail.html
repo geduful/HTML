@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="images/mylogo.jpeg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KP Retail - Quality in Every Aisle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { overflow-x: hidden; min-width: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background: #f5f7f6;
+            color: #141e19;
+        }
+
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0; height: 2px;
+            bottom: -2px; left: 0;
+            background-color: #00A86B;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #00A86B 0%, #00754a 100%);
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%   { transform: translateY(0px); }
+            50%  { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hidden-fade { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+        .animate-fadeIn { opacity: 1; transform: translateY(0); }
+
+        #mobile-menu { display: none; }
+        #mobile-menu.open { display: block; }
+
+        .glass-card {
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0,168,107,0.1);
+        }
+
+        .stat-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -8px rgba(0,168,107,0.2);
+        }
+
+        .category-card {
+            transition: all 0.3s ease;
+        }
+        .category-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 32px -8px rgba(0,168,107,0.25);
+        }
+
+        @media (max-width: 768px) {
+            .hero-img { max-width: 320px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ NAV ═══ -->
+    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-[#00A86B]/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg flex items-center justify-center font-bold text-white shadow-lg" style="background:#00A86B">
+                    <i class="fas fa-store-alt text-sm"></i>
+                </div>
+                <span class="font-bold text-base tracking-tight">KP Retail</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#categories" class="nav-link">Categories</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="index.html" class="bg-[#00A86B] text-white px-5 py-2 rounded-full text-sm font-bold hover:brightness-110 transition-all">
+                    <i class="fas fa-arrow-left mr-1"></i> Back to Group
+                </a>
+            </div>
+
+            <button class="md:hidden text-2xl" onclick="document.getElementById('mobile-menu').classList.toggle('open')">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="md:hidden bg-white border-t border-[#00A86B]/10 px-4 py-4 space-y-3">
+            <a href="#home" onclick="this.closest('#mobile-menu').classList.remove('open')" class="block text-sm font-medium py-1">Home</a>
+            <a href="#categories" onclick="this.closest('#mobile-menu').classList.remove('open')" class="block text-sm font-medium py-1">Categories</a>
+            <a href="#about" onclick="this.closest('#mobile-menu').classList.remove('open')" class="block text-sm font-medium py-1">About</a>
+            <a href="#contact" onclick="this.closest('#mobile-menu').classList.remove('open')" class="block text-sm font-medium py-1">Contact</a>
+            <a href="index.html" class="inline-block bg-[#00A86B] text-white px-4 py-2 rounded-full text-sm font-bold">Back to Group</a>
+        </div>
+    </nav>
+
+    <!-- ═══ HERO ═══ -->
+    <section id="home" class="hero-gradient min-h-screen flex items-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 w-full">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-flex items-center gap-2 bg-white/20 rounded-full px-5 py-2 text-white text-sm font-medium mb-6">
+                        <i class="fas fa-store"></i> KP Group Subsidiary
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-[0.95] mb-6">
+                        Quality in<br>
+                        <span class="text-white/80">Every Aisle.</span>
+                    </h1>
+                    <p class="text-white/80 text-lg sm:text-xl max-w-lg mb-8 leading-relaxed">
+                        Your trusted retail partner offering quality products at competitive prices 
+                        across Ghana. From groceries to electronics, we deliver excellence daily.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#categories" class="bg-white text-[#00A86B] px-8 py-4 rounded-full font-bold text-base hover:shadow-xl transition-all">
+                            Browse Categories <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#contact" class="border-2 border-white/40 text-white px-8 py-4 rounded-full font-bold text-base hover:bg-white/10 transition-all">
+                            Contact Us
+                        </a>
+                    </div>
+                </div>
+                <div class="flex justify-center md:justify-end">
+                    <div class="relative">
+                        <div class="w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-white/10 animate-float flex items-center justify-center">
+                            <i class="fas fa-shopping-bag text-8xl text-white/60"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ STATS ═══ -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="stat-card text-center p-6 rounded-2xl glass-card">
+                    <p class="text-3xl sm:text-4xl font-black text-[#00A86B]">500+</p>
+                    <p class="text-sm font-medium text-gray-500 mt-1">Products</p>
+                </div>
+                <div class="stat-card text-center p-6 rounded-2xl glass-card">
+                    <p class="text-3xl sm:text-4xl font-black text-[#00A86B]">50+</p>
+                    <p class="text-sm font-medium text-gray-500 mt-1">Brand Partners</p>
+                </div>
+                <div class="stat-card text-center p-6 rounded-2xl glass-card">
+                    <p class="text-3xl sm:text-4xl font-black text-[#00A86B]">10k+</p>
+                    <p class="text-sm font-medium text-gray-500 mt-1">Happy Customers</p>
+                </div>
+                <div class="stat-card text-center p-6 rounded-2xl glass-card">
+                    <p class="text-3xl sm:text-4xl font-black text-[#00A86B]">5</p>
+                    <p class="text-sm font-medium text-gray-500 mt-1">Locations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ CATEGORIES ═══ -->
+    <section id="categories" class="py-16 sm:py-20" style="background:#f5f7f6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <p class="text-[#00A86B] font-bold text-sm uppercase tracking-widest mb-3">Shop by Category</p>
+                <h2 class="text-3xl sm:text-5xl font-black">What We Offer</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="category-card bg-white rounded-2xl p-6 sm:p-8 text-center">
+                    <div class="w-16 h-16 rounded-full bg-[#00A86B]/10 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-apple-alt text-2xl text-[#00A86B]"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Groceries</h3>
+                    <p class="text-gray-500 text-sm">Fresh produce, dairy, beverages, and pantry essentials sourced from trusted suppliers.</p>
+                </div>
+                <div class="category-card bg-white rounded-2xl p-6 sm:p-8 text-center">
+                    <div class="w-16 h-16 rounded-full bg-[#00A86B]/10 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-tshirt text-2xl text-[#00A86B]"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Fashion</h3>
+                    <p class="text-gray-500 text-sm">Trendy clothing, accessories, and footwear for men, women, and children.</p>
+                </div>
+                <div class="category-card bg-white rounded-2xl p-6 sm:p-8 text-center">
+                    <div class="w-16 h-16 rounded-full bg-[#00A86B]/10 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-mobile-alt text-2xl text-[#00A86B]"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Electronics</h3>
+                    <p class="text-gray-500 text-sm">Phones, laptops, accessories, and home appliances at competitive prices.</p>
+                </div>
+                <div class="category-card bg-white rounded-2xl p-6 sm:p-8 text-center">
+                    <div class="w-16 h-16 rounded-full bg-[#00A86B]/10 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-home text-2xl text-[#00A86B]"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Home &amp; Living</h3>
+                    <p class="text-gray-500 text-sm">Furniture, kitchenware, decor, and household essentials for everyday living.</p>
+                </div>
+                <div class="category-card bg-white rounded-2xl p-6 sm:p-8 text-center">
+                    <div class="w-16 h-16 rounded-full bg-[#00A86B]/10 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-baby text-2xl text-[#00A86B]"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Baby &amp; Kids</h3>
+                    <p class="text-gray-500 text-sm">Baby care products, toys, clothing, and school supplies for children of all ages.</p>
+                </div>
+                <div class="category-card bg-white rounded-2xl p-6 sm:p-8 text-center">
+                    <div class="w-16 h-16 rounded-full bg-[#00A86B]/10 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-first-aid text-2xl text-[#00A86B]"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Health &amp; Beauty</h3>
+                    <p class="text-gray-500 text-sm">Personal care, cosmetics, vitamins, and wellness products for a healthier you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ ABOUT ═══ -->
+    <section id="about" class="py-16 sm:py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <p class="text-[#00A86B] font-bold text-sm uppercase tracking-widest mb-3">About KP Retail</p>
+                    <h2 class="text-3xl sm:text-5xl font-black mb-6">
+                        More Than<br>
+                        <span class="text-[#00A86B]">Just a Store.</span>
+                    </h2>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        KP Retail is a subsidiary of KP Group Of Companies, committed to providing 
+                        quality products and exceptional shopping experiences across Ghana. We partner 
+                        with leading brands and local suppliers to bring you the best value every day.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed mb-8">
+                        From our humble beginnings to multiple locations, we continue to expand our 
+                        reach while maintaining the personal touch and reliability that our customers 
+                        have come to trust.
+                    </p>
+                    <div class="flex gap-4">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check-circle text-[#00A86B]"></i>
+                            <span class="text-sm font-medium">Quality Guaranteed</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check-circle text-[#00A86B]"></i>
+                            <span class="text-sm font-medium">Best Prices</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check-circle text-[#00A86B]"></i>
+                            <span class="text-sm font-medium">Nationwide Delivery</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <div class="w-full max-w-md aspect-square rounded-3xl overflow-hidden shadow-2xl">
+                        <div class="w-full h-full bg-gradient-to-br from-[#00A86B]/20 to-[#00A86B]/5 flex items-center justify-center">
+                            <i class="fas fa-store-alt text-8xl text-[#00A86B]/30"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ TESTIMONIALS ═══ -->
+    <section class="py-16 sm:py-20" style="background:#f5f7f6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <p class="text-[#00A86B] font-bold text-sm uppercase tracking-widest mb-3">Testimonials</p>
+                <h2 class="text-3xl sm:text-5xl font-black">What Our Customers Say</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-card p-6 sm:p-8 rounded-2xl">
+                    <div class="flex gap-1 text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">"KP Retail has become my go-to for everything. Great prices, friendly staff, and always stocked with what I need."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-[#00A86B]/20 flex items-center justify-center text-[#00A86B] font-bold">A</div>
+                        <div>
+                            <p class="font-bold text-sm">Ama Mensah</p>
+                            <p class="text-xs text-gray-400">Regular Customer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-6 sm:p-8 rounded-2xl">
+                    <div class="flex gap-1 text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">"The delivery service is amazing! Ordered groceries in the morning and they arrived before lunch. Highly recommend."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-[#00A86B]/20 flex items-center justify-center text-[#00A86B] font-bold">K</div>
+                        <div>
+                            <p class="font-bold text-sm">Kwame Asante</p>
+                            <p class="text-xs text-gray-400">Online Shopper</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-6 sm:p-8 rounded-2xl">
+                    <div class="flex gap-1 text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">"As a small business owner, I rely on KP Retail for bulk supplies. They never disappoint with quality or pricing."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-[#00A86B]/20 flex items-center justify-center text-[#00A86B] font-bold">E</div>
+                        <div>
+                            <p class="font-bold text-sm">Esi Dogbe</p>
+                            <p class="text-xs text-gray-400">Business Partner</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ CONTACT ═══ -->
+    <section id="contact" class="py-16 sm:py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <p class="text-[#00A86B] font-bold text-sm uppercase tracking-widest mb-3">Get in Touch</p>
+                    <h2 class="text-3xl sm:text-5xl font-black mb-6">Let's Connect</h2>
+                    <p class="text-gray-600 leading-relaxed mb-8">
+                        Have questions, feedback, or want to partner with us? Reach out — we'd love to hear from you.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-[#00A86B]/10 flex items-center justify-center text-[#00A86B]">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold">Phone</p>
+                                <a href="tel:+233257722786" class="text-gray-500 text-sm hover:text-[#00A86B]">+233 25 772 2786</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-[#00A86B]/10 flex items-center justify-center text-[#00A86B]">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold">Email</p>
+                                <a href="mailto:retail@kpgroup.com" class="text-gray-500 text-sm hover:text-[#00A86B]">retail@kpgroup.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-[#00A86B]/10 flex items-center justify-center text-[#00A86B]">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold">Location</p>
+                                <p class="text-gray-500 text-sm">Koforidua, Eastern Region, Ghana</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form id="contactForm" class="glass-card p-6 sm:p-10 rounded-3xl space-y-6">
+                    <input type="text" name="name" placeholder="Full Name" required
+                           class="w-full bg-white border border-gray-200 rounded-xl px-5 py-3.5 outline-none focus:border-[#00A86B] transition-colors text-sm">
+                    <input type="email" name="email" placeholder="Email Address" required
+                           class="w-full bg-white border border-gray-200 rounded-xl px-5 py-3.5 outline-none focus:border-[#00A86B] transition-colors text-sm">
+                    <input type="text" name="subject" placeholder="Subject"
+                           class="w-full bg-white border border-gray-200 rounded-xl px-5 py-3.5 outline-none focus:border-[#00A86B] transition-colors text-sm">
+                    <textarea name="message" placeholder="Your Message" rows="5" required
+                              class="w-full bg-white border border-gray-200 rounded-xl px-5 py-3.5 outline-none focus:border-[#00A86B] transition-colors text-sm resize-none"></textarea>
+                    <button type="submit"
+                            class="w-full bg-[#00A86B] text-white py-4 rounded-xl font-bold text-base hover:brightness-110 transition-all shadow-lg">
+                        Send Message <i class="fas fa-paper-plane ml-2"></i>
+                    </button>
+                    <p id="contactFeedback" class="text-center text-sm font-bold hidden"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="py-10" style="background:#141e19; color: rgba(255,255,255,0.6);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-xs font-medium uppercase tracking-widest">© 2026 KP Retail — A KP Group Subsidiary</p>
+                <div class="flex gap-6 text-xs font-bold uppercase tracking-widest">
+                    <a href="index.html" class="hover:text-[#00A86B] transition-colors">KP Group</a>
+                    <a href="#privacy-modal" class="hover:text-[#00A86B] transition-colors">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="privacy-modal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.9);padding:1.25rem;overflow-y:auto" class="flex items-center justify-center">
+        <div style="background:#111317;color:#eceff4;border:1px solid rgba(255,255,255,0.1);max-width:600px;width:100%;padding:2rem;border-radius:24px;position:relative">
+            <a href="#" onclick="document.getElementById('privacy-modal').style.display='none'" style="position:absolute;top:1rem;right:1rem;color:#eceff4;font-size:1.5rem">&times;</a>
+            <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:1rem;color:#00A86B">Privacy Policy</h2>
+            <div style="opacity:0.75;font-size:0.9rem;line-height:1.7">
+                <p><strong>1. Data Collection:</strong> We collect information you provide via contact forms to serve you better.</p>
+                <p><strong>2. Use of Data:</strong> Your data is used for order processing, communication, and service improvement.</p>
+                <p><strong>3. Protection:</strong> We implement industry-standard security measures to protect your personal information.</p>
+                <p><strong>4. Third Parties:</strong> We do not sell or share your data with unauthorized third parties.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fade-in on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('animate-fadeIn');
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.hidden-fade').forEach(el => observer.observe(el));
+
+        // Contact form
+        const contactForm = document.getElementById('contactForm');
+        const feedback = document.getElementById('contactFeedback');
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            feedback.classList.remove('hidden', 'text-green-500', 'text-red-500');
+            feedback.textContent = 'Sending...';
+            const formData = new FormData(contactForm);
+            try {
+                const response = await fetch('https://formspree.io/f/maqpgbkd', {
+                    method: 'POST', body: formData, headers: { 'Accept': 'application/json' }
+                });
+                if (response.ok) {
+                    contactForm.reset();
+                    feedback.classList.add('text-green-500');
+                    feedback.textContent = 'Message sent. Thank you!';
+                } else {
+                    throw new Error('Submission failed.');
+                }
+            } catch (error) {
+                feedback.classList.add('text-red-500');
+                feedback.textContent = 'Unable to send message. Try again later.';
+            }
+        });
+
+        // Privacy modal hash
+        if (window.location.hash === '#privacy-modal') {
+            document.getElementById('privacy-modal').style.display = 'flex';
+        }
+        window.addEventListener('hashchange', () => {
+            document.getElementById('privacy-modal').style.display =
+                window.location.hash === '#privacy-modal' ? 'flex' : 'none';
+        });
+    </script>
+</body>
+</html>
