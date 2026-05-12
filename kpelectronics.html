@@ -513,24 +513,21 @@
             justify-content: center;
         }
 
-        .sidebar-social a {
-            width: 36px;
-            height: 36px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            display: inline-flex;
-            align-items: center;
+        .sidebar-social {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
             justify-content: center;
+        }
+
+        .sidebar-social a {
             color: var(--text-muted);
-            text-decoration: none;
-            transition: all 0.25s ease;
+            font-size: 1.1rem;
+            transition: color 0.25s ease;
         }
 
         .sidebar-social a:hover {
-            border-color: var(--primary);
             color: var(--primary);
-            transform: translateY(-2px);
         }
 
         /* Sidebar Close Button */
@@ -1178,28 +1175,17 @@
 
         .social-links {
             display: flex;
-            gap: 0.75rem;
+            gap: 1rem;
+            font-size: 1.15rem;
         }
 
         .social-links a {
-            width: 34px;
-            height: 34px;
-            background: var(--surface-lighter);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
             color: var(--text-muted);
-            font-size: 0.85rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
+            transition: color 0.3s ease;
         }
 
         .social-links a:hover {
             color: var(--primary);
-            border-color: var(--primary);
-            transform: translateY(-2px);
         }
 
         .footer-col h4 {
@@ -1227,7 +1213,6 @@
         }
 
         .footer-bottom {
-            border-top: 1px solid var(--border);
             padding-top: 1.5rem;
             display: flex;
             justify-content: space-between;
@@ -3364,12 +3349,14 @@
     overflow: hidden;
     transform: scale(0.8);
     opacity: 0;
+    pointer-events: none;
     transition: all 0.4s ease;
 }
 
 .chat-widget.active {
     transform: scale(1);
     opacity: 1;
+    pointer-events: auto;
 }
 
 .chat-header {
@@ -3675,10 +3662,10 @@
                     </a>
                 </div>
                 <div class="sidebar-social">
-                    <a href="https://web.facebook.com/godfred.eduful.319" target="_blank" rel="noopener"><i class="fab fa-facebook"></i></a>
-                    <a href="https://x.com/_kobby_pounds" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
-                    <a href="https://instagram.com/_kp_media" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://web.facebook.com/godfred.eduful.319"><i class="fab fa-facebook"></i></a>
+                    <a href="https://x.com/_kobby_pounds"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/_kp_media"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
@@ -4201,10 +4188,10 @@
                 </a>
                 <p>Your trusted destination for premium electronics and home appliances in Ghana. Quality products, competitive prices, exceptional service.</p>
                 <div class="social-links">
-                    <a href="https://web.facebook.com/godfred.eduful.319" target="_blank" rel="noopener"><i class="fab fa-facebook"></i></a>
-                    <a href="https://x.com/_kobby_pounds" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
-                    <a href="https://instagram.com/_kp_media" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://web.facebook.com/godfred.eduful.319"><i class="fab fa-facebook"></i></a>
+                    <a href="https://x.com/_kobby_pounds"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/_kp_media"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/godfred-eduful-743b2b350/"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
 
