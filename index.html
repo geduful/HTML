@@ -98,6 +98,45 @@
             padding: 1rem;
         }
         #profile-modal.open { display: flex; }
+
+        /* ═══ HERO SLIDESHOW ═══ */
+        .hero-slideshow {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        .hero-slide.active {
+            opacity: 1;
+            animation: heroZoom 5s ease-out forwards;
+        }
+        @keyframes heroZoom {
+            from { transform: scale(1); }
+            to   { transform: scale(1.12); }
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: rgba(0,0,0,0.65);
+        }
+        .hero-overlay::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(45deg, rgba(0,0,0,0.5) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.5) 75%),
+                linear-gradient(45deg, rgba(0,0,0,0.5) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.5) 75%);
+            background-size: 80px 80px;
+            background-position: 0 0, 40px 40px;
+        }
     </style>
 </head>
 
@@ -300,27 +339,39 @@
     </div>
 
     <!-- ═══ HERO ═══ -->
-    <header class="pt-28 sm:pt-36 md:pt-44 lg:pt-52 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-start min-h-[80vh]">
-        <div class="inline-flex mb-5 rounded-full px-4 sm:px-5 py-1.5 border text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.3em]"
-             :style="'border-color: var(--accent); color: var(--accent)'">
-            Conglomerate Excellence
+    <section class="relative overflow-hidden min-h-[80vh]">
+        <!-- Slideshow background -->
+        <div class="hero-slideshow">
+            <div class="hero-slide active" style="background-image: url('SlideShow/1.jpg')"></div>
+            <div class="hero-slide" style="background-image: url('SlideShow/3.jpg')"></div>
+            <div class="hero-slide" style="background-image: url('SlideShow/4.jpg')"></div>
+            <div class="hero-slide" style="background-image: url('SlideShow/2.jpg')"></div>
         </div>
-        <h1 class="hero-title font-bold tracking-tighter font-heading italic mb-8 sm:mb-10">
-            <span class="block">KP GROUP</span>
-            <span class="block opacity-30 uppercase" :style="'color: var(--accent)'" x-text="theme"></span>
-        </h1>
-        <p class="max-w-xl text-base sm:text-lg md:text-2xl opacity-70 mb-10 sm:mb-12 font-light italic"
-           x-text="sectors[theme].slogan"></p>
-        <div class="flex flex-wrap gap-2 sm:gap-3 p-2 glass rounded-[2rem] w-full sm:w-fit shadow-2xl">
-            <template x-for="(data, key) in sectors" :key="key">
-                <button @click="theme = key"
-                        :class="theme === key ? 'active' : 'hover:bg-white/5 opacity-40'"
-                        class="industry-tab flex-1 sm:flex-none px-4 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-2xl font-bold transition-all uppercase text-[10px] sm:text-[11px] tracking-widest">
-                    <span x-text="data.name"></span>
-                </button>
-            </template>
-        </div>
-    </header>
+        <!-- Checkered overlay with dark tint -->
+        <div class="hero-overlay"></div>
+        <!-- Content -->
+        <header class="relative z-10 pt-28 sm:pt-36 md:pt-44 lg:pt-52 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-start min-h-[80vh]">
+            <div class="inline-flex mb-5 rounded-full px-4 sm:px-5 py-1.5 border text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.3em]"
+                 :style="'border-color: var(--accent); color: var(--accent)'">
+                Conglomerate Excellence
+            </div>
+            <h1 class="hero-title font-bold tracking-tighter font-heading italic mb-8 sm:mb-10">
+                <span class="block">KP GROUP</span>
+                <span class="block opacity-30 uppercase" :style="'color: var(--accent)'" x-text="theme"></span>
+            </h1>
+            <p class="max-w-xl text-base sm:text-lg md:text-2xl opacity-70 mb-10 sm:mb-12 font-light italic"
+               x-text="sectors[theme].slogan"></p>
+            <div class="flex flex-wrap gap-2 sm:gap-3 p-2 glass rounded-[2rem] w-full sm:w-fit shadow-2xl">
+                <template x-for="(data, key) in sectors" :key="key">
+                    <button @click="theme = key"
+                            :class="theme === key ? 'active' : 'hover:bg-white/5 opacity-40'"
+                            class="industry-tab flex-1 sm:flex-none px-4 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-2xl font-bold transition-all uppercase text-[10px] sm:text-[11px] tracking-widest">
+                        <span x-text="data.name"></span>
+                    </button>
+                </template>
+            </div>
+        </header>
+    </section>
 
     <!-- ═══ SECTORS ═══ -->
     <section id="sectors" class="px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 max-w-7xl mx-auto">
@@ -671,6 +722,18 @@
                 console.error(error);
             }
         });
+
+        /* ── Hero slideshow ── */
+        (function() {
+            const slides = document.querySelectorAll('.hero-slide');
+            if (slides.length < 2) return;
+            let current = 0;
+            setInterval(() => {
+                slides[current].classList.remove('active');
+                current = (current + 1) % slides.length;
+                slides[current].classList.add('active');
+            }, 5000);
+        })();
     </script>
 </body>
 </html>
