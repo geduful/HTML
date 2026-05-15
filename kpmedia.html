@@ -4,6 +4,7 @@
     <link rel="icon" href="images/mylogo.jpeg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KP Media — creative media solutions including video production, photography, social media management, and brand strategy. Stories that move.">
     <title>KP Media - Creative Media Solutions</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -129,7 +130,7 @@
                 </div>
 
                 <!-- Hamburger -->
-                <button id="menu-toggle" class="md:hidden text-gray-800 focus:outline-none p-2" aria-label="Toggle menu">
+                <button id="menu-toggle" class="md:hidden text-gray-800 focus:outline-none p-2" aria-label="Toggle menu" aria-expanded="false">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
             </div>
@@ -601,7 +602,12 @@
 
         // ── Mobile menu ──
         document.getElementById('menu-toggle').addEventListener('click', function () {
-            document.getElementById('mobile-menu').classList.toggle('open');
+            var menu = document.getElementById('mobile-menu');
+            var isOpen = menu.classList.toggle('open');
+            this.setAttribute('aria-expanded', isOpen);
+            var icon = this.querySelector('i');
+            icon.classList.toggle('fa-bars', !isOpen);
+            icon.classList.toggle('fa-times', isOpen);
         });
 
         // ── Smooth scroll — only for hash links with matching elements ──

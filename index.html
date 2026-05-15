@@ -4,6 +4,7 @@
     <link rel="icon" href="images/mylogo.jpeg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KP Group of Companies — a conglomerate spanning media, retail, and electronics. Partner with us for world-class services across all sectors.">
     <title>KP Group | Conglomerate Excellence</title>
 
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
@@ -159,7 +160,7 @@
                  @click="window.scrollTo({top:0, behavior:'smooth'}); menuOpen=false; closeStaff()">
                 <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-white shadow-lg overflow-hidden flex-shrink-0"
                      :style="'background: var(--accent)'">
-                    <img src="" alt="KP Group Logo" class="w-full h-full object-contain"
+                    <img src="images/mylogo.jpeg" alt="KP Group Logo" class="w-full h-full object-contain"
                          onerror="this.style.display='none'; this.parentElement.innerText='KP'" />
                 </div>
                 <span class="font-heading font-bold text-sm sm:text-base tracking-tighter uppercase leading-tight">Group Of Companies</span>
@@ -216,7 +217,7 @@
     </nav>
 
     <!-- ═══ STAFF PANEL ═══ -->
-    <div id="staff-panel">
+    <div id="staff-panel" role="region" aria-label="Staff Directory">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
             <!-- Panel header -->
             <div class="flex items-center justify-between mb-10">
@@ -321,7 +322,7 @@
     </div>
 
     <!-- ═══ PROFILE MODAL ═══ -->
-    <div id="profile-modal" onclick="if(event.target===this) closeProfile()">
+    <div id="profile-modal" role="dialog" aria-modal="true" aria-label="Staff Profile" onclick="if(event.target===this) closeProfile()">
         <div id="profile-content"
              class="relative w-full max-w-lg rounded-[2rem] p-7 sm:p-10 overflow-y-auto max-h-[90vh]"
              style="background:#111317; border:1px solid rgba(255,255,255,0.12); color:#eceff4;">
@@ -520,9 +521,9 @@
     </footer>
 
     <!-- ═══ MODALS: Privacy & Terms — always dark ═══ -->
-    <div id="privacy" class="modal">
+    <div id="privacy" class="modal" role="dialog" aria-modal="true" aria-label="Privacy Policy">
         <div class="modal-inner max-w-3xl mx-auto p-8 sm:p-12 rounded-[2rem] sm:rounded-[3rem] relative">
-            <a href="#" class="absolute top-6 right-6 sm:top-8 sm:right-8" style="color:#eceff4"><i data-lucide="x"></i></a>
+            <button type="button" onclick="history.replaceState(null,'',window.location.pathname); window.location.hash=''" class="absolute top-6 right-6 sm:top-8 sm:right-8 cursor-pointer" style="color:#eceff4; background:none; border:none; padding:0"><i data-lucide="x"></i></button>
             <h2 class="font-heading text-3xl sm:text-4xl font-bold mb-5 sm:mb-6 italic" style="color: var(--accent); font-family:'Clash Display',sans-serif">Privacy Policy</h2>
             <div class="space-y-4 text-sm leading-relaxed" style="opacity:0.75">
                 <p><strong>1. Data Collection:</strong> We collect information you provide directly via contact forms to facilitate business partnerships.</p>
@@ -533,9 +534,9 @@
         </div>
     </div>
 
-    <div id="terms" class="modal">
+    <div id="terms" class="modal" role="dialog" aria-modal="true" aria-label="Terms of Service">
         <div class="modal-inner max-w-3xl mx-auto p-8 sm:p-12 rounded-[2rem] sm:rounded-[3rem] relative">
-            <a href="#" class="absolute top-6 right-6 sm:top-8 sm:right-8" style="color:#eceff4"><i data-lucide="x"></i></a>
+            <button type="button" onclick="history.replaceState(null,'',window.location.pathname); window.location.hash=''" class="absolute top-6 right-6 sm:top-8 sm:right-8 cursor-pointer" style="color:#eceff4; background:none; border:none; padding:0"><i data-lucide="x"></i></button>
             <h2 class="font-heading text-3xl sm:text-4xl font-bold mb-5 sm:mb-6 italic" style="color: var(--accent); font-family:'Clash Display',sans-serif">Terms of Service</h2>
             <div class="space-y-4 text-sm leading-relaxed" style="opacity:0.75">
                 <p><strong>1. Acceptable Use:</strong> Users agree to use this portal for legitimate business inquiries only.</p>
@@ -548,7 +549,16 @@
 
     <script>
         lucide.createIcons();
-        window.addEventListener('click', () => { setTimeout(() => lucide.createIcons(), 100); });
+
+        // Only re-render icons when the DOM actually changes (debounced)
+        (function() {
+            var debounce;
+            var observer = new MutationObserver(function() {
+                clearTimeout(debounce);
+                debounce = setTimeout(function() { lucide.createIcons(); }, 150);
+            });
+            observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+        })();
 
         /* ── Staff panel ── */
         const staffPanel   = document.getElementById('staff-panel');

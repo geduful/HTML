@@ -5077,17 +5077,23 @@
             }
         }
 
-        // Header search on Enter
-        document.querySelector('.search-bar input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchProducts(this.value);
-            }
-        });
+        // Header search on Enter (only if visible on desktop)
+        var headerSearch = document.querySelector('.search-bar input');
+        if (headerSearch) {
+            headerSearch.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchProducts(this.value);
+                }
+            });
+        }
 
         // Sidebar search on input
-        document.querySelector('.sidebar-search input').addEventListener('input', function() {
-            searchProducts(this.value);
-        });
+        var sidebarSearch = document.querySelector('.sidebar-search input');
+        if (sidebarSearch) {
+            sidebarSearch.addEventListener('input', function() {
+                searchProducts(this.value);
+            });
+        }
 
         // Newsletter forms (inline + modal)
         document.querySelectorAll('.newsletter-form, #newsletter-form').forEach(function(form) {

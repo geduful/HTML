@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Category {
+  ROAD
+  ELECTRICITY
+  WATER
+  WASTE
+  PUBLIC_BUILDING
+}
+
+enum ReportStatus {
+  REPORTED
+  IN_PROGRESS
+  RESOLVED
+  REJECTED
+}
+
+model Report {
+  id          String       @id @default(cuid())
+  title       String
+  description String
+  category    Category
+  location    String
+  latitude    Float?
+  longitude   Float?
+  imageUrl    String?
+  status      ReportStatus @default(REPORTED)
+  isEscalated Boolean      @default(false)
+  votes       Int          @default(0)
+  escalatedAt DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([status])
+  @@index([category])
+  @@index([isEscalated])
+}
