@@ -152,6 +152,149 @@
         @media (max-width: 768px) {
             .hero-img { max-width: 320px; }
         }
+
+        .hero-circle-wrap {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .hero-circle-wrap img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.8s ease-in-out;
+        }
+        .hero-circle-wrap img.top {
+            opacity: 0;
+        }
+
+        /* ── Category modal ── */
+        .cat-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            align-items: flex-end;
+            justify-content: center;
+            padding: 0;
+        }
+        .cat-modal.open {
+            display: flex;
+        }
+        .cat-modal-inner {
+            background: #fff;
+            border-radius: 24px 24px 0 0;
+            max-width: 600px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 0;
+            animation: slideUp 0.35s cubic-bezier(0.4,0,0.2,1);
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to   { transform: translateY(0); }
+        }
+        .cat-modal-header {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1;
+        }
+        .cat-modal-header h3 {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: #141e19;
+        }
+        .cat-modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: #f5f7f6;
+            color: #666;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .cat-modal-close:hover {
+            background: #e8e8e8;
+        }
+        .cat-modal-body {
+            padding: 1rem 1.5rem 2rem;
+        }
+        .cat-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.85rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .cat-item:last-child {
+            border-bottom: none;
+        }
+        .cat-item-info {
+            flex: 1;
+        }
+        .cat-item-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #141e19;
+        }
+        .cat-item-desc {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 2px;
+        }
+        .cat-item-price {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #00A86B;
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+        .cat-item-stock {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 2px 8px;
+            border-radius: 999px;
+            margin-left: 0.5rem;
+        }
+        .cat-item-stock.in {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .cat-item-stock.low {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        @media (min-width: 640px) {
+            .cat-modal {
+                align-items: center;
+                padding: 2rem;
+            }
+            .cat-modal-inner {
+                border-radius: 24px;
+                max-height: 80vh;
+            }
+        }
     </style>
 </head>
 <body>
@@ -171,8 +314,8 @@
                 <a href="#categories" class="nav-link">Categories</a>
                 <a href="#about" class="nav-link">About</a>
                 <a href="#contact" class="nav-link">Contact</a>
-                <a href="index.html" class="bg-[#00A86B] text-white px-5 py-2 rounded-full text-sm font-bold hover:brightness-110 transition-all">
-                    <i class="fas fa-arrow-left mr-1"></i> Back to Group
+                <a href="tel:+233257722786" class="bg-[#00A86B] text-white px-5 py-2 rounded-full text-sm font-bold hover:brightness-110 transition-all">
+                    <i class="fas fa-phone mr-1"></i> Call Us Now
                 </a>
             </div>
 
@@ -186,7 +329,7 @@
             <a href="#categories" onclick="this.closest('#mobile-menu').classList.remove('open')" class="block text-sm font-medium py-1">Categories</a>
             <a href="#about" onclick="this.closest('#mobile-menu').classList.remove('open')" class="block text-sm font-medium py-1">About</a>
             <a href="#contact" onclick="this.closest('#mobile-menu').classList.remove('open')" class="block text-sm font-medium py-1">Contact</a>
-            <a href="index.html" class="inline-block bg-[#00A86B] text-white px-4 py-2 rounded-full text-sm font-bold">Back to Group</a>
+            <a href="tel:+233257722786" class="inline-block bg-[#00A86B] text-white px-4 py-2 rounded-full text-sm font-bold"><i class="fas fa-phone mr-1"></i> Call Us</a>
         </div>
     </nav>
 
@@ -218,9 +361,12 @@
                 </div>
                 <div class="flex justify-center md:justify-end hidden-fade">
                     <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&q=80"
-                             alt="KP Retail Store"
-                             class="w-72 h-72 sm:w-96 sm:h-96 rounded-full object-cover shadow-2xl animate-float border-4 border-white/20">
+                        <div class="w-72 h-72 sm:w-96 sm:h-96 rounded-full shadow-2xl animate-float border-4 border-white/20 overflow-hidden relative">
+                            <div class="hero-circle-wrap">
+                                <img id="hero-circle-bottom" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80" alt="KP Retail Store">
+                                <img id="hero-circle-top" src="" alt="KP Retail Store" class="top">
+                            </div>
+                        </div>
                         <div class="absolute -bottom-4 -left-4 bg-white rounded-2xl px-5 py-3 shadow-xl">
                             <p class="text-sm font-bold text-[#00A86B]">500+ Products</p>
                         </div>
@@ -268,7 +414,7 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
 
-                <div class="cat-card hidden-fade">
+                <div class="cat-card hidden-fade" data-cat="stationery">
                     <img src="https://images.unsplash.com/photo-1452860606245-08befc0ff44b?w=400&q=80" alt="Stationery & School">
                     <div class="overlay"></div>
                     <div class="icon-bg"><i class="fas fa-pen-fancy"></i></div>
@@ -279,7 +425,7 @@
                     </div>
                 </div>
 
-                <div class="cat-card hidden-fade">
+                <div class="cat-card hidden-fade" data-cat="cleaning">
                     <img src="https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=400&q=80" alt="Home Cleaning">
                     <div class="overlay"></div>
                     <div class="icon-bg"><i class="fas fa-soap"></i></div>
@@ -290,8 +436,8 @@
                     </div>
                 </div>
 
-                <div class="cat-card hidden-fade">
-                    <img src="https://images.unsplash.com/photo-1585232351009-aa8c7e2e9a5a?w=400&q=80" alt="Tissues & Paper">
+                <div class="cat-card hidden-fade" data-cat="tissues">
+                    <img src="https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=400&q=80" alt="Tissues & Paper">
                     <div class="overlay"></div>
                     <div class="icon-bg"><i class="fas fa-toilet-paper"></i></div>
                     <div class="content">
@@ -301,7 +447,7 @@
                     </div>
                 </div>
 
-                <div class="cat-card hidden-fade">
+                <div class="cat-card hidden-fade" data-cat="kitchen">
                     <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80" alt="Kitchen & Dining">
                     <div class="overlay"></div>
                     <div class="icon-bg"><i class="fas fa-utensils"></i></div>
@@ -312,7 +458,7 @@
                     </div>
                 </div>
 
-                <div class="cat-card hidden-fade">
+                <div class="cat-card hidden-fade" data-cat="storage">
                     <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=400&q=80" alt="Storage & Bins">
                     <div class="overlay"></div>
                     <div class="icon-bg"><i class="fas fa-trash-alt"></i></div>
@@ -323,7 +469,7 @@
                     </div>
                 </div>
 
-                <div class="cat-card hidden-fade">
+                <div class="cat-card hidden-fade" data-cat="personal">
                     <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&q=80" alt="Personal Care">
                     <div class="overlay"></div>
                     <div class="icon-bg"><i class="fas fa-hand-holding-heart"></i></div>
@@ -334,7 +480,7 @@
                     </div>
                 </div>
 
-                <div class="cat-card hidden-fade">
+                <div class="cat-card hidden-fade" data-cat="home">
                     <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=400&q=80" alt="Home Essentials">
                     <div class="overlay"></div>
                     <div class="icon-bg"><i class="fas fa-lightbulb"></i></div>
@@ -345,7 +491,7 @@
                     </div>
                 </div>
 
-                <div class="cat-card hidden-fade">
+                <div class="cat-card hidden-fade" data-cat="baby">
                     <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?w=400&q=80" alt="Baby & Kids">
                     <div class="overlay"></div>
                     <div class="icon-bg"><i class="fas fa-baby"></i></div>
@@ -356,7 +502,7 @@
                     </div>
                 </div>
 
-                <div class="cat-card hidden-fade" style="grid-column: span 1;">
+                <div class="cat-card hidden-fade" data-cat="food">
                     <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=80" alt="Food & Beverages">
                     <div class="overlay"></div>
                     <div class="icon-bg"><i class="fas fa-apple-alt"></i></div>
@@ -367,7 +513,7 @@
                     </div>
                 </div>
 
-                <div class="cat-card hidden-fade">
+                <div class="cat-card hidden-fade" data-cat="office">
                     <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=400&q=80" alt="Office Supplies">
                     <div class="overlay"></div>
                     <div class="icon-bg"><i class="fas fa-briefcase"></i></div>
@@ -378,7 +524,7 @@
                     </div>
                 </div>
 
-                <div class="cat-card hidden-fade">
+                <div class="cat-card hidden-fade" data-cat="fashion">
                     <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?w=400&q=80" alt="Fashion & Textiles">
                     <div class="overlay"></div>
                     <div class="icon-bg"><i class="fas fa-tshirt"></i></div>
@@ -389,8 +535,8 @@
                     </div>
                 </div>
 
-                <div class="cat-card hidden-fade">
-                    <img src="https://images.unsplash.com/photo-1577003833119-5d8d7c925bf3?w=400&q=80" alt="Party & Events">
+                <div class="cat-card hidden-fade" data-cat="party">
+                    <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=400&q=80" alt="Party & Events">
                     <div class="overlay"></div>
                     <div class="icon-bg"><i class="fas fa-birthday-cake"></i></div>
                     <div class="content">
@@ -482,9 +628,9 @@
                 </div>
                 <div class="flex justify-center hidden-fade">
                     <div class="w-full max-w-md aspect-square rounded-3xl overflow-hidden shadow-2xl relative">
-                        <img src="https://images.unsplash.com/photo-1561715276-a2d2e1a0da7f?w=600&q=80"
-                             alt="KP Retail Store"
-                             class="w-full h-full object-cover">
+                    <img src="https://img.freepik.com/premium-photo/shop-store-building-design-ai-generative_1115174-4338.jpg"
+                         alt="KP Retail Store"
+                         class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                         <div class="absolute bottom-4 left-4 right-4">
                             <div class="bg-white/90 backdrop-blur rounded-xl px-4 py-3">
@@ -627,6 +773,17 @@
         </div>
     </section>
 
+    <!-- ═══ CATEGORY MODAL ═══ -->
+    <div id="cat-modal" class="cat-modal" onclick="if(event.target===this)closeCatModal()">
+        <div class="cat-modal-inner">
+            <div class="cat-modal-header">
+                <h3 id="cat-modal-title">Category</h3>
+                <button type="button" class="cat-modal-close" onclick="closeCatModal()">&times;</button>
+            </div>
+            <div class="cat-modal-body" id="cat-modal-body"></div>
+        </div>
+    </div>
+
     <!-- ═══ FOOTER ═══ -->
     <footer class="py-12" style="background:#141e19; color: rgba(255,255,255,0.6);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -659,8 +816,8 @@
                     </div>
                 </div>
             </div>
-            <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p class="text-xs font-medium uppercase tracking-widest">© 2026 KP Retail — A KP Group Subsidiary</p>
+            <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 pb-20 sm:pb-6">
+                <p class="text-xs font-medium uppercase tracking-widest">© 2026 KP Retail — A <a href="index.html" class="text-[#00A86B] hover:underline">KP Group</a> Subsidiary</p>
                 <div class="flex gap-6 text-xs font-bold uppercase tracking-widest">
                     <a href="index.html" class="hover:text-[#00A86B] transition-colors">KP Group</a>
                     <a href="#privacy-modal" class="hover:text-[#00A86B] transition-colors">Privacy</a>
@@ -671,7 +828,7 @@
 
     <!-- ═══ WHATSAPP FAB ═══ -->
     <a href="https://wa.me/233257722786" target="_blank" rel="noopener"
-       class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center text-2xl shadow-lg hover:scale-110 transition-transform z-50">
+       class="fixed bottom-20 right-6 sm:bottom-6 w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center text-2xl shadow-lg hover:scale-110 transition-transform z-50">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -729,6 +886,247 @@
         window.addEventListener('hashchange', () => {
             document.getElementById('privacy-modal').style.display =
                 window.location.hash === '#privacy-modal' ? 'flex' : 'none';
+        });
+
+        // Hero circle crossfade — two-image swap, no background flash
+        (function() {
+            var bottom = document.getElementById('hero-circle-bottom');
+            var top = document.getElementById('hero-circle-top');
+            if (!bottom || !top) return;
+
+            var images = [
+                'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80',
+                'https://images.unsplash.com/photo-1578916171726-846644833981?w=600&q=80',
+                'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=600&q=80',
+                'https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&q=80',
+                'https://images.unsplash.com/photo-1601598851547-430999321887?w=600&q=80'
+            ];
+            var idx = 0;
+
+            setInterval(function() {
+                var nextIdx = (idx + 1) % images.length;
+                var loader = new Image();
+                loader.onload = function() {
+                    top.src = images[nextIdx];
+                    top.style.opacity = '1';
+                    setTimeout(function() {
+                        bottom.src = images[nextIdx];
+                        top.style.opacity = '0';
+                    }, 800);
+                    idx = nextIdx;
+                };
+                loader.onerror = function() {
+                    idx = nextIdx;
+                };
+                loader.src = images[nextIdx];
+            }, 4000);
+        })();
+
+        // ── Category modal ──
+        var catData = {
+            stationery: {
+                title: "Stationery & School",
+                items: [
+                    { name: "A4 Exercise Book (192pg)", desc: "Ruled, high-quality paper", price: "GH₵ 8.00", stock: "in" },
+                    { name: "Ballpoint Pen (Blue/Black)", desc: "Smooth-writing, 0.7mm tip", price: "GH₵ 2.50", stock: "in" },
+                    { name: "HB Pencil Pack (12 pcs)", desc: "Premium graphite, easy sharpening", price: "GH₵ 15.00", stock: "in" },
+                    { name: "30cm Ruler (Plastic)", desc: "Transparent, unbreakable", price: "GH₵ 3.00", stock: "in" },
+                    { name: "Crayon Set (24 colours)", desc: "Non-toxic, vibrant colours", price: "GH₵ 18.00", stock: "in" },
+                    { name: "Geometry Set (7 pcs)", desc: "Compass, protractor, set squares", price: "GH₵ 25.00", stock: "in" },
+                    { name: "Eraser & Sharpener Combo", desc: "Dust-free eraser + metal sharpener", price: "GH₵ 4.00", stock: "in" },
+                    { name: "School Glue Stick", desc: "Washable, non-toxic, 20g", price: "GH₵ 5.00", stock: "low" }
+                ]
+            },
+            cleaning: {
+                title: "Cleaning & Hygiene",
+                items: [
+                    { name: "Liquid Dish Soap (500ml)", desc: "Grease-cutting, lemon scent", price: "GH₵ 12.00", stock: "in" },
+                    { name: "Bleach (1 Litre)", desc: "Multi-surface disinfectant", price: "GH₵ 8.00", stock: "in" },
+                    { name: "Floor Mop (Cotton)", desc: "Heavy-duty, washable head", price: "GH₵ 25.00", stock: "in" },
+                    { name: "Broom (Soft Bristle)", desc: "Indoor use, long handle", price: "GH₵ 15.00", stock: "in" },
+                    { name: "Scrubbing Sponge (3-pack)", desc: "Dual-sided, non-scratch", price: "GH₵ 6.00", stock: "in" },
+                    { name: "Dustpan & Brush Set", desc: "Compact, easy storage", price: "GH₵ 10.00", stock: "in" },
+                    { name: "Toilet Cleaner (750ml)", desc: "Antibacterial, fresh scent", price: "GH₵ 9.00", stock: "in" },
+                    { name: "Microfibre Cloth (3-pack)", desc: "Lint-free, reusable", price: "GH₵ 14.00", stock: "low" }
+                ]
+            },
+            tissues: {
+                title: "Tissues & Paper Products",
+                items: [
+                    { name: "Toilet Tissue (10-roll pack)", desc: "2-ply, soft & absorbent", price: "GH₵ 18.00", stock: "in" },
+                    { name: "Facial Tissue Box (200 sheets)", desc: "Gentle on skin, lotion-infused", price: "GH₵ 12.00", stock: "in" },
+                    { name: "Kitchen Towel Roll", desc: "Super absorbent, 60 sheets", price: "GH₵ 8.00", stock: "in" },
+                    { name: "Paper Napkins (50 pcs)", desc: "Dinner size, white", price: "GH₵ 5.00", stock: "in" },
+                    { name: "Pocket Tissue Pack (10 pcs)", desc: "Compact, travel-friendly", price: "GH₵ 4.00", stock: "in" },
+                    { name: "Paper Towel Roll (XL)", desc: "Heavy-duty, 120 sheets", price: "GH₵ 14.00", stock: "in" },
+                    { name: "Wet Wipes (80 pcs)", desc: "Alcohol-free, antibacterial", price: "GH₵ 10.00", stock: "in" }
+                ]
+            },
+            kitchen: {
+                title: "Kitchen & Dining",
+                items: [
+                    { name: "Plastic Bowl Set (5 pcs)", desc: "BPA-free, assorted sizes", price: "GH₵ 22.00", stock: "in" },
+                    { name: "Stainless Cutlery Set (24 pcs)", desc: "Forks, spoons, knives", price: "GH₵ 45.00", stock: "in" },
+                    { name: "Food Flask (1 Litre)", desc: "Keeps hot/cold for 12hrs", price: "GH₵ 35.00", stock: "in" },
+                    { name: "Plastic Plates (6-pack)", desc: "Microwave-safe, durable", price: "GH₵ 18.00", stock: "in" },
+                    { name: "Drinking Cups (4-pack)", desc: "Unbreakable, stackable", price: "GH₵ 12.00", stock: "in" },
+                    { name: "Food Container Set (3 pcs)", desc: "Airtight lids, freezer-safe", price: "GH₵ 28.00", stock: "in" },
+                    { name: "Cooler Box (20 Litre)", desc: "Insulated, portable handle", price: "GH₵ 55.00", stock: "low" },
+                    { name: "Cooking Spoon Set (3 pcs)", desc: "Heat-resistant silicone", price: "GH₵ 20.00", stock: "in" }
+                ]
+            },
+            storage: {
+                title: "Storage & Bins",
+                items: [
+                    { name: "Trash Bin (12 Litre)", desc: "With lid, foot pedal", price: "GH₵ 25.00", stock: "in" },
+                    { name: "Storage Box (Large)", desc: "Stackable, with lid", price: "GH₵ 30.00", stock: "in" },
+                    { name: "Laundry Basket", desc: "Foldable, ventilated", price: "GH₵ 20.00", stock: "in" },
+                    { name: "Plastic Drawer Unit (3-tier)", desc: "Multi-purpose organiser", price: "GH₵ 45.00", stock: "in" },
+                    { name: "Shelf Organiser", desc: "Expandable, non-slip", price: "GH₵ 18.00", stock: "in" },
+                    { name: "Vacuum Storage Bag (3-pack)", desc: "Space-saving, reusable", price: "GH₵ 22.00", stock: "low" },
+                    { name: "Trash Bags (50 pcs)", desc: "Heavy-duty, leak-proof", price: "GH₵ 12.00", stock: "in" }
+                ]
+            },
+            personal: {
+                title: "Personal Care",
+                items: [
+                    { name: "Body Wash (500ml)", desc: "Moisturising, fresh scent", price: "GH₵ 22.00", stock: "in" },
+                    { name: "Shampoo (400ml)", desc: "Anti-dandruff, all hair types", price: "GH₵ 18.00", stock: "in" },
+                    { name: "Toothpaste (100ml)", desc: "Fluoride, mint fresh", price: "GH₵ 8.00", stock: "in" },
+                    { name: "Deodorant Roll-On (50ml)", desc: "48hr protection, unscented", price: "GH₵ 15.00", stock: "in" },
+                    { name: "Body Lotion (250ml)", desc: "Deep moisturising, shea butter", price: "GH₵ 20.00", stock: "in" },
+                    { name: "Sanitary Pads (10-pack)", desc: "Ultra-thin, comfortable", price: "GH₵ 12.00", stock: "in" },
+                    { name: "Shaving Stick", desc: "Smooth glide, no irritation", price: "GH₵ 6.00", stock: "in" },
+                    { name: "Vaseline (100ml)", desc: "Pure petroleum jelly", price: "GH₵ 8.00", stock: "in" }
+                ]
+            },
+            home: {
+                title: "Home Essentials",
+                items: [
+                    { name: "LED Bulb (9W, Warm White)", desc: "Energy-saving, long-lasting", price: "GH₵ 10.00", stock: "in" },
+                    { name: "AA Batteries (4-pack)", desc: "Alkaline, 1.5V", price: "GH₵ 8.00", stock: "in" },
+                    { name: "Safety Matches (10 boxes)", desc: "Strike-anywhere, reliable", price: "GH₵ 5.00", stock: "in" },
+                    { name: "Scented Candles (3-pack)", desc: "Lavender, vanilla, citrus", price: "GH₵ 18.00", stock: "in" },
+                    { name: "Insect Killer Spray", desc: "Fast-acting, 400ml", price: "GH₵ 15.00", stock: "in" },
+                    { name: "Air Freshener (300ml)", desc: "Ocean breeze, long-lasting", price: "GH₵ 12.00", stock: "in" },
+                    { name: "Duct Tape (Roll)", desc: "Heavy-duty, waterproof", price: "GH₵ 8.00", stock: "low" }
+                ]
+            },
+            baby: {
+                title: "Baby & Kids",
+                items: [
+                    { name: "Baby Diapers (Size M, 30 pcs)", desc: "Ultra-soft, leak-proof", price: "GH₵ 35.00", stock: "in" },
+                    { name: "Baby Wipes (80 pcs)", desc: "Fragrance-free, gentle", price: "GH₵ 12.00", stock: "in" },
+                    { name: "Baby Soap (200ml)", desc: "Hypoallergenic, tear-free", price: "GH₵ 15.00", stock: "in" },
+                    { name: "Baby Powder (100g)", desc: "Talc-free, cornstarch-based", price: "GH₵ 10.00", stock: "in" },
+                    { name: "Baby Lotion (250ml)", desc: "Moisturising, chamomile", price: "GH₵ 18.00", stock: "in" },
+                    { name: "Sippy Cup (300ml)", desc: "Spill-proof, BPA-free", price: "GH₵ 14.00", stock: "in" },
+                    { name: "School Bag (Kids)", desc: "Lightweight, padded straps", price: "GH₵ 30.00", stock: "in" },
+                    { name: "Baby Toy Set", desc: "Colourful, safe materials", price: "GH₵ 22.00", stock: "low" }
+                ]
+            },
+            food: {
+                title: "Food & Beverages",
+                items: [
+                    { name: "Rice (5kg Bag)", desc: "Long grain, premium quality", price: "GH₵ 45.00", stock: "in" },
+                    { name: "Cooking Oil (2 Litre)", desc: "Vegetable oil, cholesterol-free", price: "GH₵ 28.00", stock: "in" },
+                    { name: "Canned Tomatoes (400g)", desc: "Rich, no preservatives", price: "GH₵ 8.00", stock: "in" },
+                    { name: "Soft Drinks (6-pack, 330ml)", desc: "Assorted flavours", price: "GH₵ 18.00", stock: "in" },
+                    { name: "Biscuits (Family Pack)", desc: "Assorted, crunchy", price: "GH₵ 12.00", stock: "in" },
+                    { name: "Milk Powder (400g)", desc: "Full cream, fortified", price: "GH₵ 22.00", stock: "in" },
+                    { name: "Bottled Water (1.5L, 6-pack)", desc: "Pure, mineral-enriched", price: "GH₵ 10.00", stock: "in" },
+                    { name: "Spice Collection (5 jars)", desc: "Pepper, curry, thyme, garlic, ginger", price: "GH₵ 25.00", stock: "low" }
+                ]
+            },
+            office: {
+                title: "Office & Work",
+                items: [
+                    { name: "A4 File Folder (10-pack)", desc: "Manila, reinforced edges", price: "GH₵ 15.00", stock: "in" },
+                    { name: "Stapler + Staples", desc: "Heavy-duty, 20-sheet capacity", price: "GH₵ 18.00", stock: "in" },
+                    { name: "Sticky Notes (3-pack)", desc: "76x76mm, assorted colours", price: "GH₵ 8.00", stock: "in" },
+                    { name: "Desktop Calculator", desc: "12-digit, solar-powered", price: "GH₵ 25.00", stock: "in" },
+                    { name: "Stamp Pad (Black)", desc: "Quick-dry, refillable", price: "GH₵ 6.00", stock: "in" },
+                    { name: "Desk Organiser", desc: "Multi-compartment, bamboo", price: "GH₵ 30.00", stock: "in" },
+                    { name: "Printer Paper (500 sheets)", desc: "A4, 80gsm, bright white", price: "GH₵ 35.00", stock: "low" }
+                ]
+            },
+            fashion: {
+                title: "Fashion & Textiles",
+                items: [
+                    { name: "Bath Towel (Large)", desc: "100% cotton, quick-dry", price: "GH₵ 25.00", stock: "in" },
+                    { name: "Bed Sheet Set (Double)", desc: "Fitted + 2 pillowcases", price: "GH₵ 45.00", stock: "in" },
+                    { name: "Pillowcase Pair", desc: "Soft cotton, zip closure", price: "GH₵ 15.00", stock: "in" },
+                    { name: "House Slippers", desc: "Comfortable, non-slip sole", price: "GH₵ 18.00", stock: "in" },
+                    { name: "School Uniform Fabric (6 yards)", desc: "Durable, colour-fast", price: "GH₵ 35.00", stock: "in" },
+                    { name: "Hand Towel Set (3 pcs)", desc: "Absorbent, assorted colours", price: "GH₵ 12.00", stock: "in" },
+                    { name: "Duvet Cover (King)", desc: "Soft microfiber, zip", price: "GH₵ 55.00", stock: "low" }
+                ]
+            },
+            party: {
+                title: "Party & Events",
+                items: [
+                    { name: "Disposable Cups (50 pcs)", desc: "Plastic, 250ml, assorted", price: "GH₵ 8.00", stock: "in" },
+                    { name: "Paper Plates (25 pcs)", desc: "Sturdy, 9-inch diameter", price: "GH₵ 6.00", stock: "in" },
+                    { name: "Balloon Pack (50 pcs)", desc: "Latex, mixed colours", price: "GH₵ 12.00", stock: "in" },
+                    { name: "Gift Wrap Roll", desc: "Premium, 2m length", price: "GH₵ 8.00", stock: "in" },
+                    { name: "Ribbon Roll (10m)", desc: "Satin, 2cm wide", price: "GH₵ 5.00", stock: "in" },
+                    { name: "Greeting Cards (5-pack)", desc: "Assorted designs, envelopes", price: "GH₵ 10.00", stock: "in" },
+                    { name: "Party Banner", desc: "\"Happy Birthday\" foil letters", price: "GH₵ 15.00", stock: "in" },
+                    { name: "Tablecloth (Disposable)", desc: "Plastic, 1.5m x 2m", price: "GH₵ 6.00", stock: "low" }
+                ]
+            }
+        };
+
+        function openCatModal(catKey) {
+            var data = catData[catKey];
+            if (!data) return;
+            document.getElementById('cat-modal-title').textContent = data.title;
+            var body = document.getElementById('cat-modal-body');
+            var html = '';
+            var showCount = 5;
+            var total = data.items.length;
+            for (var i = 0; i < showCount && i < total; i++) {
+                var item = data.items[i];
+                html += '<div class="cat-item">' +
+                    '<div class="cat-item-info">' +
+                        '<div class="cat-item-name">' + item.name + '</div>' +
+                        '<div class="cat-item-desc">' + item.desc + '</div>' +
+                    '</div>' +
+                    '<span class="cat-item-stock ' + item.stock + '">' + (item.stock === 'in' ? 'In Stock' : 'Low Stock') + '</span>' +
+                    '<span class="cat-item-price">' + item.price + '</span>' +
+                '</div>';
+            }
+            var remaining = total - showCount;
+            if (remaining > 0) {
+                html += '<div style="text-align:center;padding:1.5rem 0 0.5rem">' +
+                    '<p style="font-size:0.85rem;color:#888;margin-bottom:0.25rem;line-height:1.5">We carry a wider selection in-store. Visit us or call for the complete catalog with current pricing and availability.</p>' +
+                    '<a href="tel:+233257722786" style="display:inline-flex;align-items:center;gap:0.4rem;background:#00A86B;color:#fff;padding:0.6rem 1.4rem;border-radius:999px;font-size:0.85rem;font-weight:700;text-decoration:none;transition:filter 0.2s" onmouseover="this.style.filter=\'brightness(1.1)\'" onmouseout="this.style.filter=\'\'"><i class="fas fa-phone" style="font-size:0.75rem"></i> Call Us Now</a>' +
+                '</div>';
+            }
+            body.innerHTML = html;
+            document.getElementById('cat-modal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+        }
+
+        function closeCatModal() {
+            document.getElementById('cat-modal').classList.remove('open');
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+        }
+
+        // Attach click handlers to all category cards
+        document.querySelectorAll('.cat-card').forEach(function(card) {
+            card.addEventListener('click', function() {
+                openCatModal(this.getAttribute('data-cat'));
+            });
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeCatModal();
         });
     </script>
 </body>
