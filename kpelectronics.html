@@ -3346,15 +3346,20 @@
     box-shadow: 0 8px 32px rgba(0,0,0,0.2);
     display: none;
     flex-direction: column;
-    z-index: 1000;
+    z-index: 1002;
     border: 1px solid var(--border);
     overflow: hidden;
     transform-origin: bottom left;
+    backdrop-filter: none;
 }
 
 .chat-widget.active {
     display: flex;
     animation: chatPopIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+body.chat-open {
+    overflow: hidden;
 }
 
 @keyframes chatPopIn {
@@ -4238,9 +4243,6 @@
     <div class="fab-container">
         <button class="fab" onclick="window.open('https://wa.me/233257722786', '_blank')" title="Chat on WhatsApp">
             <i class="fab fa-whatsapp"></i>
-        </button>
-        <button class="fab fab-secondary" onclick="document.getElementById('newsletter-modal').classList.add('active')" title="Subscribe to Newsletter">
-            <i class="fas fa-envelope"></i>
         </button>
         <button class="fab fab-secondary" id="chatToggleBtn" title="Need Help?">
             <i class="fas fa-comments"></i>
@@ -5135,6 +5137,7 @@
                 widget.style.display = 'flex';
                 void widget.offsetHeight;
                 widget.classList.add('active');
+                document.body.classList.add('chat-open');
             }
             this.style.display = 'none';
         });
@@ -5145,6 +5148,7 @@
             if (widget) {
                 widget.classList.remove('active');
                 widget.style.display = 'none';
+                document.body.classList.remove('chat-open');
             }
             const btn = document.getElementById('chatToggleBtn');
             if (btn) btn.style.display = '';
