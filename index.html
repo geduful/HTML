@@ -59,7 +59,7 @@
 
         /* ── FIX 2: Modals always dark regardless of theme ── */
         .modal { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.9); padding: 1.25rem; overflow-y: auto; }
-        .modal:target { display: block; }
+        .modal.open { display: flex; align-items: center; }
         .modal-inner {
             background: #111317 !important;
             color: #eceff4 !important;
@@ -518,16 +518,16 @@
         <div class="mt-20 sm:mt-24 lg:mt-32 pt-8 sm:pt-10 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p class="text-xs opacity-40 font-bold uppercase tracking-[0.4em]">© 2026 KP Group Of Companies</p>
             <div class="flex gap-6 sm:gap-8 text-[10px] font-bold uppercase tracking-widest opacity-60">
-                <a href="#privacy" class="hover:text-[var(--accent)] transition-colors">Privacy Policy</a>
-                <a href="#terms"   class="hover:text-[var(--accent)] transition-colors">Terms of Service</a>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('privacy').classList.add('open')" class="hover:text-[var(--accent)] transition-colors">Privacy Policy</a>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('terms').classList.add('open')" class="hover:text-[var(--accent)] transition-colors">Terms of Service</a>
             </div>
         </div>
     </footer>
 
     <!-- ═══ MODALS: Privacy & Terms — always dark ═══ -->
-    <div id="privacy" class="modal" role="dialog" aria-modal="true" aria-label="Privacy Policy">
+    <div id="privacy" class="modal" role="dialog" aria-modal="true" aria-label="Privacy Policy" onclick="if(event.target===this) this.classList.remove('open')">
         <div class="modal-inner max-w-3xl mx-auto p-8 sm:p-12 rounded-[2rem] sm:rounded-[3rem] relative">
-            <button type="button" onclick="history.replaceState(null,'',window.location.pathname); window.location.hash=''" class="absolute top-6 right-6 sm:top-8 sm:right-8 cursor-pointer" style="color:#eceff4; background:none; border:none; padding:0"><i data-lucide="x"></i></button>
+            <button type="button" onclick="document.getElementById('privacy').classList.remove('open')" class="absolute top-6 right-6 sm:top-8 sm:right-8 cursor-pointer" style="color:#eceff4; background:none; border:none; padding:0" aria-label="Close"><span style="display:block;font-size:1.5rem;line-height:1;pointer-events:none">&times;</span></button>
             <h2 class="font-heading text-3xl sm:text-4xl font-bold mb-5 sm:mb-6 italic" style="color: var(--accent); font-family:'Clash Display',sans-serif">Privacy Policy</h2>
             <div class="space-y-4 text-sm leading-relaxed" style="opacity:0.75">
                 <p><strong>1. Data Collection:</strong> We collect information you provide directly via contact forms to facilitate business partnerships.</p>
@@ -538,9 +538,9 @@
         </div>
     </div>
 
-    <div id="terms" class="modal" role="dialog" aria-modal="true" aria-label="Terms of Service">
+    <div id="terms" class="modal" role="dialog" aria-modal="true" aria-label="Terms of Service" onclick="if(event.target===this) this.classList.remove('open')">
         <div class="modal-inner max-w-3xl mx-auto p-8 sm:p-12 rounded-[2rem] sm:rounded-[3rem] relative">
-            <button type="button" onclick="history.replaceState(null,'',window.location.pathname); window.location.hash=''" class="absolute top-6 right-6 sm:top-8 sm:right-8 cursor-pointer" style="color:#eceff4; background:none; border:none; padding:0"><i data-lucide="x"></i></button>
+            <button type="button" onclick="document.getElementById('terms').classList.remove('open')" class="absolute top-6 right-6 sm:top-8 sm:right-8 cursor-pointer" style="color:#eceff4; background:none; border:none; padding:0" aria-label="Close"><span style="display:block;font-size:1.5rem;line-height:1;pointer-events:none">&times;</span></button>
             <h2 class="font-heading text-3xl sm:text-4xl font-bold mb-5 sm:mb-6 italic" style="color: var(--accent); font-family:'Clash Display',sans-serif">Terms of Service</h2>
             <div class="space-y-4 text-sm leading-relaxed" style="opacity:0.75">
                 <p><strong>1. Acceptable Use:</strong> Users agree to use this portal for legitimate business inquiries only.</p>
@@ -588,8 +588,12 @@
 
         // Close staff panel on Escape
         document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') { closeStaff(); closeProfile(); }
+            if (e.key === 'Escape') { closeStaff(); closeProfile(); closeModals(); }
         });
+
+        function closeModals() {
+            document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
+        }
 
         /* ── Profile modal ── */
         const profiles = {
