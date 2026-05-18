@@ -2256,6 +2256,77 @@
             background: var(--primary-dark);
         }
 
+        /* Product Quick-View Modal */
+        .quickview-overlay {
+            position: fixed; inset: 0; z-index: 2000;
+            background: rgba(0,0,0,0.85);
+            display: none; align-items: center; justify-content: center;
+            padding: 1rem;
+        }
+        .quickview-overlay.active { display: flex; }
+        .quickview-modal {
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            width: 100%; max-width: 800px;
+            max-height: 90vh; overflow-y: auto;
+            position: relative;
+        }
+        .quickview-close {
+            position: absolute; top: 1rem; right: 1rem; z-index: 1;
+            width: 36px; height: 36px; border-radius: 50%;
+            background: var(--surface); color: var(--text);
+            border: 1px solid var(--border);
+            font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .quickview-close:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .quickview-body { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 2rem; }
+        .quickview-image {
+            background: var(--surface); border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            padding: 1rem; min-height: 300px;
+        }
+        .quickview-image img { max-width: 100%; max-height: 350px; object-fit: contain; }
+        .quickview-info h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .quickview-info .qv-category {
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--primary); font-weight: 600; margin-bottom: 0.75rem;
+        }
+        .quickview-info .qv-price { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .quickview-info .qv-original {
+            font-size: 1rem; color: var(--text-muted);
+            text-decoration: line-through; margin-bottom: 1.5rem;
+        }
+        .quickview-info .qv-badge {
+            display: inline-block; padding: 0.25rem 0.75rem;
+            background: var(--primary); color: #fff;
+            font-size: 0.7rem; font-weight: 700; border-radius: 6px;
+            text-transform: uppercase; margin-bottom: 0.75rem;
+        }
+        .qv-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+        .qv-actions .btn-add { flex: 1; padding: 0.85rem; }
+        .qv-actions .btn-wishlist { width: 48px; height: 48px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted); font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .qv-actions .btn-wishlist:hover { color: #e74c3c; border-color: #e74c3c; }
+        .quickview-similar { padding: 0 2rem 2rem; }
+        .quickview-similar h3 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-muted); }
+        .qv-similar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+        .qv-similar-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 12px; padding: 0.75rem; cursor: pointer;
+            transition: all 0.2s; text-align: center;
+        }
+        .qv-similar-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .qv-similar-card img { width: 100%; height: 80px; object-fit: contain; margin-bottom: 0.5rem; }
+        .qv-similar-card h4 { font-size: 0.75rem; font-weight: 600; margin-bottom: 0.25rem; line-height: 1.2; }
+        .qv-similar-card .qv-sim-price { font-size: 0.8rem; font-weight: 700; color: var(--primary); }
+        @media (max-width: 640px) {
+            .quickview-body { grid-template-columns: 1fr; padding: 1.25rem; }
+            .quickview-image { min-height: 200px; }
+            .qv-similar-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
         .flex {
             display: flex;
         }
@@ -3710,7 +3781,8 @@ body.chat-open {
                     </div>
                 </div>
                 <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="Electronics">
+<img 
+src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="Electronics" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27200%27 viewBox=%270 0 400 200%27%3E%3Crect fill=%27%23222%27 width=%27400%27 height=%27200%27/%3E%3Ctext fill=%27%23666%27 font-family=%27Arial%27 font-size=%2716%27 text-anchor=%27middle%27 x=%27200%27 y=%27106%27%3EElectronics%3C/text%3E%3C/svg%3E'">
                 </div>
             </div>
         </section>
@@ -4018,7 +4090,7 @@ body.chat-open {
                         <input type="radio" name="payment" value="mtn" checked>
                         <div class="payment-option-content">
                             <div class="payment-icon">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/New-mtn-logo.jpg" alt="MTN" style="width:50px;height:50px;border-radius:12px;object-fit:cover;">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/New-mtn-logo.jpg" alt="MTN" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2750%27 height=%2750%27 viewBox=%270 0 50 50%27%3E%3Crect fill=%27%23ffcc00%27 width=%2750%27 height=%2750%27 rx=%278%27/%3E%3Ctext fill=%27%23000%27 font-family=%27Arial%27 font-size=%2710%27 font-weight=%27bold%27 text-anchor=%27middle%27 x=%2725%27 y=%2729%27%3EMTN%3C/text%3E%3C/svg%3E'" style="width:50px;height:50px;border-radius:12px;object-fit:cover;">
                             </div>
                             <div>
                                 <strong>MTN Mobile Money</strong>
@@ -4030,7 +4102,7 @@ body.chat-open {
                         <input type="radio" name="payment" value="at">
                         <div class="payment-option-content">
                             <div class="payment-icon">
-                                <img src="https://www.telecomreviewafrica.com/wp-content/uploads/2023/06/AirtelTigo_Rebrands_for_Enhanced_Identification_and_Simplicity.jpg" alt="AT" style="width:50px;height:50px;border-radius:12px;object-fit:cover;">
+                                <img src="https://www.telecomreviewafrica.com/wp-content/uploads/2023/06/AirtelTigo_Rebrands_for_Enhanced_Identification_and_Simplicity.jpg" alt="AT" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2750%27 height=%2750%27 viewBox=%270 0 50 50%27%3E%3Crect fill=%27%23ed1c24%27 width=%2750%27 height=%2750%27 rx=%278%27/%3E%3Ctext fill=%27%23fff%27 font-family=%27Arial%27 font-size=%278%27 font-weight=%27bold%27 text-anchor=%27middle%27 x=%2725%27 y=%2729%27%3EAT%3C/text%3E%3C/svg%3E'" style="width:50px;height:50px;border-radius:12px;object-fit:cover;">
                             </div>
                             <div>
                                 <strong>AT Money</strong>
@@ -4042,7 +4114,7 @@ body.chat-open {
                         <input type="radio" name="payment" value="telecel">
                         <div class="payment-option-content">
                             <div class="payment-icon">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNUEv0uX08h4RyFGJLpc6SwgIQ4G7w6ER9lw&s" alt="Telecel" style="width:50px;height:50px;border-radius:12px;object-fit:cover;">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNUEv0uX08h4RyFGJLpc6SwgIQ4G7w6ER9lw&s" alt="Telecel" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2750%27 height=%2750%27 viewBox=%270 0 50 50%27%3E%3Crect fill=%27%232654a0%27 width=%2750%27 height=%2750%27 rx=%278%27/%3E%3Ctext fill=%27%23fff%27 font-family=%27Arial%27 font-size=%277%27 font-weight=%27bold%27 text-anchor=%27middle%27 x=%2725%27 y=%2729%27%3ETele%3C/text%3E%3C/svg%3E'" style="width:50px;height:50px;border-radius:12px;object-fit:cover;">
                             </div>
                             <div>
                                 <strong>Telecel Cash</strong>
@@ -4285,6 +4357,15 @@ body.chat-open {
     </button>
 
     <script src="https://checkout.flutterwave.com/v3.js"></script>
+    <!-- ═══ PRODUCT QUICK-VIEW MODAL ═══ -->
+    <div id="quickviewOverlay" class="quickview-overlay" onclick="if(event.target===this) closeQuickView()">
+        <div class="quickview-modal">
+            <button class="quickview-close" onclick="closeQuickView()">&times;</button>
+            <div class="quickview-body" id="quickviewBody"></div>
+            <div class="quickview-similar" id="quickviewSimilar"></div>
+        </div>
+    </div>
+
     <script>
         // ========== PAYMENT CONFIG ==========
         const FLW_PUBLIC_KEY = 'FLWPUBK_TEST-3c9a8a5d5b7e6f8a9b0c1d2e3f4a5b6c'; // Replace with your live key in production
@@ -4357,10 +4438,10 @@ body.chat-open {
         // Product Data by Category
         const products = {
             all: [
-                { name: "Professional Laptop 15\"", category: "Laptops", price: 8500, original: 10000, badge: "Hot", img: "https://images.unsplash.com/photo-1593640408182-31c70c8f98f6?w=300&q=80" },
+                { name: "Professional Laptop 15\"", category: "Laptops", price: 8500, original: 10000, badge: "Hot", img: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300&q=80" },
                 { name: "Smart TV 55\" 4K Ultra HD", category: "TVs", price: 6200, original: 7500, badge: "New", img: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=300&q=80" },
                 { name: "Pro Smartphone 256GB", category: "Mobile", price: 4800, original: 5500, badge: "", img: "https://images.unsplash.com/photo-1585060544812-6b45742d762f?w=300&q=80" },
-                { name: "Wireless Headphones", category: "Audio", price: 450, original: 600, badge: "-20%", img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300&q=80" },
+                { name: "Wireless Headphones", category: "Audio", price: 450, original: 600, badge: "-20%", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&q=80" },
                 { name: "Smart Watch Series 8", category: "Wearables", price: 1200, original: 1500, badge: "", img: "https://images.unsplash.com/photo-1523275335684-37899b6b9fe5?w=300&q=80" },
                 { name: "Portable Speaker", category: "Audio", price: 350, original: 450, badge: "Best", img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=80" },
                 { name: "Kitchen Blender", category: "Appliances", price: 280, original: 350, badge: "", img: "https://images.unsplash.com/photo-1585647347384-2593c35786bf?w=300&q=80" },
@@ -4377,17 +4458,17 @@ body.chat-open {
                 { name: "Curved TV 50\"", category: "TVs", price: 5500, original: 7000, badge: "", img: "https://images.unsplash.com/photo-1485740100423-b3b0b5bd2f59?w=300&q=80" }
             ],
             laptops: [
-                { name: "Professional Laptop 15\"", category: "Laptops", price: 8500, original: 10000, badge: "Hot", img: "https://images.unsplash.com/photo-1593640408182-31c70c8f98f6?w=300&q=80" },
+                { name: "Professional Laptop 15\"", category: "Laptops", price: 8500, original: 10000, badge: "Hot", img: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300&q=80" },
                 { name: "Gaming Laptop Pro 17\"", category: "Gaming", price: 12000, original: 15000, badge: "New", img: "https://images.unsplash.com/photo-1603302576838-37599f0537fe?w=300&q=80" },
-                { name: "Ultrabook 14\"", category: "Laptops", price: 6500, original: 8000, badge: "", img: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300&q=80" },
+                { name: "Ultrabook 14\"", category: "Laptops", price: 6500, original: 8000, badge: "", img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=300&q=80" },
                 { name: "Business Laptop 15\"", category: "Laptops", price: 5500, original: 6500, badge: "", img: "https://images.unsplash.com/photo-1588872657578-7efd1a68e42f?w=300&q=80" },
-                { name: "MacBook Style 13\"", category: "Laptops", price: 7500, original: 9000, badge: "-15%", img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=300&q=80" },
+                { name: "MacBook Style 13\"", category: "Laptops", price: 7500, original: 9000, badge: "-15%", img: "https://images.unsplash.com/photo-1593640408182-31c70c8f98f6?w=300&q=80" },
                 { name: "Budget Laptop 14\"", category: "Laptops", price: 3800, original: 4500, badge: "", img: "https://images.unsplash.com/photo-1541803090-6909c2e7780a?w=300&q=80" }
             ],
             mobile: [
                 { name: "Pro Smartphone 256GB", category: "Mobile", price: 4800, original: 5500, badge: "", img: "https://images.unsplash.com/photo-1585060544812-6b45742d762f?w=300&q=80" },
                 { name: "Ultra Phone 512GB", category: "Mobile", price: 6500, original: 8000, badge: "Hot", img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&q=80" },
-                { name: "Budget Phone 128GB", category: "Mobile", price: 1800, original: 2200, badge: "", img: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=300&q=80" },
+                { name: "Budget Phone 128GB", category: "Mobile", price: 1800, original: 2200, badge: "", img: "https://images.unsplash.com/photo-1567581935884-3349723552ca?w=300&q=80" },
                 { name: "Pro Max 256GB", category: "Mobile", price: 8200, original: 9500, badge: "New", img: "https://images.unsplash.com/photo-1601784551446-20281a782c8d?w=300&q=80" },
                 { name: "Android Tablet 10\"", category: "Tablets", price: 2200, original: 2800, badge: "", img: "https://images.unsplash.com/photo-1542751110-974e27e2b299?w=300&q=80" },
                 { name: "Fold Phone", category: "Mobile", price: 9500, original: 12000, badge: "", img: "https://images.unsplash.com/photo-1598327102508-3c6a3082e63e?w=300&q=80" }
@@ -4401,12 +4482,12 @@ body.chat-open {
                 { name: "Air Conditioner 1.5HP", category: "Appliances", price: 3500, original: 4200, badge: "", img: "https://images.unsplash.com/photo-1630699144867-5adefc433438?w=300&q=80" }
             ],
             audio: [
-                { name: "Wireless Headphones", category: "Audio", price: 450, original: 600, badge: "-20%", img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300&q=80" },
+                { name: "Wireless Headphones", category: "Audio", price: 450, original: 600, badge: "-20%", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&q=80" },
                 { name: "Portable Speaker", category: "Audio", price: 350, original: 450, badge: "Best", img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=80" },
                 { name: "Bluetooth Earbuds", category: "Audio", price: 280, original: 400, badge: "", img: "https://images.unsplash.com/photo-1590658268035-6b12f6c4b64e?w=300&q=80" },
                 { name: "Soundbar 5.1", category: "Audio", price: 2200, original: 2800, badge: "New", img: "https://images.unsplash.com/photo-1545454675-3531f4d6b24d?w=300&q=80" },
                 { name: "Home Theater System", category: "Audio", price: 5500, original: 7000, badge: "Hot", img: "https://images.unsplash.com/photo-1514475157002-1e9a8d41cf5f?w=300&q=80" },
-                { name: "Neckband Headphones", category: "Audio", price: 380, original: 500, badge: "", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&q=80" }
+                { name: "Neckband Headphones", category: "Audio", price: 380, original: 500, badge: "", img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300&q=80" }
             ],
             gaming: [
                 { name: "Gaming Console", category: "Gaming", price: 2800, original: 3500, badge: "Hot", img: "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=300&q=80" },
@@ -4577,10 +4658,10 @@ body.chat-open {
             }
 
             grid.innerHTML = list.map(p => `
-                <div class="product-card">
+                <div class="product-card" onclick="openQuickView('${esc(p.name)}')">
                     ${p.badge ? '<span class="product-badge">' + p.badge + '</span>' : ''}
                     <div class="product-image">
-                        <img src="${p.img}" alt="${esc(p.name)}">
+                        <img src="${p.img}" alt="${esc(p.name)}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27 viewBox=%270 0 200 200%27%3E%3Crect fill=%27%23222%27 width=%27200%27 height=%27200%27/%3E%3Ctext fill=%27%23666%27 font-family=%27Arial%27 font-size=%2713%27 text-anchor=%27middle%27 x=%27100%27 y=%27106%27%3ENo Image%3C/text%3E%3C/svg%3E'">
                     </div>
                     <div class="product-category">${p.category}</div>
                     <h3 class="product-name">${p.name}</h3>
@@ -4589,8 +4670,8 @@ body.chat-open {
                         ${p.original ? '<span class="original">GHS ' + p.original.toLocaleString() + '</span>' : ''}
                     </div>
                     <div class="product-actions">
-                        <button class="btn-add" onclick="addToCart('${esc(p.name)}')">Add to Cart</button>
-                        <button class="btn-wishlist"><i class="fas fa-heart"></i></button>
+                        <button class="btn-add" onclick="event.stopPropagation(); addToCart('${esc(p.name)}')">Add to Cart</button>
+                        <button class="btn-wishlist" onclick="event.stopPropagation()"><i class="fas fa-heart"></i></button>
                     </div>
                 </div>
             `).join('');
@@ -4687,7 +4768,7 @@ body.chat-open {
             itemsEl.innerHTML = cart.map(item => `
                 <div class="cart-item">
                     <div class="cart-item-img">
-                        <img src="${item.img}" alt="${esc(item.name)}">
+                        <img src="${item.img}" alt="${esc(item.name)}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2760%27 height=%2760%27 viewBox=%270 0 60 60%27%3E%3Crect fill=%27%23222%27 width=%2760%27 height=%2760%27/%3E%3Ctext fill=%27%23666%27 font-family=%27Arial%27 font-size=%278%27 text-anchor=%27middle%27 x=%2730%27 y=%2734%27%3ENo%3C/text%3E%3C/svg%3E'">
                     </div>
                     <div class="cart-item-info">
                         <div class="cart-item-category">${item.category}</div>
@@ -4782,7 +4863,7 @@ body.chat-open {
             itemsEl.innerHTML = cart.map(item => `
                 <div class="checkout-item">
                     <div class="checkout-item-img">
-                        <img src="${item.img}" alt="${esc(item.name)}">
+                        <img src="${item.img}" alt="${esc(item.name)}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2760%27 height=%2760%27 viewBox=%270 0 60 60%27%3E%3Crect fill=%27%23222%27 width=%2760%27 height=%2760%27/%3E%3Ctext fill=%27%23666%27 font-family=%27Arial%27 font-size=%278%27 text-anchor=%27middle%27 x=%2730%27 y=%2734%27%3ENo%3C/text%3E%3C/svg%3E'">
                     </div>
                     <div class="checkout-item-info">
                         <h4>${esc(item.name)}</h4>
@@ -5031,6 +5112,75 @@ body.chat-open {
             document.getElementById(id + 'Modal').classList.remove('active');
         }
 
+        // Product quick-view modal
+        function findProductByName(name) {
+            for (var key in products) {
+                var list = products[key];
+                if (!Array.isArray(list)) continue;
+                for (var i = 0; i < list.length; i++) {
+                    if (list[i].name === name) return list[i];
+                }
+            }
+            return null;
+        }
+
+        function getSimilarProducts(product, limit) {
+            limit = limit || 4;
+            var cat = product.category;
+            var same = [];
+            for (var key in products) {
+                var list = products[key];
+                if (!Array.isArray(list)) continue;
+                for (var i = 0; i < list.length; i++) {
+                    if (list[i].category === cat && list[i].name !== product.name && same.length < limit) {
+                        same.push(list[i]);
+                    }
+                }
+            }
+            return same;
+        }
+
+        function openQuickView(name) {
+            var p = findProductByName(name);
+            if (!p) return;
+            var body = document.getElementById('quickviewBody');
+            var similar = document.getElementById('quickviewSimilar');
+            body.innerHTML = 
+                '<div class="quickview-image"><img src="' + p.img + '" alt="' + esc(p.name) + '" onerror="this.src=\'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27 viewBox=%270 0 200 200%27%3E%3Crect fill=%27%23222%27 width=%27200%27 height=%27200%27/%3E%3Ctext fill=%27%23666%27 font-family=%27Arial%27 font-size=%2713%27 text-anchor=%27middle%27 x=%27100%27 y=%27106%27%3ENo Image%3C/text%3E%3C/svg%3E\'"></div>' +
+                '<div class="quickview-info">' +
+                    (p.badge ? '<span class="qv-badge">' + p.badge + '</span>' : '') +
+                    '<div class="qv-category">' + p.category + '</div>' +
+                    '<h2>' + p.name + '</h2>' +
+                    '<div class="qv-price">GHS ' + p.price.toLocaleString() + '</div>' +
+                    (p.original ? '<div class="qv-original">GHS ' + p.original.toLocaleString() + '</div>' : '') +
+                    '<div class="qv-actions">' +
+                        '<button class="btn-add" onclick="addToCart(\'' + esc(p.name) + '\'); closeQuickView(); showToast(\'Added to cart!\')">Add to Cart</button>' +
+                        '<button class="btn-wishlist" onclick="event.stopPropagation()"><i class="fas fa-heart"></i></button>' +
+                    '</div>' +
+                '</div>';
+            var sim = getSimilarProducts(p);
+            if (sim.length > 0) {
+                similar.innerHTML = '<h3>Similar Products</h3><div class="qv-similar-grid">' +
+                    sim.map(function(s) {
+                        return '<div class="qv-similar-card" onclick="closeQuickView(); openQuickView(\'' + esc(s.name) + '\')">' +
+                            '<img src="' + s.img + '" alt="' + esc(s.name) + '" onerror="this.src=\'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2780%27 height=%2780%27 viewBox=%270 0 80 80%27%3E%3Crect fill=%27%23222%27 width=%2780%27 height=%2780%27/%3E%3Ctext fill=%27%23666%27 font-family=%27Arial%27 font-size=%277%27 text-anchor=%27middle%27 x=%2740%27 y=%2744%27%3ENo%3C/text%3E%3C/svg%3E\'">' +
+                            '<h4>' + s.name + '</h4>' +
+                            '<div class="qv-sim-price">GHS ' + s.price.toLocaleString() + '</div>' +
+                        '</div>';
+                    }).join('') +
+                '</div>';
+            } else {
+                similar.innerHTML = '';
+            }
+            document.getElementById('quickviewOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeQuickView() {
+            document.getElementById('quickviewOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
         // Search functionality
         function searchProducts(query) {
             query = query.trim().toLowerCase();
@@ -5272,6 +5422,13 @@ body.chat-open {
         window.addEventListener('click', function(e) {
             if (e.target.classList.contains('modal')) {
                 e.target.style.display = 'none';
+            }
+        });
+
+        // Escape closes quick-view
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('quickviewOverlay').classList.contains('active')) {
+                closeQuickView();
             }
         });
 
