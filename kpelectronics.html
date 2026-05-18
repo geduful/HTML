@@ -1814,6 +1814,111 @@
             font-size: 1.3rem;
         }
 
+        .delivery-section {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .delivery-section h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .delivery-section h3 i {
+            color: var(--primary);
+        }
+
+        .delivery-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--surface-light);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.85rem;
+            margin-bottom: 0.6rem;
+            box-sizing: border-box;
+        }
+
+        .delivery-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .delivery-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .delivery-row {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .delivery-row .delivery-input {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .gps-btn {
+            padding: 0.75rem 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .gps-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .gps-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .gps-btn.loading {
+            pointer-events: none;
+        }
+
+        .gps-result {
+            display: none;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            padding: 0.4rem 0.75rem;
+            background: rgba(124, 58, 237, 0.08);
+            border-radius: 8px;
+            margin-top: 0.4rem;
+            word-break: break-all;
+        }
+
+        .gps-result.show {
+            display: block;
+        }
+
+        .gps-result i {
+            color: var(--primary);
+            margin-right: 0.3rem;
+        }
+
         .payment-methods {
             display: flex;
             flex-direction: column;
@@ -4076,6 +4181,21 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
             <div class="checkout-step" id="checkoutStep1">
                 <h2>Review Your Order</h2>
                 <div class="checkout-items" id="checkoutItems"></div>
+
+                <div class="delivery-section">
+                    <h3><i class="fas fa-location-dot"></i> Delivery Location</h3>
+                    <div class="delivery-row">
+                        <input type="text" class="delivery-input" id="deliveryName" placeholder="Full name" style="flex:1">
+                        <input type="tel" class="delivery-input" id="deliveryPhone" placeholder="Phone number" style="flex:1">
+                    </div>
+                    <input type="text" class="delivery-input" id="deliveryAddress" placeholder="Enter your delivery address (e.g. Adum, Kumasi)">
+                    <div class="delivery-row">
+                        <input type="text" class="delivery-input" id="deliveryExtra" placeholder="Landmark / digital address (optional)">
+                        <button class="gps-btn" id="gpsBtn" onclick="getGPSLocation()"><i class="fas fa-satellite"></i> GPS</button>
+                    </div>
+                    <div class="gps-result" id="gpsResult"></div>
+                </div>
+
                 <div class="checkout-order-total">
                     <span>Total</span>
                     <span id="checkoutTotal">GHS 0</span>
@@ -4243,6 +4363,7 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
                     <h2>Payment Pending</h2>
                     <p id="pendingText">Your transfer is being verified.</p>
                     <p class="checkout-note" id="pendingRefText">Reference: <strong id="pendingRefDisplay"></strong></p>
+                    <p class="checkout-note" id="pendingDelivery" style="display:none"></p>
                     <p class="checkout-note">We'll confirm your order once the payment reflects in our account (usually within 24 hours). You will be notified.</p>
                     <button class="checkout-btn" onclick="closeCheckout()">Continue Shopping</button>
                 </div>
@@ -4250,6 +4371,7 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
                     <div class="success-icon"><i class="fas fa-check-circle"></i></div>
                     <h2>Payment Successful!</h2>
                     <p>Your order has been placed successfully.</p>
+                    <p class="checkout-note" id="successDelivery" style="display:none"></p>
                     <p class="checkout-note">A confirmation has been sent to your phone/email.</p>
                     <button class="checkout-btn" onclick="closeCheckout()">Continue Shopping</button>
                 </div>
@@ -4795,6 +4917,7 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
         let currentStep = 1;
         let selectedPayment = 'mtn';
         let pendingOrderRef = '';
+        let deliveryLocation = { address: '', lat: null, lng: null };
         let activeSSE = null;
 
         function closeSSE() {
@@ -4852,6 +4975,14 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
             document.getElementById('checkoutOverlay').classList.add('active');
             currentStep = 1;
             selectedPayment = 'mtn';
+            deliveryLocation = { address: '', lat: null, lng: null };
+            document.getElementById('deliveryName').value = '';
+            document.getElementById('deliveryPhone').value = '';
+            document.getElementById('deliveryAddress').value = '';
+            document.getElementById('deliveryExtra').value = '';
+            document.getElementById('gpsResult').className = 'gps-result';
+            document.getElementById('successDelivery').style.display = 'none';
+            document.getElementById('pendingDelivery').style.display = 'none';
             document.querySelectorAll('.checkout-step').forEach(s => s.style.display = 'none');
             document.getElementById('checkoutStep1').style.display = 'block';
 
@@ -4886,10 +5017,69 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
             });
         }
 
+        function getDeliverySummary() {
+            const name = document.getElementById('deliveryName').value.trim();
+            const phone = document.getElementById('deliveryPhone').value.trim();
+            const addr = document.getElementById('deliveryAddress').value.trim();
+            const extra = document.getElementById('deliveryExtra').value.trim();
+            let summary = name + ' — ' + phone;
+            summary += ' | ' + addr;
+            if (extra) summary += ', ' + extra;
+            if (deliveryLocation.lat && deliveryLocation.lng) {
+                summary += ' (' + deliveryLocation.lat.toFixed(6) + ', ' + deliveryLocation.lng.toFixed(6) + ')';
+            }
+            return summary || 'Not provided';
+        }
+
+        function getGPSLocation() {
+            const btn = document.getElementById('gpsBtn');
+            const result = document.getElementById('gpsResult');
+            if (!navigator.geolocation) {
+                result.textContent = 'GPS not supported on your device. Please type your address manually.';
+                result.className = 'gps-result show';
+                return;
+            }
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Locating...';
+            result.className = 'gps-result';
+            navigator.geolocation.getCurrentPosition(
+                function(pos) {
+                    deliveryLocation.lat = pos.coords.latitude;
+                    deliveryLocation.lng = pos.coords.longitude;
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-satellite"></i> GPS';
+                    result.innerHTML = '<i class="fas fa-check-circle"></i> Location found: ' +
+                        pos.coords.latitude.toFixed(6) + ', ' + pos.coords.longitude.toFixed(6);
+                    result.className = 'gps-result show';
+                },
+                function(err) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-satellite"></i> GPS';
+                    let msg = 'Could not get location. ';
+                    if (err.code === 1) msg += 'Please allow location access in your browser.';
+                    else if (err.code === 2) msg += 'Position unavailable. Try again.';
+                    else msg += 'Request timed out. Try again.';
+                    result.textContent = msg;
+                    result.className = 'gps-result show';
+                },
+                { enableHighAccuracy: true, timeout: 10000 }
+            );
+        }
+
         function goToStep(step) {
             currentStep = step;
             clearCardErrors();
             document.querySelectorAll('.checkout-step').forEach(s => s.style.display = 'none');
+
+            if (step === 2) {
+                const name = document.getElementById('deliveryName').value.trim();
+                const phone = document.getElementById('deliveryPhone').value.trim();
+                const addr = document.getElementById('deliveryAddress').value.trim();
+                if (!name) { showToast('Please enter your full name'); document.getElementById('checkoutStep1').style.display = 'block'; currentStep = 1; return; }
+                if (!phone) { showToast('Please enter your phone number'); document.getElementById('checkoutStep1').style.display = 'block'; currentStep = 1; return; }
+                if (!addr) { showToast('Please enter a delivery address'); document.getElementById('checkoutStep1').style.display = 'block'; currentStep = 1; return; }
+                deliveryLocation.address = name + ' — ' + phone + ' | ' + addr + (document.getElementById('deliveryExtra').value.trim() ? ', ' + document.getElementById('deliveryExtra').value.trim() : '');
+            }
 
             if (step === 3) {
                 const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
@@ -4973,6 +5163,8 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
                             document.getElementById('checkoutSuccess').style.display = 'block';
                             document.getElementById('checkoutSuccess').querySelector('p').textContent =
                                 detectCardType(cardNum) + ' payment of GHS ' + total.toLocaleString() + ' successful!';
+                            document.getElementById('successDelivery').textContent = 'Deliver to: ' + getDeliverySummary();
+                            document.getElementById('successDelivery').style.display = 'block';
                             clearCartAfterPayment();
                         }
                     },
@@ -4986,7 +5178,6 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
                 });
 
             } else if (selectedPayment === 'bank') {
-                const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
                 showProcessing('Checking your transfer status...');
                 setTimeout(() => {
                     document.getElementById('checkoutProcessing').style.display = 'none';
@@ -4995,6 +5186,8 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
                         'Your transfer of GHS ' + total.toLocaleString() + ' has been noted. Awaiting confirmation...';
                     document.getElementById('pendingRefDisplay').textContent = pendingOrderRef;
                     document.getElementById('pendingRefText').style.display = 'block';
+                    document.getElementById('pendingDelivery').textContent = 'Deliver to: ' + getDeliverySummary();
+                    document.getElementById('pendingDelivery').style.display = 'block';
                     clearCartAfterPayment();
                 }, 1500);
                 return;
@@ -5053,6 +5246,8 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
                             document.getElementById('checkoutSuccess').style.display = 'block';
                             document.getElementById('checkoutSuccess').querySelector('p').textContent =
                                 'Payment of GHS ' + total.toLocaleString() + ' via ' + networkName(detected) + ' successful!';
+                            document.getElementById('successDelivery').textContent = 'Deliver to: ' + getDeliverySummary();
+                            document.getElementById('successDelivery').style.display = 'block';
                             clearCartAfterPayment();
                         }
                     },
