@@ -4190,7 +4190,7 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
                     </div>
                     <input type="text" class="delivery-input" id="deliveryAddress" placeholder="Enter your delivery address (e.g. Adum, Kumasi)">
                     <div class="delivery-row">
-                        <input type="text" class="delivery-input" id="deliveryExtra" placeholder="Landmark / digital address (optional)">
+                        <input type="text" class="delivery-input" id="deliveryDigital" placeholder="Digital address / GPS (auto-filled)">
                         <button class="gps-btn" id="gpsBtn" onclick="getGPSLocation()"><i class="fas fa-satellite"></i> GPS</button>
                     </div>
                     <div class="gps-result" id="gpsResult"></div>
@@ -4956,7 +4956,12 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
                 const res = await fetch('/api/create-order', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ amount })
+                    body: JSON.stringify({
+                        amount,
+                        name: document.getElementById('deliveryName').value.trim(),
+                        phone: document.getElementById('deliveryPhone').value.trim(),
+                        address: getDeliverySummary()
+                    })
                 });
                 const data = await res.json();
                 if (data.success) return data.accountDetails;
@@ -4971,6 +4976,19 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
             };
         }
 
+        function saveCustomerInfo(txRef) {
+            fetch('/api/save-customer', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    txRef: txRef,
+                    name: document.getElementById('deliveryName').value.trim(),
+                    phone: document.getElementById('deliveryPhone').value.trim(),
+                    address: getDeliverySummary()
+                })
+            }).catch(function() {});
+        }
+
         function openCheckout() {
             document.getElementById('checkoutOverlay').classList.add('active');
             currentStep = 1;
@@ -4979,7 +4997,7 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
             document.getElementById('deliveryName').value = '';
             document.getElementById('deliveryPhone').value = '';
             document.getElementById('deliveryAddress').value = '';
-            document.getElementById('deliveryExtra').value = '';
+            document.getElementById('deliveryDigital').value = '';
             document.getElementById('gpsResult').className = 'gps-result';
             document.getElementById('successDelivery').style.display = 'none';
             document.getElementById('pendingDelivery').style.display = 'none';
@@ -5021,10 +5039,10 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
             const name = document.getElementById('deliveryName').value.trim();
             const phone = document.getElementById('deliveryPhone').value.trim();
             const addr = document.getElementById('deliveryAddress').value.trim();
-            const extra = document.getElementById('deliveryExtra').value.trim();
+            const digital = document.getElementById('deliveryDigital').value.trim();
             let summary = name + ' — ' + phone;
             summary += ' | ' + addr;
-            if (extra) summary += ', ' + extra;
+            if (digital) summary += ', Digital: ' + digital;
             if (deliveryLocation.lat && deliveryLocation.lng) {
                 summary += ' (' + deliveryLocation.lat.toFixed(6) + ', ' + deliveryLocation.lng.toFixed(6) + ')';
             }
@@ -5048,14 +5066,15 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
                     deliveryLocation.lng = pos.coords.longitude;
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-satellite"></i> GPS';
-                    result.innerHTML = '<i class="fas fa-check-circle"></i> Location found: ' +
-                        pos.coords.latitude.toFixed(6) + ', ' + pos.coords.longitude.toFixed(6);
+                    var coords = pos.coords.latitude.toFixed(6) + ', ' + pos.coords.longitude.toFixed(6);
+                    document.getElementById('deliveryDigital').value = coords;
+                    result.innerHTML = '<i class="fas fa-check-circle"></i> Coordinates captured. We\'ll trace delivery to this location.';
                     result.className = 'gps-result show';
                 },
                 function(err) {
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-satellite"></i> GPS';
-                    let msg = 'Could not get location. ';
+                    var msg = 'Could not get location. ';
                     if (err.code === 1) msg += 'Please allow location access in your browser.';
                     else if (err.code === 2) msg += 'Position unavailable. Try again.';
                     else msg += 'Request timed out. Try again.';
@@ -5078,7 +5097,7 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
                 if (!name) { showToast('Please enter your full name'); document.getElementById('checkoutStep1').style.display = 'block'; currentStep = 1; return; }
                 if (!phone) { showToast('Please enter your phone number'); document.getElementById('checkoutStep1').style.display = 'block'; currentStep = 1; return; }
                 if (!addr) { showToast('Please enter a delivery address'); document.getElementById('checkoutStep1').style.display = 'block'; currentStep = 1; return; }
-                deliveryLocation.address = name + ' — ' + phone + ' | ' + addr + (document.getElementById('deliveryExtra').value.trim() ? ', ' + document.getElementById('deliveryExtra').value.trim() : '');
+                deliveryLocation.address = name + ' — ' + phone + ' | ' + addr + (document.getElementById('deliveryDigital').value.trim() ? ', Digital: ' + document.getElementById('deliveryDigital').value.trim() : '');
             }
 
             if (step === 3) {
@@ -5141,9 +5160,11 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
                 if (hasError) return;
 
                 showProcessing('Authorizing your ' + detectCardType(cardNum) + ' card...');
+                var cardTxRef = 'KPEL-' + Date.now();
+                saveCustomerInfo(cardTxRef);
                 FlutterwaveCheckout({
                     public_key: FLW_PUBLIC_KEY,
-                    tx_ref: 'KPEL-' + Date.now(),
+                    tx_ref: cardTxRef,
                     amount: total,
                     currency: 'GHS',
                     payment_options: 'card',
@@ -5221,9 +5242,11 @@ src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&q=80" alt="
                 }
 
                 showProcessing('Sending payment request to ' + networkName(detected) + ' (' + phone + ')...');
+                var momoTxRef = 'KPEL-' + Date.now();
+                saveCustomerInfo(momoTxRef);
                 FlutterwaveCheckout({
                     public_key: FLW_PUBLIC_KEY,
-                    tx_ref: 'KPEL-' + Date.now(),
+                    tx_ref: momoTxRef,
                     amount: total,
                     currency: 'GHS',
                     payment_options: 'mobilemoneyghana',

@@ -28,9 +28,13 @@ Static HTML site. No build tools, tests, or package manager at root.
   FLW_SECRET_KEY=...
   WEBHOOK_SECRET=...
   PORT=3000
+  AT_USERNAME=              # Africa's Talking username (optional — for SMS alerts to customers)
+  AT_API_KEY=               # Africa's Talking API key
+  AT_FROM=KPELEC            # Africa's Talking sender ID (optional)
   ```
 - **API endpoints** (all served on PORT, default 3000):
-  - `POST /api/create-order` — creates a Flutterwave virtual account
+  - `POST /api/create-order` — creates a Flutterwave virtual account (sends SMS on payment via webhook)
+  - `POST /api/save-customer` — saves customer info for MoMo/card payments so SMS can be sent
   - `GET /api/order-status/:txRef` — SSE stream for real-time payment status
   - `POST /api/webhook` — Flutterwave webhook receiver
 - `.env` and `node_modules/` are gitignored in `server/`
